@@ -13,20 +13,6 @@ class Destination {
       ..retainWhere((element) => element.path == uri);
     if (destList.isEmpty) throw ('bad url');
     return destList.first;
-    // switch (uri) {
-    //   case '/':
-    //     return Destinations.home;
-    //   case '/aboutMe':
-    //     return Destinations.aboutMe;
-    //   case '/experience':
-    //     return Destinations.experience;
-    //   case '/projects':
-    //     return Destinations.projects;
-    //   case '/philosophy':
-    //     return Destinations.philosophy;
-    //   default:
-    //     throw ('invalid uri');
-    // }
   }
 
   final Offset Function(Size size) origin;

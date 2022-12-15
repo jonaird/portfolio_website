@@ -37,8 +37,6 @@ class _LogoWidgetState extends State<LogoWidget> {
       ),
     );
     return AnimatedPositioned(
-      // left: context.atHome ? context.windowSize.width / 2 - 150 : -100,
-      // top: context.atHome ? context.windowSize.height / 2 - 150 : -100,
       left: context.atHome ? context.windowSize.width / 2 - 150 : -100,
       top: context.atHome ? context.windowSize.height / 2 - 150 : -115,
       duration: _duration,

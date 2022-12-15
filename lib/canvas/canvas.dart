@@ -43,16 +43,6 @@ class FullCanvas extends StatelessWidget {
             ),
           ),
         ),
-        // if (Destinations.bsvNews.key.offsetIsAvailable)
-        //   Positioned(
-        //     top: offset.dy,
-        //     left: offset.dx,
-        //     child: Container(
-        //       width: 40,
-        //       height: 40,
-        //       color: Colors.green,
-        //     ),
-        //   )
       ],
     );
   }
@@ -100,13 +90,7 @@ class PageBackground extends StatelessWidget {
         color: destination.color,
         child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 50),
-            child: Column(
-              children: [
-                // Text(destination.name, style: Theme.of(context).textTheme.headline2),
-                // Gap(30),
-                destination.content,
-              ],
-            )),
+            child: destination.content),
       ),
     );
   }

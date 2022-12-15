@@ -50,7 +50,6 @@ class RouterDelegateState extends EmitterContainer
 
   @override
   Future<void> setRestoredRoutePath(AppRouterConfig configuration) {
-    // TODO: implement setRestoredRoutePath
     throw UnimplementedError();
   }
 

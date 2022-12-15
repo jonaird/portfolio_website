@@ -11,10 +11,6 @@ class ProjectsPageContent extends StatelessWidget {
         Project(Destinations.bsvNews),
         const Gap(20),
         Project(Destinations.verso),
-        // Gap(20),
-        // Project("graph thing"),
-        // Gap(20),
-        // Project("Verso"),
         const Gap(20),
       ],
     );
