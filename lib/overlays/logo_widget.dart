@@ -17,8 +17,6 @@ class _LogoWidgetState extends State<LogoWidget> {
     final destination = Destination.of(context);
     if (destination != Destinations.home) _leftHome = true;
 
-    final showBackground = context.select<AppState, bool>(
-        (state) => state.introAnimationCompleted.value)!;
     final child = Center(
       child: AnimatedCrossFade(
         duration: _leftHome ? _duration : Duration.zero,
@@ -42,16 +40,13 @@ class _LogoWidgetState extends State<LogoWidget> {
       duration: _duration,
       curve: _curve,
       child: AnimatedScale(
-        scale: context.atHome ? 1 : 0.2,
-        duration: _duration,
-        curve: _curve,
-        child: showBackground
-            ? LogoBackground(
-                onTap: context.appState.handleBackButton,
-                child: child,
-              )
-            : SizedBox(width: 300, height: 300, child: child),
-      ),
+          scale: context.atHome ? 1 : 0.2,
+          duration: _duration,
+          curve: _curve,
+          child: LogoBackground(
+            onTap: context.appState.handleBackButton,
+            child: child,
+          )),
     );
   }
 }
