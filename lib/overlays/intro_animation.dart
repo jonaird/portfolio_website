@@ -15,8 +15,8 @@ class _IntroAnimationState extends State<IntroAnimation> {
   Widget build(BuildContext context) {
     if (_scale == 10) {
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+        await Future.delayed(const Duration(milliseconds: 700));
         _scale = 1;
-        // await Future.delayed(const Duration(milliseconds: 900));
         rebuild();
       });
     }
