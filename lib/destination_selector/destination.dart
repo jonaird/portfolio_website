@@ -77,15 +77,19 @@ extension OS on GlobalKey {
 
 class PageDestination extends Destination {
   PageDestination({
-    required super.origin,
-    required super.getScale,
     required super.title,
     required super.path,
     required this.color,
     required this.content,
     required this.horizontalPosition,
     required this.verticalPosition,
-  });
+  }) : super(
+          getScale: (_) => scaleMultiple,
+          origin: PageDestination.originGetterFromPosition(
+            horizontalPosition,
+            verticalPosition,
+          ),
+        );
   final HorizontalPosition horizontalPosition;
   final VerticalPosition verticalPosition;
   final Widget content;
@@ -105,6 +109,34 @@ class PageDestination extends Destination {
         element.horizontalPosition == horizontalPosition &&
         element.verticalPosition == verticalPosition);
     return proj.first;
+  }
+
+  static Offset Function(Size) originGetterFromPosition(
+    HorizontalPosition horizontalPosition,
+    VerticalPosition verticalPosition,
+  ) {
+    //formula for this comes from the fact that we need an origin
+    //that results in a point at 1/4W should end at 1/2W when zoomed by the
+    //scale factor.
+    // ----O---A-------B-----------------
+    //where O is origin, A is 1/4W and B is at 1/2W
+    //length of OA*scalefactor should equal OB
+    double getA(Size size) {
+      return size.width / (4 * (scaleMultiple - 1));
+    }
+
+    double getB(Size size) {
+      return size.height / (2 * scaleMultiple - 2);
+    }
+
+    final getX = horizontalPosition == HorizontalPosition.left
+        ? (size) => size.width / 4 - getA(size)
+        : (size) => size.width * 3 / 4 + getA(size);
+
+    final getY = verticalPosition == VerticalPosition.top
+        ? (size) => 0
+        : (size) => size.height / 2 + getB(size);
+    return (size) => Offset(getX(size), getY(size));
   }
 }
 

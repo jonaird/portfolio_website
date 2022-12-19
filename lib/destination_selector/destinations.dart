@@ -1,13 +1,5 @@
 import 'package:website/main.dart';
 
-double _getA(Size size) {
-  return size.width / (4 * (scaleMultiple - 1));
-}
-
-double _getB(Size size) {
-  return size.height / (2 * scaleMultiple - 2);
-}
-
 class Destinations {
   static final home = Destination(
       origin: (Size size) => const Offset(0, 0),
@@ -15,14 +7,6 @@ class Destinations {
       title: "Home",
       path: '/');
   static final aboutMe = PageDestination(
-    //formula for this comes from the fact that we need an origin
-    //that results in a point at 1/4W should end at 1/2W when zoomed by the
-    //scale factor.
-    // ----O---A-------B-----------------
-    //where O is origin, A is 1/4W and B is at 1/2W
-    //length of OA*scalefactor should equal OB
-    origin: (Size size) => Offset(size.width / 4 - _getA(size), 0),
-    getScale: (_) => scaleMultiple,
     color: const Color(0xFFFFF5AE),
     content: const AboutMePage(),
     horizontalPosition: HorizontalPosition.left,
@@ -31,8 +15,6 @@ class Destinations {
     path: '/aboutMe',
   );
   static final experience = PageDestination(
-      origin: (Size size) => Offset(size.width * 3 / 4 + _getA(size), 0),
-      getScale: (_) => scaleMultiple,
       color: const Color(0xFFC0E3FF),
       content: const ExperiencePageContent(),
       horizontalPosition: HorizontalPosition.right,
@@ -40,9 +22,6 @@ class Destinations {
       title: 'Experience',
       path: '/experience');
   static final projects = PageDestination(
-      origin: (Size size) =>
-          Offset(size.width / 4 - _getA(size), size.height / 2 + _getB(size)),
-      getScale: (_) => scaleMultiple,
       color: const Color(0xFFF2D9FF),
       content: const ProjectsPageContent(),
       horizontalPosition: HorizontalPosition.left,
@@ -50,9 +29,6 @@ class Destinations {
       title: 'Projects',
       path: '/projects');
   static final philosophy = PageDestination(
-      origin: (Size size) => Offset(
-          size.width * 3 / 4 + _getA(size), size.height / 2 + _getB(size)),
-      getScale: (_) => scaleMultiple,
       color: const Color.fromARGB(255, 222, 255, 192),
       content: const PhilosophyPageContent(),
       horizontalPosition: HorizontalPosition.right,
