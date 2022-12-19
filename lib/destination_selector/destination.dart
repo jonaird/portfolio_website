@@ -118,9 +118,11 @@ class PageDestination extends Destination {
     //formula for this comes from the fact that we need an origin
     //that results in a point at 1/4W should end at 1/2W when zoomed by the
     //scale factor.
-    // ----O---A-------B-----------------
-    //where O is origin, A is 1/4W and B is at 1/2W
-    //length of OA*scalefactor should equal OB
+    // ----O---A-------X-----------------
+    //where O is origin, A is 1/4W and X is at 1/2W
+    //length of OA*scalefactor should equal OX
+    //
+    //An analogous calculation is used for the y coordinates
     double getA(Size size) {
       return size.width / (4 * (scaleMultiple - 1));
     }
