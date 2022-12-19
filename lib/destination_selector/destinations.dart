@@ -61,19 +61,22 @@ class Destinations {
       path: '/philosophy');
 
   static final bsvNews = ProjectDestination(
-    origin: ProjectDestination.originGetterFromKey(_bsvNewsKey),
-    getScale: (size) => scaleMultiple * size.height / 100,
     title: 'BSV News',
     path: 'projects/bsvNews',
     key: _bsvNewsKey,
+    content: Container(color: Colors.green),
   );
   static final verso = ProjectDestination(
-    origin: ProjectDestination.originGetterFromKey(_versoKey),
-    getScale: (size) => scaleMultiple * size.height / 100,
     title: 'Verso',
     path: 'projects/bsvNews',
     key: _versoKey,
+    content: Container(color: Colors.purple),
   );
+  static final forceDirectedGraph = ProjectDestination(
+      path: 'projects/forceDirectedGraph',
+      title: 'force_directed_graph',
+      content: const ForceDirectedGraphDemo(),
+      key: _graphKey);
 
   static final _bsvNewsKey = GlobalKey();
   static final _graphKey = GlobalKey();

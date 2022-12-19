@@ -27,6 +27,8 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  force_directed_graph:
+    path: /Users/jonathanaird/Developer/Libraries/force_directed_graph
   change_emitter:
     path: /Users/jonathanaird/Developer/Libraries/change_emitter
   flutter:

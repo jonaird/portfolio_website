@@ -1,4 +1,5 @@
 import "package:website/main.dart";
+export 'force_directed_graph.dart';
 
 class ProjectsPageContent extends StatelessWidget {
   const ProjectsPageContent({super.key});
@@ -12,6 +13,7 @@ class ProjectsPageContent extends StatelessWidget {
         const Gap(20),
         Project(Destinations.verso),
         const Gap(20),
+        Project(Destinations.forceDirectedGraph)
       ],
     );
   }
@@ -30,33 +32,32 @@ class Project extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(destination.title),
-        Portal(key: useKey ? destination.key : null)
+        Portal(key: useKey ? destination.key : null, destination: destination)
       ],
     );
   }
 }
 
-class Portal extends StatefulWidget {
-  const Portal({super.key});
+class Portal extends StatelessWidget {
+  const Portal({super.key, required this.destination});
+  final ProjectDestination destination;
 
-  @override
-  State<Portal> createState() => _PortalState();
-}
-
-class _PortalState extends State<Portal> {
   @override
   Widget build(BuildContext context) {
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
         key: UniqueKey(),
-        onTap: () => context.appState.destination.value = Destinations.bsvNews,
-        child: Container(
+        onTap: () => context.appState.destination.value = destination,
+        child: SizedBox(
           width: 100 * context.windowSize.width / context.windowSize.height,
           height: 100,
-          decoration: BoxDecoration(
-              border: Border.all(color: Colors.green, width: 5),
-              color: Colors.grey),
+          child: Transform.scale(
+              scale: 1,
+              child: SizedBox(
+                  width: context.windowSize.width,
+                  height: context.windowSize.height,
+                  child: destination.content)),
         ),
       ),
     );

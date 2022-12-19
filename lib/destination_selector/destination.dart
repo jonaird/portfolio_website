@@ -34,13 +34,16 @@ class Destination {
 
 class ProjectDestination extends Destination {
   ProjectDestination({
-    required super.origin,
-    required super.getScale,
     required super.path,
     required super.title,
+    required this.content,
     required this.key,
-  });
+  }) : super(
+          getScale: (size) => scaleMultiple * size.height / 100,
+          origin: ProjectDestination.originGetterFromKey(key),
+        );
   final GlobalKey key;
+  final Widget content;
 
   static Offset Function(Size) originGetterFromKey(GlobalKey key) {
     return (size) {

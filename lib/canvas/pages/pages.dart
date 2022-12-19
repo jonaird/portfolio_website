@@ -1,5 +1,5 @@
 import '../../main.dart';
-export './projects.dart';
+export '../projects.dart/projects.dart';
 
 class AboutMePage extends StatelessWidget {
   const AboutMePage({super.key});
