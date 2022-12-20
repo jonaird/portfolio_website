@@ -136,7 +136,7 @@ class PageDestination extends Destination {
         : (size) => size.width * 3 / 4 + getA(size);
 
     final getY = verticalPosition == VerticalPosition.top
-        ? (size) => 0
+        ? (size) => 0.0
         : (size) => size.height / 2 + getB(size);
     return (size) => Offset(getX(size), getY(size));
   }
