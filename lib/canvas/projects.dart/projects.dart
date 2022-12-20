@@ -53,11 +53,17 @@ class Portal extends StatelessWidget {
           width: 100 * context.windowSize.width / context.windowSize.height,
           height: 100,
           child: Transform.scale(
-              scale: 1,
+            scale: scaleMultiple / destination.getScale(context.windowSize),
+            child: OverflowBox(
+              maxWidth: context.windowSize.width,
+              maxHeight: context.windowSize.height,
               child: SizedBox(
-                  width: context.windowSize.width,
-                  height: context.windowSize.height,
-                  child: destination.content)),
+                width: context.windowSize.width,
+                height: context.windowSize.height,
+                child: destination.content,
+              ),
+            ),
+          ),
         ),
       ),
     );
