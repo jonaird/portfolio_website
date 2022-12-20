@@ -73,5 +73,6 @@ class Destinations {
     philosophy,
     bsvNews,
     verso,
+    forceDirectedGraph
   ];
 }
