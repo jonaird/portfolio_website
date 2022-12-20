@@ -38,18 +38,18 @@ class Destinations {
 
   static final bsvNews = ProjectDestination(
     title: 'BSV News',
-    path: 'projects/bsvNews',
+    path: '/projects/bsvNews',
     key: _bsvNewsKey,
     content: Container(color: Colors.green),
   );
   static final verso = ProjectDestination(
     title: 'Verso',
-    path: 'projects/bsvNews',
+    path: '/projects/bsvNews',
     key: _versoKey,
     content: Container(color: Colors.purple),
   );
   static final forceDirectedGraph = ProjectDestination(
-      path: 'projects/forceDirectedGraph',
+      path: '/projects/forceDirectedGraph',
       title: 'force_directed_graph',
       content: const ForceDirectedGraphDemo(),
       key: _graphKey);
