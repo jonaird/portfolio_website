@@ -25,8 +25,7 @@ class Project extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final useKey =
-        context.findAncestorStateOfType<ScrollOverlayState>() == null;
+    final useKey = Scrollable.of(context) == null;
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -44,12 +43,13 @@ class Portal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      child: GestureDetector(
-        key: UniqueKey(),
-        onTap: () => context.appState.destination.value = destination,
-        child: SizedBox(
+    //whether the current widget is in the hidden scroll overlay or not.
+    final includeContent = Scrollable.of(context) == null;
+    final useButtonOverlay = context.select<AppState, bool>(
+        (appState) => appState.destination.value is! ProjectDestination)!;
+    return Stack(
+      children: [
+        SizedBox(
           width: 100 * context.windowSize.width / context.windowSize.height,
           height: 100,
           child: Transform.scale(
@@ -60,12 +60,36 @@ class Portal extends StatelessWidget {
               child: SizedBox(
                 width: context.windowSize.width,
                 height: context.windowSize.height,
-                child: destination.content,
+                child: includeContent ? destination.content : null,
               ),
             ),
           ),
         ),
-      ),
+        if (useButtonOverlay)
+          MouseRegion(
+            cursor: SystemMouseCursors.click,
+            child: GestureDetector(
+              key: UniqueKey(),
+              onTap: () {
+                context.appState.destination.value = destination;
+              },
+              child: SizedBox(
+                width:
+                    100 * context.windowSize.width / context.windowSize.height,
+                height: 100,
+                child: Center(
+                    child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Theme.of(context).primaryColor),
+                  child: const Text('try me'),
+                  onPressed: () {
+                    context.appState.destination.value = destination;
+                  },
+                )),
+              ),
+            ),
+          ),
+      ],
     );
   }
 }
