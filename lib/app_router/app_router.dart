@@ -20,7 +20,7 @@ class RouteInfoParser extends RouteInformationParser<AppRouterConfig> {
 }
 
 class RouterDelegateState extends EmitterContainer
-    with ListenableEmitterMixin
+    with ListenableEmitterMixin<ContainerChange>
     implements RouterDelegate<AppRouterConfig> {
   final AppState appState = AppState();
 

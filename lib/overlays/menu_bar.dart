@@ -9,19 +9,20 @@ class MenuBarOverlay extends StatelessWidget {
       offset: Offset(0, Destination.of(context) is PageDestination ? 0 : -1),
       duration: const Duration(milliseconds: 240),
       curve: Curves.easeInOut,
-      child: const MenuBar(),
+      child: const AppMenuBar(),
     );
   }
 }
 
-class MenuBar extends StatefulWidget {
-  const MenuBar({super.key});
+class AppMenuBar extends StatefulWidget {
+  const AppMenuBar({super.key});
 
   @override
-  State<MenuBar> createState() => _MenuBarState();
+  State<AppMenuBar> createState() => _AppMenuBarState();
 }
 
-class _MenuBarState extends State<MenuBar> with SingleTickerProviderStateMixin {
+class _AppMenuBarState extends State<AppMenuBar>
+    with SingleTickerProviderStateMixin {
   late final _controller = TabController(length: 4, vsync: this);
   var _skipNotif = false;
   @override
