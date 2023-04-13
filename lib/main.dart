@@ -24,23 +24,42 @@ void main() {
   runApp(MaterialApp.router(
     routeInformationParser: RouteInfoParser(),
     routerDelegate: _routerDelegate,
-    theme: ThemeData(primaryColor: const Color(0xFFFF7575)),
+    theme: ThemeData(primaryColor: const Color(0xFFFF5252)),
   ));
 }
 
 class App extends StatelessWidget {
-  const App({Key? key}) : super(key: key);
+  const App({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ScaleMultipleSetter(
-      child: Container(
-        color: Colors.white,
-        child: const Overlays(child: DestinationSelector()),
+    return Overlays(
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.blueGrey.shade700,
+          title: const Text('Portfolio'),
+          automaticallyImplyLeading: false,
+          leading: context.atHome ? const Placeholder() : const BackButton(),
+        ),
+        backgroundColor: Colors.blueGrey.shade900,
       ),
     );
   }
 }
+
+// class App extends StatelessWidget {
+//   const App({Key? key}) : super(key: key);
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return ScaleMultipleSetter(
+//       child: Container(
+//         color: Colors.white,
+//         child: const Overlays(child: DestinationSelector()),
+//       ),
+//     );
+//   }
+// }
 
 class ScaleMultipleSetter extends StatelessWidget {
   const ScaleMultipleSetter({super.key, required this.child});
@@ -54,14 +73,14 @@ class ScaleMultipleSetter extends StatelessWidget {
 }
 
 class AppState extends RootEmitter {
-  AppState() {
-    introAnimationCompleted.changes.listen((event) async {
-      await Future.delayed(const Duration(milliseconds: 300));
-      destination.value = initialDestination == Destinations.home
-          ? Destinations.aboutMe
-          : initialDestination;
-    });
-  }
+  // AppState() {
+  //   introAnimationCompleted.changes.listen((event) async {
+  //     await Future.delayed(const Duration(milliseconds: 300));
+  //     destination.value = initialDestination == Destinations.home
+  //         ? Destinations.aboutMe
+  //         : initialDestination;
+  //   });
+  // }
   late final Destination initialDestination;
   final destination = ValueEmitter(Destinations.home);
   final animationInProgress = ValueEmitter(false);

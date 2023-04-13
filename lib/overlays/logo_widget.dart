@@ -35,8 +35,8 @@ class _LogoWidgetState extends State<LogoWidget> {
       ),
     );
     return AnimatedPositioned(
-      left: context.atHome ? context.windowSize.width / 2 - 150 : -100,
-      top: context.atHome ? context.windowSize.height / 2 - 150 : -115,
+      right: context.atHome ? context.windowSize.width / 2 - 150 : 0,
+      bottom: context.atHome ? context.windowSize.height / 2 - 150 : 0,
       duration: _duration,
       curve: _curve,
       child: AnimatedScale(
@@ -74,7 +74,7 @@ class LogoBackground extends StatelessWidget {
               height: 300,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(150),
-                color: const Color(0xFFFF7575),
+                color: Theme.of(context).primaryColor,
               ),
               child: child),
         ),

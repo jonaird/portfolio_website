@@ -9,7 +9,6 @@ class IntroAnimation extends StatefulWidget {
 
 class _IntroAnimationState extends State<IntroAnimation> {
   double _scale = 10;
-  var _animationCompleted = false;
 
   @override
   Widget build(BuildContext context) {
@@ -20,21 +19,15 @@ class _IntroAnimationState extends State<IntroAnimation> {
         rebuild();
       });
     }
-    if (!_animationCompleted) {
-      return Center(
-        child: AnimatedScale(
-            scale: _scale,
-            duration: const Duration(milliseconds: 500),
-            curve: Curves.easeInOut,
-            onEnd: () => setState(() {
-                  _animationCompleted = true;
-                  context.appState.introAnimationCompleted.value = true;
-                }),
-            child: const LogoBackground(
-              child: SizedBox(),
-            )),
-      );
-    }
-    return const SizedBox();
+    return Center(
+      child: AnimatedScale(
+          scale: _scale,
+          duration: const Duration(milliseconds: 500),
+          curve: Curves.easeInOut,
+          onEnd: () => context.appState.introAnimationCompleted.value = true,
+          child: const LogoBackground(
+            child: SizedBox(),
+          )),
+    );
   }
 }
