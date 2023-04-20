@@ -30,14 +30,6 @@ void main() {
 }
 
 class AppViewModel extends RootEmitter {
-  // AppState() {
-  //   introAnimationCompleted.changes.listen((event) async {
-  //     await Future.delayed(const Duration(milliseconds: 300));
-  //     destination.value = initialDestination == Destinations.home
-  //         ? Destinations.aboutMe
-  //         : initialDestination;
-  //   });
-  // }
   late final Destination initialDestination;
   final destination = ValueEmitter(Destinations.home);
   final animationInProgress = ValueEmitter(false);
@@ -99,20 +91,6 @@ class Overlays extends StatelessWidget {
     );
   }
 }
-
-// class App extends StatelessWidget {
-//   const App({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return ScaleMultipleSetter(
-//       child: Container(
-//         color: Colors.white,
-//         child: const Overlays(child: DestinationSelector()),
-//       ),
-//     );
-//   }
-// }
 
 class ScaleMultipleSetter extends StatelessWidget {
   const ScaleMultipleSetter({super.key, required this.child});

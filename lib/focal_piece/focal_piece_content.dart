@@ -133,24 +133,3 @@ class _ContactCard extends StatelessWidget {
     );
   }
 }
-  // return Center(
-    //   child: Row(
-    //     children: const [
-    //       Gap(12 * FocalPieceViewModel.fabScale),
-    //       Icon(
-    //         Icons.email_sharp,
-    //         size: 24 * FocalPieceViewModel.fabScale,
-    //         color: Colors.white,
-    //       ),
-    //       Gap(12 * FocalPieceViewModel.fabScale),
-    //       // Text(
-    //       //   'contact',
-    //       //   style: TextStyle(
-    //       //     color: Colors.white,
-    //       //     fontSize: 16 * FocalPieceViewModel.fabScale,
-    //       //   ),
-    //       // ),
-    //       // Gap(20 * FocalPieceViewModel.fabScale)
-    //     ],
-    //   ),
-    // );

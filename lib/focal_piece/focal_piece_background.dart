@@ -139,29 +139,3 @@ class _FocalPieceBackgroundState extends State<FocalPieceBackground> {
     );
   }
 }
-
-// class _InteractiveComponents extends StatelessWidget {
-//   const _InteractiveComponents({required this.child});
-//   final Widget child;
-//   final _br = const BorderRadius.all(
-//       Radius.circular(24 * FocalPieceViewModel.fabScale));
-//   @override
-//   Widget build(BuildContext context) {
-//     if (context.select((FocalPieceBackgroundViewModel vm) => vm.useInkwell)!) {
-//       return MouseRegion(
-//         cursor: SystemMouseCursors.click,
-//         child: Material(
-//           type: MaterialType.button,
-//           color: Theme.of(context).primaryColor,
-//           borderRadius: _br,
-//           child: InkWell(
-//             borderRadius: _br,
-//             onTap: context.read<FocalPieceBackgroundViewModel>()!.handleFABTap,
-//             child: child,
-//           ),
-//         ),
-//       );
-//     }
-//     return child;
-//   }
-// }
