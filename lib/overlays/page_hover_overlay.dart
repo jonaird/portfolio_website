@@ -4,7 +4,7 @@ class PageHoverOverlay extends StatelessWidget {
   const PageHoverOverlay({super.key});
 
   void onPress(Destination destination, BuildContext context) {
-    context.read<AppState>()!.destination.value = destination;
+    context.read<AppViewModel>()!.destination.value = destination;
   }
 
   @override

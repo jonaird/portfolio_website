@@ -45,7 +45,7 @@ class Portal extends StatelessWidget {
   Widget build(BuildContext context) {
     //whether the current widget is in the hidden scroll overlay or not.
     final includeContent = Scrollable.of(context) == null;
-    final useButtonOverlay = context.select<AppState, bool>(
+    final useButtonOverlay = context.select<AppViewModel, bool>(
         (appState) => appState.destination.value is! ProjectDestination)!;
     return Stack(
       children: [
@@ -71,7 +71,7 @@ class Portal extends StatelessWidget {
             child: GestureDetector(
               key: UniqueKey(),
               onTap: () {
-                context.appState.destination.value = destination;
+                context.appViewModel.destination.value = destination;
               },
               child: SizedBox(
                 width:
@@ -83,7 +83,7 @@ class Portal extends StatelessWidget {
                       backgroundColor: Theme.of(context).primaryColor),
                   child: const Text('try me'),
                   onPressed: () {
-                    context.appState.destination.value = destination;
+                    context.appViewModel.destination.value = destination;
                   },
                 )),
               ),

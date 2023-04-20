@@ -13,6 +13,7 @@ export 'destination_selector/destination_selector.dart';
 export 'utils.dart';
 export './overlays/overlays.dart';
 export './app_router/app_router.dart';
+export './focal_piece/focal_piece.dart';
 
 const destMaxHeight = 1100;
 double scaleMultiple = 10;
@@ -26,6 +27,36 @@ void main() {
     routerDelegate: _routerDelegate,
     theme: ThemeData(primaryColor: const Color(0xFFFF5252)),
   ));
+}
+
+class AppViewModel extends RootEmitter {
+  // AppState() {
+  //   introAnimationCompleted.changes.listen((event) async {
+  //     await Future.delayed(const Duration(milliseconds: 300));
+  //     destination.value = initialDestination == Destinations.home
+  //         ? Destinations.aboutMe
+  //         : initialDestination;
+  //   });
+  // }
+  late final Destination initialDestination;
+  final destination = ValueEmitter(Destinations.home);
+  final animationInProgress = ValueEmitter(false);
+  final focalPiece = FocalPieceViewModel();
+
+  void handleBackButton() {
+    if (destination.value is ProjectDestination) {
+      destination.value = Destinations.projects;
+    } else {
+      destination.value = Destinations.home;
+    }
+  }
+
+  @override
+  get children => {
+        destination,
+        animationInProgress,
+        focalPiece,
+      };
 }
 
 class App extends StatelessWidget {
@@ -43,6 +74,28 @@ class App extends StatelessWidget {
         ),
         backgroundColor: Colors.blueGrey.shade900,
       ),
+    );
+  }
+}
+
+class Overlays extends StatelessWidget {
+  const Overlays({required this.child, super.key});
+  final Widget child;
+  @override
+  Widget build(BuildContext context) {
+    return Overlay(
+      initialEntries: [
+        OverlayEntry(builder: (_) => child),
+        // if (context.select<AppState, bool>(
+        //     (state) => !state.introAnimationCompleted.value)!)
+        //   OverlayEntry(builder: (_) => const IntroAnimation()),
+        OverlayEntry(
+          builder: (_) => Reprovider(
+            selector: (AppViewModel appViewModel) => appViewModel.focalPiece,
+            child: const FocalPiece(),
+          ),
+        ),
+      ],
     );
   }
 }
@@ -70,32 +123,6 @@ class ScaleMultipleSetter extends StatelessWidget {
     scaleMultiple = (2 * destMaxHeight) / height;
     return child;
   }
-}
-
-class AppState extends RootEmitter {
-  // AppState() {
-  //   introAnimationCompleted.changes.listen((event) async {
-  //     await Future.delayed(const Duration(milliseconds: 300));
-  //     destination.value = initialDestination == Destinations.home
-  //         ? Destinations.aboutMe
-  //         : initialDestination;
-  //   });
-  // }
-  late final Destination initialDestination;
-  final destination = ValueEmitter(Destinations.home);
-  final animationInProgress = ValueEmitter(false);
-  final introAnimationCompleted = ValueEmitter(false);
-
-  void handleBackButton() {
-    if (destination.value is ProjectDestination) {
-      destination.value = Destinations.projects;
-    } else {
-      destination.value = Destinations.home;
-    }
-  }
-
-  @override
-  get children => {destination, animationInProgress, introAnimationCompleted};
 }
 
 late Uint8List logoBytes;

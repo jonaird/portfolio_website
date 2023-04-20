@@ -17,7 +17,25 @@ extension StatelessExtensions on StatelessWidget {
 extension ContextExtensions on BuildContext {
   Size get windowSize => MediaQuery.of(this).size;
 
-  bool get atHome => depend<AppState>()!.destination.value == Destinations.home;
+  bool get atHome =>
+      depend<AppViewModel>()!.destination.value == Destinations.home;
 
-  AppState get appState => read<AppState>()!;
+  AppViewModel get appViewModel => read<AppViewModel>()!;
+}
+
+abstract class ConsumerStatelessWidget<C extends ChangeEmitter>
+    extends StatelessWidget {
+  const ConsumerStatelessWidget({super.key});
+
+  Widget consume(BuildContext context, C changeEmitter);
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<C>(
+      builder: (context, changeEmitter) => consume(
+        context,
+        changeEmitter,
+      ),
+    );
+  }
 }

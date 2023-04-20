@@ -35,7 +35,7 @@ class _DestinationSelectorState extends State<DestinationSelector>
           Tween<Offset>(begin: const Offset(0, 0), end: const Offset(0, 0)));
       _initialBuild = false;
       _controller.addStatusListener((status) {
-        context.appState.animationInProgress.value =
+        context.appViewModel.animationInProgress.value =
             status == AnimationStatus.forward;
       });
     } else {

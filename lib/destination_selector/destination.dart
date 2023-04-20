@@ -28,7 +28,7 @@ class Destination {
 
   static Destination of(BuildContext context) {
     return context
-        .select<AppState, Destination>((state) => state.destination.value)!;
+        .select<AppViewModel, Destination>((state) => state.destination.value)!;
   }
 }
 
