@@ -1,4 +1,3 @@
-// export 'logo_widget.dart';
 export '../main.dart';
 export 'scroll_overlay.dart';
 

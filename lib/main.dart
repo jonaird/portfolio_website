@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 
 import 'overlays/overlays.dart';
-
+import 'home.dart';
 export 'package:change_emitter/change_emitter.dart';
 export 'package:flutter/material.dart';
 export 'package:google_fonts/google_fonts.dart';
@@ -65,6 +65,7 @@ class App extends StatelessWidget {
           leading: context.atHome ? const Placeholder() : const BackButton(),
         ),
         backgroundColor: Colors.blueGrey.shade900,
+        body: const HomePage(),
       ),
     );
   }
