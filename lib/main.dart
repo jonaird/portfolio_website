@@ -78,9 +78,6 @@ class Overlays extends StatelessWidget {
     return Overlay(
       initialEntries: [
         OverlayEntry(builder: (_) => child),
-        // if (context.select<AppState, bool>(
-        //     (state) => !state.introAnimationCompleted.value)!)
-        //   OverlayEntry(builder: (_) => const IntroAnimation()),
         OverlayEntry(
           builder: (_) => Reprovider(
             selector: (AppViewModel appViewModel) => appViewModel.focalPiece,

@@ -19,18 +19,6 @@ class FocalPieceBackgroundViewModel extends EmitterContainer {
     parent.stage = FocalPieceStages.intro;
   }
 
-  // bool get useInkwell {
-  //   // final animatingFromContactSheet = parent.stage == FocalPieceStages.fab &&
-  //   //     parent.previousStage == FocalPieceStages.contact;
-  //   // final animatingToContactSheet =
-  //   //     parent.stage == FocalPieceStages.contact && parent.animating.value;
-
-  //   //   return (parent.stage == FocalPieceStages.fab &&
-  //   //           !(_backgroundParameters.previous == Backgr)) ||
-  //   //       (parent.stage == FocalPieceStages.contact && !parent.animating.value);
-  //   return parent.stage == FocalPieceStages.fab && !parent.animating.value;
-  // }
-
   bool get firstBuild => parent.stage == FocalPieceStages.firstBuild;
 
   void handleFABTap() {
