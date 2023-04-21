@@ -63,7 +63,7 @@ class FocalPieceBackgroundViewModel extends EmitterContainer {
           height: 400,
           decoration: BoxDecoration(
             // color: const Color(0xFFFF5252),
-            color: Colors.blueGrey.shade400,
+            color: const Color(0xFFFF5252),
             borderRadius:
                 BorderRadius.circular(12 * FocalPieceViewModel.fabScale),
           ),
