@@ -25,6 +25,8 @@ class FocalPieceBackgroundViewModel extends EmitterContainer {
     parent.stage = FocalPieceStages.contact;
   }
 
+  Duration get animationDuration => parent.animationDuration;
+
   BackgroundParameters get getBackgroundParameters {
     switch (parent.stage) {
       case FocalPieceStages.firstBuild:
@@ -65,7 +67,7 @@ class FocalPieceBackgroundViewModel extends EmitterContainer {
             // color: const Color(0xFFFF5252),
             color: const Color(0xFFFF5252),
             borderRadius:
-                BorderRadius.circular(12 * FocalPieceViewModel.fabScale),
+                BorderRadius.circular(6 * FocalPieceViewModel.fabScale),
           ),
         );
     }
@@ -113,8 +115,8 @@ class _FocalPieceBackgroundState extends State<FocalPieceBackground> {
             key: const Key('animatedCotnainer'),
             width: fp.backgroundParameters.width,
             height: fp.backgroundParameters.height,
-            curve: Curves.easeInOut,
-            duration: FocalPieceViewModel.animationDuration,
+            curve: FocalPieceViewModel.animationCurve,
+            duration: fp.animationDuration,
             onEnd: fp.finishedAnimating,
             decoration: fp.backgroundParameters.decoration,
             child: Reprovider(

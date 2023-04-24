@@ -5,8 +5,9 @@ class FocalPieceContentViewModel extends EmitterContainer {
   FocalPieceViewModel get parent => super.parent as FocalPieceViewModel;
 
   Duration get animationDuration {
-    if (parent.stage == FocalPieceStages.firstBuild) return Duration.zero;
-    return FocalPieceViewModel.animationDuration;
+    return parent.animationDuration;
+    // if (parent.stage == FocalPieceStages.firstBuild) return Duration.zero;
+    // return FocalPieceViewModel.animationDuration;
   }
 
   Widget get firstChild {

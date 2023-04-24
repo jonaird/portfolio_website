@@ -36,14 +36,23 @@ class FocalPieceViewModel extends EmitterContainer {
 
   Alignment get alignment {
     if (stage == FocalPieceStages.firstBuild ||
-        stage == FocalPieceStages.intro) {
+        stage == FocalPieceStages.intro ||
+        stage == FocalPieceStages.contact) {
       return Alignment.center;
     }
     return Alignment.bottomRight;
   }
 
+  Duration get animationDuration {
+    if (stage == FocalPieceStages.firstBuild) {
+      return const Duration(milliseconds: 0);
+    }
+    if (introSequenceCompleted) return const Duration(milliseconds: 250);
+    return const Duration(milliseconds: 500);
+  }
+
   static const fabScale = 1.6;
-  static const animationDuration = Duration(milliseconds: 500);
+  // static const animationDuration = Duration(milliseconds: 500);
   static const animationCurve = Curves.easeInOutExpo;
 
   @override
@@ -59,14 +68,15 @@ class FocalPiece extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
-      alignment:
-          context.select<FocalPieceViewModel, Alignment>((vm) => vm.alignment),
-      duration: FocalPieceViewModel.animationDuration,
+      alignment: context.select<FocalPieceViewModel, Alignment>(
+          (FocalPieceViewModel vm) => vm.alignment),
+      duration:
+          context.select((FocalPieceViewModel vm) => vm.animationDuration)!,
       curve: FocalPieceViewModel.animationCurve,
       child: FittedBox(
         fit: BoxFit.none,
-        child: Reprovider<FocalPieceViewModel, FocalPieceBackgroundViewModel>(
-          selector: (vm) => vm.backgroundViewModel,
+        child: Reprovider(
+          selector: (FocalPieceViewModel vm) => vm.backgroundViewModel,
           child: const FocalPieceBackground(),
         ),
       ),
