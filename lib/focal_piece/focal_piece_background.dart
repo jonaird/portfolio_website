@@ -102,30 +102,27 @@ class FocalPieceBackground extends StatefulWidget {
   State<FocalPieceBackground> createState() => _FocalPieceBackgroundState();
 }
 
-class _FocalPieceBackgroundState extends State<FocalPieceBackground> {
+class _FocalPieceBackgroundState
+    extends ConsumerState<FocalPieceBackground, FocalPieceBackgroundViewModel> {
   var initialBuild = true;
   @override
-  Widget build(BuildContext context) {
-    return Consumer<FocalPieceBackgroundViewModel>(
-      builder: (context, fp) {
-        if (fp.firstBuild) fp.onFirstBuild();
-        return Padding(
-          padding: const EdgeInsets.all(16.0 * 3),
-          child: AnimatedContainer(
-            key: const Key('animatedCotnainer'),
-            width: fp.backgroundParameters.width,
-            height: fp.backgroundParameters.height,
-            curve: FocalPieceViewModel.animationCurve,
-            duration: fp.animationDuration,
-            onEnd: fp.finishedAnimating,
-            decoration: fp.backgroundParameters.decoration,
-            child: Reprovider(
-              selector: (FocalPieceViewModel vm) => vm.contentViewModel,
-              child: const FocalPieceContent(),
-            ),
-          ),
-        );
-      },
+  Widget consume(context, fp) {
+    if (fp.firstBuild) fp.onFirstBuild();
+    return Padding(
+      padding: const EdgeInsets.all(16.0 * 3),
+      child: AnimatedContainer(
+        key: const Key('animatedCotnainer'),
+        width: fp.backgroundParameters.width,
+        height: fp.backgroundParameters.height,
+        curve: FocalPieceViewModel.animationCurve,
+        duration: fp.animationDuration,
+        onEnd: fp.finishedAnimating,
+        decoration: fp.backgroundParameters.decoration,
+        child: Reprovider(
+          selector: (FocalPieceViewModel vm) => vm.contentViewModel,
+          child: const FocalPieceContent(),
+        ),
+      ),
     );
   }
 }

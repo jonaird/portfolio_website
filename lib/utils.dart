@@ -39,3 +39,18 @@ abstract class ConsumerStatelessWidget<C extends ChangeEmitter>
     );
   }
 }
+
+abstract class ConsumerState<S extends StatefulWidget, C extends ChangeEmitter>
+    extends State<S> {
+  Widget consume(BuildContext context, C changeEmitter);
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<C>(
+      builder: (context, changeEmitter) => consume(
+        context,
+        changeEmitter,
+      ),
+    );
+  }
+}

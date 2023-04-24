@@ -44,25 +44,22 @@ class FocalPieceContentViewModel extends EmitterContainer {
   get dependencies => {parent};
 }
 
-class FocalPieceContent extends StatelessWidget {
+class FocalPieceContent
+    extends ConsumerStatelessWidget<FocalPieceContentViewModel> {
   const FocalPieceContent({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget consume(_, vm) {
     return Center(
-      child: Consumer<FocalPieceContentViewModel>(
-        builder: (_, vm) {
-          return AnimatedCrossFade(
-            duration: vm.animationDuration,
-            firstCurve: FocalPieceViewModel.animationCurve,
-            secondCurve: FocalPieceViewModel.animationCurve,
-            sizeCurve: FocalPieceViewModel.animationCurve,
-            firstChild: vm.firstChild,
-            secondChild: vm.secondChild,
-            crossFadeState: vm.crossFadeState,
-            alignment: Alignment.center,
-          );
-        },
+      child: AnimatedCrossFade(
+        duration: vm.animationDuration,
+        firstCurve: FocalPieceViewModel.animationCurve,
+        secondCurve: FocalPieceViewModel.animationCurve,
+        sizeCurve: FocalPieceViewModel.animationCurve,
+        firstChild: vm.firstChild,
+        secondChild: vm.secondChild,
+        crossFadeState: vm.crossFadeState,
+        alignment: Alignment.center,
       ),
     );
   }

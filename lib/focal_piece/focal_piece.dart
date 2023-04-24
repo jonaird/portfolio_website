@@ -62,16 +62,14 @@ class FocalPieceViewModel extends EmitterContainer {
   get dependencies => {_stage, animating};
 }
 
-class FocalPiece extends StatelessWidget {
+class FocalPiece extends ConsumerStatelessWidget<FocalPieceViewModel> {
   const FocalPiece({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget consume(_, vm) {
     return AnimatedContainer(
-      alignment: context.select<FocalPieceViewModel, Alignment>(
-          (FocalPieceViewModel vm) => vm.alignment),
-      duration:
-          context.select((FocalPieceViewModel vm) => vm.animationDuration)!,
+      alignment: vm.alignment,
+      duration: vm.animationDuration,
       curve: FocalPieceViewModel.animationCurve,
       child: FittedBox(
         fit: BoxFit.none,
