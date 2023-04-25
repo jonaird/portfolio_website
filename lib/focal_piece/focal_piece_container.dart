@@ -1,16 +1,16 @@
 import 'package:website/main.dart';
 import 'focal_piece_content.dart';
 
-class FocalPieceBackgroundViewModel extends EmitterContainer {
+class FocalPieceContainerViewModel extends EmitterContainer {
   @override
   FocalPieceViewModel get parent => super.parent as FocalPieceViewModel;
-  late final _backgroundParameters = ValueEmitter.reactive(
+  late final _parameters = ValueEmitter.reactive(
     reactTo: [parent],
-    withValue: () => getBackgroundParameters,
+    withValue: () => _getParameters,
     keepHistory: true,
   );
 
-  BackgroundParameters get backgroundParameters => _backgroundParameters.value;
+  ContainerParameters get parameters => _parameters.value;
 
   void finishedAnimating() => parent.finishedAnimating();
 
@@ -27,10 +27,10 @@ class FocalPieceBackgroundViewModel extends EmitterContainer {
 
   Duration get animationDuration => parent.animationDuration;
 
-  BackgroundParameters get getBackgroundParameters {
+  ContainerParameters get _getParameters {
     switch (parent.stage) {
       case FocalPieceStages.firstBuild:
-        return BackgroundParameters(
+        return ContainerParameters(
           width: 2000,
           height: 2000,
           decoration: BoxDecoration(
@@ -39,7 +39,7 @@ class FocalPieceBackgroundViewModel extends EmitterContainer {
           ),
         );
       case FocalPieceStages.intro:
-        return BackgroundParameters(
+        return ContainerParameters(
           width: 300,
           height: 300,
           decoration: BoxDecoration(
@@ -48,7 +48,7 @@ class FocalPieceBackgroundViewModel extends EmitterContainer {
           ),
         );
       case FocalPieceStages.fab:
-        return BackgroundParameters(
+        return ContainerParameters(
           // width: 120 * FocalPieceViewModel.fabScale,
           width: 56 * FocalPieceViewModel.fabScale,
           height: 56 * FocalPieceViewModel.fabScale,
@@ -60,7 +60,7 @@ class FocalPieceBackgroundViewModel extends EmitterContainer {
           ),
         );
       case FocalPieceStages.contact:
-        return BackgroundParameters(
+        return ContainerParameters(
           width: 350,
           height: 400,
           decoration: BoxDecoration(
@@ -74,11 +74,11 @@ class FocalPieceBackgroundViewModel extends EmitterContainer {
   }
 
   @override
-  get dependencies => {_backgroundParameters};
+  get dependencies => {_parameters};
 }
 
-class BackgroundParameters {
-  const BackgroundParameters(
+class ContainerParameters {
+  const ContainerParameters(
       {required this.width, required this.height, required this.decoration});
   final double width;
   final double height;
@@ -86,7 +86,7 @@ class BackgroundParameters {
 
   @override
   bool operator ==(Object other) =>
-      other is BackgroundParameters &&
+      other is ContainerParameters &&
       other.width == width &&
       other.height == height &&
       other.decoration == decoration;
@@ -95,15 +95,15 @@ class BackgroundParameters {
   int get hashCode => Object.hash(width, height, decoration);
 }
 
-class FocalPieceBackground extends StatefulWidget {
-  const FocalPieceBackground({super.key});
+class FocalPieceContainer extends StatefulWidget {
+  const FocalPieceContainer({super.key});
 
   @override
-  State<FocalPieceBackground> createState() => _FocalPieceBackgroundState();
+  State<FocalPieceContainer> createState() => _FocalPieceContainerState();
 }
 
-class _FocalPieceBackgroundState
-    extends ConsumerState<FocalPieceBackground, FocalPieceBackgroundViewModel> {
+class _FocalPieceContainerState
+    extends ConsumerState<FocalPieceContainer, FocalPieceContainerViewModel> {
   var initialBuild = true;
   @override
   Widget consume(context, fp) {
@@ -112,12 +112,12 @@ class _FocalPieceBackgroundState
       padding: const EdgeInsets.all(16.0 * 3),
       child: AnimatedContainer(
         key: const Key('animatedCotnainer'),
-        width: fp.backgroundParameters.width,
-        height: fp.backgroundParameters.height,
+        width: fp.parameters.width,
+        height: fp.parameters.height,
         curve: FocalPieceViewModel.animationCurve,
         duration: fp.animationDuration,
         onEnd: fp.finishedAnimating,
-        decoration: fp.backgroundParameters.decoration,
+        decoration: fp.parameters.decoration,
         child: Reprovider(
           selector: (FocalPieceViewModel vm) => vm.contentViewModel,
           child: const FocalPieceContent(),

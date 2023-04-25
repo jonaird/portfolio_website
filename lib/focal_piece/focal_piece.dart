@@ -1,5 +1,5 @@
 import 'package:website/main.dart';
-import 'focal_piece_background.dart';
+import 'focal_piece_container.dart';
 import 'focal_piece_content.dart';
 
 enum FocalPieceStages { firstBuild, intro, fab, contact }
@@ -7,7 +7,7 @@ enum FocalPieceStages { firstBuild, intro, fab, contact }
 class FocalPieceViewModel extends EmitterContainer {
   final _stage = ValueEmitter(FocalPieceStages.firstBuild, keepHistory: true);
   final animating = ValueEmitter(true);
-  final backgroundViewModel = FocalPieceBackgroundViewModel();
+  final containerViewModel = FocalPieceContainerViewModel();
   final contentViewModel = FocalPieceContentViewModel();
   var _introSequenceCompleted = false;
 
@@ -56,7 +56,7 @@ class FocalPieceViewModel extends EmitterContainer {
   static const animationCurve = Curves.easeInOutExpo;
 
   @override
-  get children => {_stage, animating, backgroundViewModel, contentViewModel};
+  get children => {_stage, animating, containerViewModel, contentViewModel};
 
   @override
   get dependencies => {_stage, animating};
@@ -74,8 +74,8 @@ class FocalPiece extends ConsumerStatelessWidget<FocalPieceViewModel> {
       child: FittedBox(
         fit: BoxFit.none,
         child: Reprovider(
-          selector: (FocalPieceViewModel vm) => vm.backgroundViewModel,
-          child: const FocalPieceBackground(),
+          selector: (FocalPieceViewModel vm) => vm.containerViewModel,
+          child: const FocalPieceContainer(),
         ),
       ),
     );
