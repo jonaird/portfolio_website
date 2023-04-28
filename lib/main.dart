@@ -82,6 +82,12 @@ class Overlays extends StatelessWidget {
         OverlayEntry(
           builder: (_) => Reprovider(
             selector: (AppViewModel appViewModel) => appViewModel.focalPiece,
+            child: const FocalPieceBackground(),
+          ),
+        ),
+        OverlayEntry(
+          builder: (_) => Reprovider(
+            selector: (AppViewModel appViewModel) => appViewModel.focalPiece,
             child: const FocalPiece(),
           ),
         ),

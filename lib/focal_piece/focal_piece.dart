@@ -9,9 +9,20 @@ class FocalPieceViewModel extends EmitterContainer {
   final animating = ValueEmitter(true);
   final containerViewModel = FocalPieceContainerViewModel();
   final contentViewModel = FocalPieceContentViewModel();
+
   var _introSequenceCompleted = false;
 
   bool get introSequenceCompleted => _introSequenceCompleted;
+
+  Color get backgroundColor {
+    if (stage == FocalPieceStages.contact) {
+      return Colors.black54;
+    }
+
+    return Colors.transparent;
+  }
+
+  bool get backgroundShouldIgnorePointer => stage != FocalPieceStages.contact;
 
   void finishedAnimating() {
     if (stage == FocalPieceStages.intro) {
@@ -47,7 +58,7 @@ class FocalPieceViewModel extends EmitterContainer {
     if (stage == FocalPieceStages.firstBuild) {
       return const Duration(milliseconds: 0);
     }
-    if (introSequenceCompleted) return const Duration(milliseconds: 250);
+    if (introSequenceCompleted) return const Duration(milliseconds: 300);
     return const Duration(milliseconds: 500);
   }
 
@@ -56,7 +67,12 @@ class FocalPieceViewModel extends EmitterContainer {
   static const animationCurve = Curves.easeInOutExpo;
 
   @override
-  get children => {_stage, animating, containerViewModel, contentViewModel};
+  get children => {
+        _stage,
+        animating,
+        containerViewModel,
+        contentViewModel,
+      };
 
   @override
   get dependencies => {_stage, animating};
@@ -67,7 +83,7 @@ class FocalPiece extends ConsumerStatelessWidget<FocalPieceViewModel> {
 
   @override
   Widget consume(_, vm) {
-    return AnimatedContainer(
+    return AnimatedAlign(
       alignment: vm.alignment,
       duration: vm.animationDuration,
       curve: FocalPieceViewModel.animationCurve,
@@ -76,6 +92,25 @@ class FocalPiece extends ConsumerStatelessWidget<FocalPieceViewModel> {
         child: Reprovider(
           selector: (FocalPieceViewModel vm) => vm.containerViewModel,
           child: const FocalPieceContainer(),
+        ),
+      ),
+    );
+  }
+}
+
+class FocalPieceBackground
+    extends ConsumerStatelessWidget<FocalPieceViewModel> {
+  const FocalPieceBackground({super.key});
+
+  @override
+  Widget consume(_, vm) {
+    return IgnorePointer(
+      ignoring: vm.backgroundShouldIgnorePointer,
+      child: GestureDetector(
+        onTap: vm.contentViewModel.onCloseContactCard,
+        child: AnimatedContainer(
+          duration: vm.animationDuration,
+          color: vm.backgroundColor,
         ),
       ),
     );
