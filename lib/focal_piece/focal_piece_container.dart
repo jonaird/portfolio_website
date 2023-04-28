@@ -27,6 +27,8 @@ class FocalPieceContainerViewModel extends EmitterContainer {
 
   Duration get animationDuration => parent.animationDuration;
 
+  final _boxShadow = kElevationToShadow[2];
+
   ContainerParameters get _getParameters {
     switch (parent.stage) {
       case FocalPieceStages.firstBuild:
@@ -34,18 +36,18 @@ class FocalPieceContainerViewModel extends EmitterContainer {
           width: 2000,
           height: 2000,
           decoration: BoxDecoration(
-            color: const Color(0xFFFF5252),
-            borderRadius: BorderRadius.circular(1000),
-          ),
+              color: const Color(0xFFFF5252),
+              borderRadius: BorderRadius.circular(1000),
+              boxShadow: _boxShadow),
         );
       case FocalPieceStages.intro:
         return ContainerParameters(
           width: 300,
           height: 300,
           decoration: BoxDecoration(
-            color: const Color(0xFFFF5252),
-            borderRadius: BorderRadius.circular(150),
-          ),
+              color: const Color(0xFFFF5252),
+              borderRadius: BorderRadius.circular(150),
+              boxShadow: _boxShadow),
         );
       case FocalPieceStages.fab:
         return ContainerParameters(
@@ -53,22 +55,22 @@ class FocalPieceContainerViewModel extends EmitterContainer {
           width: 56 * FocalPieceViewModel.fabScale,
           height: 56 * FocalPieceViewModel.fabScale,
           decoration: BoxDecoration(
-            color: const Color(0xFFFF5252),
-            // color: !useInkwell ? const Color(0xFFFF5252) : null,
-            borderRadius:
-                BorderRadius.circular(28 * FocalPieceViewModel.fabScale),
-          ),
+              color: const Color(0xFFFF5252),
+              // color: !useInkwell ? const Color(0xFFFF5252) : null,
+              borderRadius:
+                  BorderRadius.circular(28 * FocalPieceViewModel.fabScale),
+              boxShadow: _boxShadow),
         );
       case FocalPieceStages.contact:
         return ContainerParameters(
           width: 350,
           height: 400,
           decoration: BoxDecoration(
-            // color: const Color(0xFFFF5252),
-            color: const Color(0xFFFF5252),
-            borderRadius:
-                BorderRadius.circular(6 * FocalPieceViewModel.fabScale),
-          ),
+              // color: const Color(0xFFFF5252),
+              color: const Color(0xFFFF5252),
+              borderRadius:
+                  BorderRadius.circular(6 * FocalPieceViewModel.fabScale),
+              boxShadow: _boxShadow),
         );
     }
   }
