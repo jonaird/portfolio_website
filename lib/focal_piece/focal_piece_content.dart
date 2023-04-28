@@ -81,20 +81,25 @@ class _Logo extends StatelessWidget {
   }
 }
 
+const _scale = 300;
+
 class _FabContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
       color: Theme.of(context).primaryColor,
       shape: const CircleBorder(),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0 * FocalPieceViewModel.fabScale),
-        child: FittedBox(
-          fit: BoxFit.contain,
-          child: IconButton(
-            iconSize: 300,
-            onPressed: context.read<FocalPieceContentViewModel>()!.onFABPressed,
-            icon: const Icon(
+      child: FittedBox(
+        fit: BoxFit.contain,
+        child: InkWell(
+          onTap: context.appViewModel.focalPiece.contentViewModel.onFABPressed,
+          borderRadius:
+              BorderRadius.circular(56 * FocalPieceViewModel.fabScale * _scale),
+          child: const Padding(
+            padding:
+                EdgeInsets.all(16.0 * FocalPieceViewModel.fabScale * _scale),
+            child: Icon(
+              size: 24 * FocalPieceViewModel.fabScale * _scale,
               Icons.email_sharp,
               color: Colors.white,
             ),
