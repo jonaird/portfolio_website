@@ -36,6 +36,7 @@ class ProjectDestination extends Destination {
   ProjectDestination({
     required super.path,
     required super.title,
+    required this.subtitle,
     required this.content,
     required this.key,
   }) : super(
@@ -44,6 +45,7 @@ class ProjectDestination extends Destination {
         );
   final GlobalKey key;
   final Widget content;
+  final String subtitle;
 
   static Offset Function(Size) originGetterFromKey(GlobalKey key) {
     return (size) {

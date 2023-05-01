@@ -13,7 +13,7 @@ class HomePage extends StatelessWidget {
         children: const [
           Bio(),
           Gap(48),
-          ProjectCards(),
+          Projects(),
           Gap(48),
         ],
       ),
@@ -59,8 +59,8 @@ class Bio extends StatelessWidget {
   }
 }
 
-class ProjectCards extends StatelessWidget {
-  const ProjectCards({super.key});
+class Projects extends StatelessWidget {
+  const Projects({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -73,12 +73,12 @@ class ProjectCards extends StatelessWidget {
         const Gap(48),
         Row(
           mainAxisSize: MainAxisSize.min,
-          children: const [
-            ProjectCard(project: Project.bsvNews),
-            Gap(24),
-            ProjectCard(project: Project.changeEmitter),
-            Gap(24),
-            ProjectCard(project: Project.verso),
+          children: [
+            Project(Destinations.bsvNews),
+            const Gap(24),
+            Project(Destinations.changeEmitter),
+            const Gap(24),
+            Project(Destinations.verso),
           ],
         )
       ],
@@ -86,47 +86,62 @@ class ProjectCards extends StatelessWidget {
   }
 }
 
+class Project extends ConsumerStatelessWidget<AppViewModel> {
+  const Project(this.project, {super.key});
+  final ProjectDestination project;
+
+  @override
+  Widget consume(BuildContext context, vm) {
+    return AnimatedOpacity(
+      opacity: vm.destination.value == project ? 0 : 1,
+      duration: const Duration(milliseconds: 400),
+      child: ProjectCard(project),
+    );
+  }
+}
+
 class ProjectCard extends StatelessWidget {
-  const ProjectCard({required this.project, super.key});
-  final Project project;
+  const ProjectCard(this.project, {super.key});
+  final ProjectDestination project;
+
+  final _borderRadius = 11.0;
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: const Color(0xFF455A64),
       elevation: 5,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-      child: SizedBox(
-        width: 330,
-        height: 200,
-        child: Padding(
-          padding: const EdgeInsets.all(28.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                project.title,
-                style: const TextStyle(color: _textColor, fontSize: 36),
+      color: const Color(0xFF455A64),
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(_borderRadius)),
+      child: Material(
+        color: const Color(0xFF455A64),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(_borderRadius)),
+        child: InkWell(
+          onTap: () => context.appViewModel.selectProject(project),
+          borderRadius: BorderRadius.circular(_borderRadius),
+          child: SizedBox(
+            width: 330,
+            height: 200,
+            child: Padding(
+              padding: const EdgeInsets.all(28.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    project.title,
+                    style: const TextStyle(color: _textColor, fontSize: 36),
+                  ),
+                  Text(
+                    project.subtitle,
+                    style: const TextStyle(color: _textColor, fontSize: 24),
+                  ),
+                ],
               ),
-              Text(
-                project.subtitle,
-                style: const TextStyle(color: _textColor, fontSize: 24),
-              ),
-            ],
+            ),
           ),
         ),
       ),
     );
   }
-}
-
-enum Project {
-  bsvNews("BSV News", "Fullstack Development"),
-  changeEmitter("change_emitter", "Flutter Expertise"),
-  verso("Verso", "Product Design");
-
-  final String title;
-  final String subtitle;
-
-  const Project(this.title, this.subtitle);
 }

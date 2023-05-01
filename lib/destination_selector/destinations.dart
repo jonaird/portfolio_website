@@ -38,24 +38,30 @@ class Destinations {
 
   static final bsvNews = ProjectDestination(
     title: 'BSV News',
-    path: '/projects/bsvNews',
+    subtitle: 'Fullstack Development',
+    path: '/bsvNews',
     key: _bsvNewsKey,
     content: Container(color: Colors.green),
   );
+
+  static final changeEmitter = ProjectDestination(
+    path: '/changeEmitter',
+    title: 'change_emitter',
+    subtitle: 'Flutter Expertise',
+    content: const ForceDirectedGraphDemo(),
+    key: _changeEmitterKey,
+  );
+
   static final verso = ProjectDestination(
     title: 'Verso',
-    path: '/projects/bsvNews',
+    subtitle: 'Product Design',
+    path: '/verso',
     key: _versoKey,
     content: Container(color: Colors.purple),
   );
-  static final forceDirectedGraph = ProjectDestination(
-      path: '/projects/forceDirectedGraph',
-      title: 'force_directed_graph',
-      content: const ForceDirectedGraphDemo(),
-      key: _graphKey);
 
   static final _bsvNewsKey = GlobalKey();
-  static final _graphKey = GlobalKey();
+  static final _changeEmitterKey = GlobalKey();
   static final _versoKey = GlobalKey();
 
   static final pages = [
@@ -73,6 +79,6 @@ class Destinations {
     philosophy,
     bsvNews,
     verso,
-    forceDirectedGraph
+    changeEmitter
   ];
 }

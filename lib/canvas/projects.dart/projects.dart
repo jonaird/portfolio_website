@@ -13,7 +13,7 @@ class ProjectsPageContent extends StatelessWidget {
         const Gap(20),
         Project(Destinations.verso),
         const Gap(20),
-        Project(Destinations.forceDirectedGraph)
+        Project(Destinations.changeEmitter)
       ],
     );
   }
