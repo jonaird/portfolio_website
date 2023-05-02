@@ -1,22 +1,21 @@
 import 'package:flutter/foundation.dart';
+import './app_router/app_router.dart';
+import 'package:flutter/material.dart';
+import 'destination_selector/destination_selector.dart';
+import 'package:change_emitter/change_emitter.dart';
+import 'focal_piece/focal_piece.dart';
+import 'utils.dart';
 
-import 'overlays/overlays.dart';
 export 'package:change_emitter/change_emitter.dart';
 export 'package:flutter/material.dart';
 export 'package:google_fonts/google_fonts.dart';
 export 'package:gap/gap.dart';
 
-export 'canvas/canvas.dart';
 export 'home.dart';
-export 'overlays/page_hover_overlay.dart';
 export 'destination_selector/destination_selector.dart';
 export 'utils.dart';
-export './overlays/overlays.dart';
 export './app_router/app_router.dart';
 export './focal_piece/focal_piece.dart';
-
-// const destMaxHeight = 1100;
-double scaleMultiple = 1;
 
 final _routerDelegate = RouterDelegateState();
 
@@ -32,7 +31,6 @@ void main() {
 class AppViewModel extends RootEmitter {
   late final Destination initialDestination;
   final destination = ValueEmitter<Destination>(Destinations.home);
-  // final animationInProgress = ValueEmitter(false);
   final focalPiece = FocalPieceViewModel();
   late final showBackButton = ValueEmitter.reactive(
       reactTo: [destination],
@@ -55,7 +53,6 @@ class AppViewModel extends RootEmitter {
   @override
   get children => {
         destination,
-        // animationInProgress,
         focalPiece,
         showBackButton,
       };
@@ -129,17 +126,6 @@ class Overlays extends StatelessWidget {
     );
   }
 }
-
-// class ScaleMultipleSetter extends StatelessWidget {
-//   const ScaleMultipleSetter({super.key, required this.child});
-//   final Widget child;
-//   @override
-//   Widget build(BuildContext context) {
-//     final height = MediaQuery.of(context).size.height;
-//     scaleMultiple = (2 * destMaxHeight) / height;
-//     return child;
-//   }
-// }
 
 late Uint8List logoBytes;
 const logoBytesList = [

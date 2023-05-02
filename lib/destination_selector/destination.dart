@@ -40,8 +40,7 @@ class ProjectDestination extends Destination {
     required this.content,
     required this.key,
   }) : super(
-          getScale: (size) =>
-              scaleMultiple * size.height / key.projectCardSize.height,
+          getScale: (size) => size.height / key.projectCardSize.height,
           origin: ProjectDestination.originGetterFromKey(key),
         );
   final GlobalKey key;
@@ -51,11 +50,9 @@ class ProjectDestination extends Destination {
   static Offset Function(Size) originGetterFromKey(GlobalKey key) {
     return (size) {
       final y = key.offset.dy +
-          key.offset.dy /
-              (size.height * scaleMultiple / key.projectCardSize.height - 1);
+          key.offset.dy / (size.height / key.projectCardSize.height - 1);
       final x = key.offset.dx +
-          key.offset.dx /
-              (size.height * scaleMultiple / key.projectCardSize.height - 1);
+          key.offset.dx / (size.height / key.projectCardSize.height - 1);
       return Offset(x, y);
     };
   }
@@ -84,73 +81,6 @@ extension OS on GlobalKey {
 
   bool get offsetIsAvailable => currentContext?.findRenderObject() is RenderBox;
 }
-
-// class PageDestination extends Destination {
-//   PageDestination({
-//     required super.title,
-//     required super.path,
-//     required this.color,
-//     required this.content,
-//     required this.horizontalPosition,
-//     required this.verticalPosition,
-//   }) : super(
-//           getScale: (_) => scaleMultiple,
-//           origin: PageDestination.originGetterFromPosition(
-//             horizontalPosition,
-//             verticalPosition,
-//           ),
-//         );
-//   final HorizontalPosition horizontalPosition;
-//   final VerticalPosition verticalPosition;
-//   final Widget content;
-//   final Color color;
-//   Widget get widget => AppPage(destination: this);
-
-//   // static Destination fromPosition(
-//   //   HorizontalPosition horizontalPosition,
-//   //   VerticalPosition verticalPosition,
-//   // ) {
-//   //   var proj = [
-//   //     Destinations.projects,
-//   //     Destinations.experience,
-//   //     Destinations.aboutMe,
-//   //     Destinations.philosophy,
-//   //   ]..retainWhere((element) =>
-//   //       element.horizontalPosition == horizontalPosition &&
-//   //       element.verticalPosition == verticalPosition);
-//   //   return proj.first;
-//   // }
-
-//   static Offset Function(Size) originGetterFromPosition(
-//     HorizontalPosition horizontalPosition,
-//     VerticalPosition verticalPosition,
-//   ) {
-//     //formula for this comes from the fact that we need an origin
-//     //that results in a point at 1/4W should end at 1/2W when zoomed by the
-//     //scale factor.
-//     // ----O---A-------X-----------------
-//     //where O is origin, A is 1/4W and X is at 1/2W
-//     //length of OA*scalefactor should equal OX
-//     //
-//     //An analogous calculation is used for the y coordinates
-//     double getA(Size size) {
-//       return size.width / (4 * (scaleMultiple - 1));
-//     }
-
-//     double getB(Size size) {
-//       return size.height / (2 * scaleMultiple - 2);
-//     }
-
-//     final getX = horizontalPosition == HorizontalPosition.left
-//         ? (size) => size.width / 4 - getA(size)
-//         : (size) => size.width * 3 / 4 + getA(size);
-
-//     final getY = verticalPosition == VerticalPosition.top
-//         ? (size) => 0.0
-//         : (size) => size.height / 2 + getB(size);
-//     return (size) => Offset(getX(size), getY(size));
-//   }
-// }
 
 enum HorizontalPosition {
   left(),

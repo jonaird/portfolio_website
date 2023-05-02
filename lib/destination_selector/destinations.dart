@@ -6,35 +6,6 @@ class Destinations {
       getScale: (_) => 1,
       title: "Home",
       path: '/');
-  // static final aboutMe = PageDestination(
-  //   color: const Color(0xFFFFF5AE),
-  //   content: const AboutMePage(),
-  //   horizontalPosition: HorizontalPosition.left,
-  //   verticalPosition: VerticalPosition.top,
-  //   title: 'About Me',
-  //   path: '/aboutMe',
-  // );
-  // static final experience = PageDestination(
-  //     color: const Color(0xFFC0E3FF),
-  //     content: const ExperiencePageContent(),
-  //     horizontalPosition: HorizontalPosition.right,
-  //     verticalPosition: VerticalPosition.top,
-  //     title: 'Experience',
-  //     path: '/experience');
-  // static final projects = PageDestination(
-  //     color: const Color(0xFFF2D9FF),
-  //     content: const ProjectsPageContent(),
-  //     horizontalPosition: HorizontalPosition.left,
-  //     verticalPosition: VerticalPosition.bottom,
-  //     title: 'Projects',
-  //     path: '/projects');
-  // static final philosophy = PageDestination(
-  //     color: const Color.fromARGB(255, 222, 255, 192),
-  //     content: const PhilosophyPageContent(),
-  //     horizontalPosition: HorizontalPosition.right,
-  //     verticalPosition: VerticalPosition.bottom,
-  //     title: 'Philosophy',
-  //     path: '/philosophy');
 
   static final bsvNews = ProjectDestination(
     title: 'BSV News',
@@ -64,21 +35,5 @@ class Destinations {
   static final _changeEmitterKey = GlobalKey();
   static final _versoKey = GlobalKey();
 
-  // static final pages = [
-  //   aboutMe,
-  //   experience,
-  //   projects,
-  //   philosophy,
-  // ];
-
-  static final all = [
-    home,
-    // aboutMe,
-    // experience,
-    // projects,
-    // philosophy,
-    bsvNews,
-    verso,
-    changeEmitter
-  ];
+  static final all = [home, bsvNews, verso, changeEmitter];
 }
