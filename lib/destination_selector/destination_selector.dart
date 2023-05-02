@@ -34,10 +34,10 @@ class _DestinationSelectorState extends State<DestinationSelector>
       _originAnimation = _controller.drive(
           Tween<Offset>(begin: const Offset(0, 0), end: const Offset(0, 0)));
       _initialBuild = false;
-      _controller.addStatusListener((status) {
-        context.appViewModel.animationInProgress.value =
-            status == AnimationStatus.forward;
-      });
+      // _controller.addStatusListener((status) {
+      //   context.appViewModel.animationInProgress.value =
+      //       status == AnimationStatus.forward;
+      // });
     } else {
       goTo(destination, context.windowSize);
     }
@@ -89,25 +89,26 @@ class _DestinationSelectorState extends State<DestinationSelector>
     final size = MediaQuery.of(context).size;
     return Stack(
       children: [
-        Transform.translate(
-          offset: Offset(0, -_scrollOffset),
-          child: Transform.scale(
-            scale: _scaleAnim.status == AnimationStatus.forward
-                ? _scaleAnim.value
-                : _destination.getScale(size),
-            // scale: 1,
-            origin: _originAnimation.value,
-            alignment: Alignment.topLeft,
-            child: const FullCanvas(),
-          ),
+        // Transform.translate(
+        //   offset: Offset(0, -_scrollOffset),
+        //   child:
+        Transform.scale(
+          scale: _scaleAnim.status == AnimationStatus.forward
+              ? _scaleAnim.value
+              : _destination.getScale(size),
+          // scale: 1,
+          origin: _originAnimation.value,
+          alignment: Alignment.topLeft,
+          child: const HomePage(),
         ),
-        if (_destination.useScrollOverlay)
-          ScrollOverlay(
-            onScroll: (offset) => setState(() {
-              if (_destination.useScrollOverlay) _scrollOffset = offset;
-            }),
-            destination: _destination as PageDestination,
-          ),
+        // ),
+        // if (_destination.useScrollOverlay)
+        //   ScrollOverlay(
+        //     onScroll: (offset) => setState(() {
+        //       if (_destination.useScrollOverlay) _scrollOffset = offset;
+        //     }),
+        //     destination: _destination as PageDestination,
+        //   ),
       ],
     );
   }
