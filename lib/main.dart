@@ -77,7 +77,7 @@ class App extends ConsumerStatelessWidget<AppViewModel> {
           leading: const _Leading(),
         ),
         backgroundColor: Colors.blueGrey.shade900,
-        body: const HomePage(),
+        body: const DestinationSelector(),
       ),
     );
   }

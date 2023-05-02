@@ -109,6 +109,7 @@ class ProjectCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
+      key: project.key,
       elevation: 5,
       color: const Color(0xFF455A64),
       shape: RoundedRectangleBorder(

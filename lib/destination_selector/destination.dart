@@ -40,7 +40,8 @@ class ProjectDestination extends Destination {
     required this.content,
     required this.key,
   }) : super(
-          getScale: (size) => scaleMultiple * size.height / 100,
+          getScale: (size) =>
+              scaleMultiple * size.height / key.projectCardSize.height,
           origin: ProjectDestination.originGetterFromKey(key),
         );
   final GlobalKey key;
@@ -50,9 +51,11 @@ class ProjectDestination extends Destination {
   static Offset Function(Size) originGetterFromKey(GlobalKey key) {
     return (size) {
       final y = key.offset.dy +
-          key.offset.dy / (size.height * scaleMultiple / 100 - 1);
+          key.offset.dy /
+              (size.height * scaleMultiple / key.projectCardSize.height - 1);
       final x = key.offset.dx +
-          key.offset.dx / (size.height * scaleMultiple / 100 - 1);
+          key.offset.dx /
+              (size.height * scaleMultiple / key.projectCardSize.height - 1);
       return Offset(x, y);
     };
   }
@@ -73,6 +76,10 @@ extension OS on GlobalKey {
     );
     return (currentContext?.findRenderObject() as RenderBox)
         .localToGlobal(Offset.zero, ancestor: canvasRenderObject);
+  }
+
+  Size get projectCardSize {
+    return (currentContext!.findRenderObject()! as RenderBox).size;
   }
 
   bool get offsetIsAvailable => currentContext?.findRenderObject() is RenderBox;

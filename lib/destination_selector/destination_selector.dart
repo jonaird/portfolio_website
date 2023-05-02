@@ -16,7 +16,7 @@ class _DestinationSelectorState extends State<DestinationSelector>
   late Animation<Offset> _originAnimation;
   late Destination _destination;
   var _initialBuild = true;
-  var _scrollOffset = 0.0;
+  // var _scrollOffset = 0.0;
 
   @override
   void didChangeDependencies() {
@@ -75,7 +75,7 @@ class _DestinationSelectorState extends State<DestinationSelector>
     _controller.forward();
 
     _destination = newDestination;
-    _scrollOffset = 0;
+    // _scrollOffset = 0;
   }
 
   @override
