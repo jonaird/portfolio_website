@@ -1,4 +1,4 @@
-import '../main.dart';
+import '../../main.dart';
 export 'destination.dart';
 export 'destinations.dart';
 

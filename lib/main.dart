@@ -1,21 +1,18 @@
 import 'package:flutter/foundation.dart';
-import './app_router/app_router.dart';
+import 'app/app_router.dart';
 import 'package:flutter/material.dart';
-import 'destination_selector/destination_selector.dart';
-import 'package:change_emitter/change_emitter.dart';
-import 'focal_piece/focal_piece.dart';
-import 'utils.dart';
 
 export 'package:change_emitter/change_emitter.dart';
 export 'package:flutter/material.dart';
 export 'package:google_fonts/google_fonts.dart';
 export 'package:gap/gap.dart';
 
-export 'home.dart';
-export 'destination_selector/destination_selector.dart';
+export './app/app.dart';
+export 'app/home.dart';
+export 'app/destination_selector/destination_selector.dart';
 export 'utils.dart';
-export './app_router/app_router.dart';
-export './focal_piece/focal_piece.dart';
+export 'app/app_router.dart';
+export 'app/focal_piece/focal_piece.dart';
 
 final _routerDelegate = RouterDelegateState();
 
@@ -26,105 +23,6 @@ void main() {
     routerDelegate: _routerDelegate,
     theme: ThemeData(primaryColor: const Color(0xFFFF5252)),
   ));
-}
-
-class AppViewModel extends RootEmitter {
-  late final Destination initialDestination;
-  final destination = ValueEmitter<Destination>(Destinations.home);
-  final focalPiece = FocalPieceViewModel();
-  late final showBackButton = ValueEmitter.reactive(
-      reactTo: [destination],
-      withValue: () => destination.value != Destinations.home);
-
-  void handleBackButton() {
-    destination.value = Destinations.home;
-  }
-
-  void selectProject(ProjectDestination project) {
-    destination.value = project;
-  }
-
-  String get title {
-    final dest = destination.value;
-    if (dest is ProjectDestination) return dest.title;
-    return 'Portfolio';
-  }
-
-  @override
-  get children => {
-        destination,
-        focalPiece,
-        showBackButton,
-      };
-  @override
-  get dependencies => {destination};
-}
-
-class App extends ConsumerStatelessWidget<AppViewModel> {
-  const App({super.key});
-
-  @override
-  Widget consume(BuildContext context, vm) {
-    return Overlays(
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.blueGrey.shade700,
-          title: const _Title(),
-          automaticallyImplyLeading: false,
-          leading: const _Leading(),
-        ),
-        backgroundColor: Colors.blueGrey.shade900,
-        body: const DestinationSelector(),
-      ),
-    );
-  }
-}
-
-class _Title extends ConsumerStatelessWidget<AppViewModel> {
-  const _Title();
-
-  @override
-  Widget consume(BuildContext context, vm) {
-    return Text(vm.title);
-  }
-}
-
-class _Leading extends ConsumerStatelessWidget<AppViewModel> {
-  const _Leading();
-
-  @override
-  Widget consume(BuildContext context, vm) {
-    return vm.showBackButton.value
-        ? BackButton(
-            onPressed: context.appViewModel.handleBackButton,
-          )
-        : const Placeholder();
-  }
-}
-
-class Overlays extends StatelessWidget {
-  const Overlays({required this.child, super.key});
-  final Widget child;
-  @override
-  Widget build(BuildContext context) {
-    return Overlay(
-      initialEntries: [
-        OverlayEntry(builder: (_) => child),
-        OverlayEntry(
-          builder: (_) => Reprovider(
-            selector: (AppViewModel appViewModel) => appViewModel.focalPiece,
-            child: const FocalPieceBackground(),
-          ),
-        ),
-        OverlayEntry(
-          builder: (_) => Reprovider(
-            selector: (AppViewModel appViewModel) => appViewModel.focalPiece,
-            child: const FocalPiece(),
-          ),
-        ),
-      ],
-    );
-  }
 }
 
 late Uint8List logoBytes;
