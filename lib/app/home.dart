@@ -2,14 +2,17 @@ import 'package:website/main.dart';
 
 const _textColor = Color(0xFFCFD8DC);
 
-class HomePage extends StatelessWidget {
+class HomePage extends ConsumerStatelessWidget<AppViewModel> {
   const HomePage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget consume(BuildContext context, vm) {
     return Container(
       alignment: Alignment.topCenter,
       child: ListView(
+        physics: vm.destination.value == Destinations.home
+            ? null
+            : const NeverScrollableScrollPhysics(),
         children: const [
           Bio(),
           Gap(48),
