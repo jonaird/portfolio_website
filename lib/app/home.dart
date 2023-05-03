@@ -71,13 +71,12 @@ class Projects extends StatelessWidget {
           style: TextStyle(fontSize: 60, color: _textColor),
         ),
         const Gap(48),
-        Row(
-          mainAxisSize: MainAxisSize.min,
+        Wrap(
+          spacing: 24,
+          runSpacing: 24,
           children: [
             Project(Destinations.bsvNews),
-            const Gap(24),
             Project(Destinations.changeEmitter),
-            const Gap(24),
             Project(Destinations.verso),
           ],
         )

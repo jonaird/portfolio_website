@@ -18,11 +18,13 @@ final _routerDelegate = RouterDelegateState();
 
 void main() {
   logoBytes = Uint8List.fromList(logoBytesList);
-  runApp(MaterialApp.router(
-    routeInformationParser: RouteInfoParser(),
-    routerDelegate: _routerDelegate,
-    theme: ThemeData(primaryColor: const Color(0xFFFF5252)),
-  ));
+  runApp(
+    MaterialApp.router(
+      routeInformationParser: RouteInfoParser(),
+      routerDelegate: _routerDelegate,
+      theme: ThemeData(primaryColor: const Color(0xFFFF5252)),
+    ),
+  );
 }
 
 late Uint8List logoBytes;
