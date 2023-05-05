@@ -60,11 +60,11 @@ class _DestinationSelectorState extends State<DestinationSelector>
     ));
     _originAnimation = originCurve.drive(Tween<Offset>(
       begin: _destination == Destinations.home
-          ? newDestination.origin(size)
-          : _destination.origin(size),
+          ? newDestination.origin
+          : _destination.origin,
       end: newDestination == Destinations.home
-          ? _destination.origin(size)
-          : newDestination.origin(size),
+          ? _destination.origin
+          : newDestination.origin,
     ));
     _controller.value = 0;
     _controller.forward();

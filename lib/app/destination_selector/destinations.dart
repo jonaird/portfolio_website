@@ -1,11 +1,7 @@
 import 'package:website/main.dart';
 
 class Destinations {
-  static final home = Destination(
-      origin: (Size size) => const Offset(0, 0),
-      getScale: (_) => 1,
-      title: "Home",
-      path: '/');
+  static final home = Destination(getScale: (_) => 1, title: "Home", path: '/');
 
   static final bsvNews = ProjectDestination(
     title: 'BSV News',

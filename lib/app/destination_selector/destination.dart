@@ -2,7 +2,6 @@ import 'package:website/main.dart';
 
 class Destination {
   Destination({
-    required this.origin,
     required this.getScale,
     required this.title,
     required this.path,
@@ -15,16 +14,11 @@ class Destination {
     return destList.first;
   }
 
-  final Offset Function(Size size) origin;
   final double Function(Size size) getScale;
   final String title;
   final String path;
 
-  Offset translation(Size size) {
-    return const Offset(0, 0);
-  }
-
-  // bool get useScrollOverlay => this is PageDestination;
+  Offset get origin => const Offset(0, 0);
 
   static Destination of(BuildContext context) {
     return context
@@ -41,24 +35,22 @@ class ProjectDestination extends Destination {
     required this.key,
   }) : super(
           getScale: (size) => size.height / key.projectCardSize.height,
-          origin: ProjectDestination.originGetterFromKey(key),
         );
   final GlobalKey key;
   final Widget content;
   final String subtitle;
 
-  static Offset Function(Size) originGetterFromKey(GlobalKey key) {
-    return (size) {
-      final y = key.offset.dy +
-          key.offset.dy / (size.height / key.projectCardSize.height - 1);
-      final scaledWidth =
-          (size.width * key.projectCardSize.height / size.height);
-      final scaledOffsetX =
-          key.offset.dx + (key.projectCardSize.width - scaledWidth) / 2;
-      final x = scaledOffsetX +
-          scaledOffsetX / (size.height / key.projectCardSize.height - 1);
-      return Offset(x, y);
-    };
+  @override
+  Offset get origin {
+    final size = MediaQuery.of(key.currentContext!).size;
+    final y = key.offset.dy +
+        key.offset.dy / (size.height / key.projectCardSize.height - 1);
+    final scaledWidth = (size.width * key.projectCardSize.height / size.height);
+    final scaledOffsetX =
+        key.offset.dx + (key.projectCardSize.width - scaledWidth) / 2;
+    final x = scaledOffsetX +
+        scaledOffsetX / (size.height / key.projectCardSize.height - 1);
+    return Offset(x, y);
   }
 }
 
