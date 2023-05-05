@@ -43,7 +43,7 @@ class Bio extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 const Text(
-                  'Hi! My name is\nJonathan Aird ',
+                  'Hi! My name is\nJonathan Aird \nand I build apps',
                   style: TextStyle(fontSize: 60, color: _textColor),
                 ),
                 const Gap(24),

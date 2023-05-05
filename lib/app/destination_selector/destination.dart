@@ -7,7 +7,6 @@ class Destinations {
     title: 'BSV News',
     subtitle: 'Fullstack Development',
     path: '/bsvNews',
-    key: _bsvNewsKey,
     content: Container(color: Colors.green),
   );
 
@@ -16,20 +15,14 @@ class Destinations {
     title: 'change_emitter',
     subtitle: 'Flutter Expertise',
     content: const Placeholder(),
-    key: _changeEmitterKey,
   );
 
   static final verso = ProjectDestination(
     title: 'Verso',
     subtitle: 'Product Design',
     path: '/verso',
-    key: _versoKey,
     content: Container(color: Colors.purple),
   );
-
-  static final _bsvNewsKey = GlobalKey();
-  static final _changeEmitterKey = GlobalKey();
-  static final _versoKey = GlobalKey();
 
   static final all = [home, bsvNews, verso, changeEmitter];
 }
@@ -66,9 +59,8 @@ class ProjectDestination extends Destination {
     required super.title,
     required this.subtitle,
     required this.content,
-    required this.key,
   }) : super();
-  final GlobalKey key;
+  final GlobalKey key = GlobalKey();
   final Widget content;
   final String subtitle;
 
