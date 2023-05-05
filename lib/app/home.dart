@@ -9,16 +9,24 @@ class HomePage extends ConsumerStatelessWidget<AppViewModel> {
   Widget consume(BuildContext context, vm) {
     return Container(
       alignment: Alignment.topCenter,
-      child: ListView(
-        physics: vm.destination.value == Destinations.home
-            ? null
-            : const NeverScrollableScrollPhysics(),
-        children: const [
-          Bio(),
-          Gap(48),
-          Projects(),
-          Gap(48),
-        ],
+      child: FittedBox(
+        fit: BoxFit.none,
+        alignment: Alignment.topCenter,
+        child: SizedBox(
+          width: context.windowSize.width,
+          height: context.windowSize.height + 500,
+          child: ListView(
+            physics: vm.destination.value == Destinations.home
+                ? null
+                : const NeverScrollableScrollPhysics(),
+            children: const [
+              Bio(),
+              Gap(48),
+              Projects(),
+              Gap(648),
+            ],
+          ),
+        ),
       ),
     );
   }
