@@ -1,8 +1,41 @@
 import 'package:website/main.dart';
 
+class Destinations {
+  static final home = Destination(title: "Home", path: '/');
+
+  static final bsvNews = ProjectDestination(
+    title: 'BSV News',
+    subtitle: 'Fullstack Development',
+    path: '/bsvNews',
+    key: _bsvNewsKey,
+    content: Container(color: Colors.green),
+  );
+
+  static final changeEmitter = ProjectDestination(
+    path: '/changeEmitter',
+    title: 'change_emitter',
+    subtitle: 'Flutter Expertise',
+    content: const Placeholder(),
+    key: _changeEmitterKey,
+  );
+
+  static final verso = ProjectDestination(
+    title: 'Verso',
+    subtitle: 'Product Design',
+    path: '/verso',
+    key: _versoKey,
+    content: Container(color: Colors.purple),
+  );
+
+  static final _bsvNewsKey = GlobalKey();
+  static final _changeEmitterKey = GlobalKey();
+  static final _versoKey = GlobalKey();
+
+  static final all = [home, bsvNews, verso, changeEmitter];
+}
+
 class Destination {
   Destination({
-    required this.getScale,
     required this.title,
     required this.path,
   });
@@ -14,11 +47,12 @@ class Destination {
     return destList.first;
   }
 
-  final double Function(Size size) getScale;
   final String title;
   final String path;
 
   Offset get origin => const Offset(0, 0);
+
+  double get scale => 1;
 
   static Destination of(BuildContext context) {
     return context
@@ -33,9 +67,7 @@ class ProjectDestination extends Destination {
     required this.subtitle,
     required this.content,
     required this.key,
-  }) : super(
-          getScale: (size) => size.height / key.projectCardSize.height,
-        );
+  }) : super();
   final GlobalKey key;
   final Widget content;
   final String subtitle;
@@ -51,6 +83,12 @@ class ProjectDestination extends Destination {
     final x = scaledOffsetX +
         scaledOffsetX / (size.height / key.projectCardSize.height - 1);
     return Offset(x, y);
+  }
+
+  @override
+  double get scale {
+    final size = MediaQuery.of(key.currentContext!).size;
+    return size.height / key.projectCardSize.height;
   }
 }
 

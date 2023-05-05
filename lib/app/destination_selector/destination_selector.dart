@@ -1,6 +1,5 @@
 import '../../main.dart';
 export 'destination.dart';
-export 'destinations.dart';
 
 class DestinationSelector extends StatefulWidget {
   const DestinationSelector({Key? key}) : super(key: key);
@@ -19,7 +18,6 @@ class _DestinationSelectorState extends State<DestinationSelector>
 
   @override
   void didChangeDependencies() {
-    final size = context.windowSize;
     final destination = Destination.of(context);
     if (_initialBuild) {
       _destination = destination;
@@ -27,8 +25,8 @@ class _DestinationSelectorState extends State<DestinationSelector>
           vsync: this, duration: const Duration(milliseconds: 400));
       _controller.addListener((() => setState(() {})));
       _scaleAnim = _controller.drive<double>(Tween<double>(
-        begin: _destination.getScale(size),
-        end: _destination.getScale(size),
+        begin: _destination.scale,
+        end: _destination.scale,
       ));
       _originAnimation = _controller.drive(
           Tween<Offset>(begin: const Offset(0, 0), end: const Offset(0, 0)));
@@ -55,8 +53,8 @@ class _DestinationSelectorState extends State<DestinationSelector>
             : Curves.fastOutSlowIn);
 
     _scaleAnim = curved.drive<double>(Tween<double>(
-      begin: _destination.getScale(size),
-      end: newDestination.getScale(size),
+      begin: _destination.scale,
+      end: newDestination.scale,
     ));
     _originAnimation = originCurve.drive(Tween<Offset>(
       begin: _destination == Destinations.home
@@ -80,13 +78,12 @@ class _DestinationSelectorState extends State<DestinationSelector>
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return Stack(
       children: [
         Transform.scale(
           scale: _scaleAnim.status == AnimationStatus.forward
               ? _scaleAnim.value
-              : _destination.getScale(size),
+              : _destination.scale,
           origin: _originAnimation.value,
           alignment: Alignment.topLeft,
           child: const HomePage(),
