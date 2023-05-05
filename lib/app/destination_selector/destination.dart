@@ -51,8 +51,12 @@ class ProjectDestination extends Destination {
     return (size) {
       final y = key.offset.dy +
           key.offset.dy / (size.height / key.projectCardSize.height - 1);
-      final x = key.offset.dx +
-          key.offset.dx / (size.height / key.projectCardSize.height - 1);
+      final scaledWidth =
+          (size.width * key.projectCardSize.height / size.height);
+      final scaledOffsetX =
+          key.offset.dx + (key.projectCardSize.width - scaledWidth) / 2;
+      final x = scaledOffsetX +
+          scaledOffsetX / (size.height / key.projectCardSize.height - 1);
       return Offset(x, y);
     };
   }
