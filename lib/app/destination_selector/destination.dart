@@ -115,23 +115,3 @@ extension OS on GlobalKey {
 
   bool get offsetIsAvailable => currentContext?.findRenderObject() is RenderBox;
 }
-
-enum HorizontalPosition {
-  left(),
-  right();
-
-  HorizontalPosition get opposite {
-    if (this == HorizontalPosition.left) return HorizontalPosition.right;
-    return HorizontalPosition.left;
-  }
-}
-
-enum VerticalPosition {
-  top,
-  bottom;
-
-  VerticalPosition get opposite {
-    if (this == VerticalPosition.top) return VerticalPosition.bottom;
-    return VerticalPosition.top;
-  }
-}
