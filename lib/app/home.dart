@@ -11,15 +11,16 @@ class HomePage extends ConsumerStatelessWidget<AppViewModel> {
       alignment: Alignment.topCenter,
       child: FittedBox(
         fit: BoxFit.none,
-        alignment: Alignment.topCenter,
+        alignment: Alignment.center,
         child: SizedBox(
           width: context.windowSize.width,
-          height: context.windowSize.height + 500,
+          height: context.windowSize.height + 1000,
           child: ListView(
             physics: vm.destination.value == Destinations.home
                 ? null
                 : const NeverScrollableScrollPhysics(),
             children: const [
+              Gap(500),
               Bio(),
               Gap(48),
               Projects(),
