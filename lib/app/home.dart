@@ -7,8 +7,8 @@ class HomePage extends ConsumerStatelessWidget<AppViewModel> {
 
   @override
   Widget consume(BuildContext context, vm) {
-    return Container(
-      alignment: Alignment.topCenter,
+    return SizedBox(
+      width: MediaQuery.of(context).size.width,
       child: FittedBox(
         fit: BoxFit.none,
         alignment: Alignment.center,
