@@ -63,7 +63,7 @@ class FocalPieceContainerViewModel extends EmitterContainer {
         );
       case FocalPieceStages.contact:
         return ContainerParameters(
-          width: 350,
+          width: 400,
           height: 400,
           decoration: BoxDecoration(
               // color: const Color(0xFFFF5252),
@@ -119,9 +119,13 @@ class _FocalPieceContainerState
         duration: fp.animationDuration,
         onEnd: fp.finishedAnimating,
         decoration: fp.parameters.decoration,
-        child: Reprovider(
-          selector: (FocalPieceViewModel vm) => vm.contentViewModel,
-          child: const FocalPieceContent(),
+        clipBehavior: Clip.antiAlias,
+        child: Material(
+          color: Theme.of(context).primaryColor,
+          child: Reprovider(
+            selector: (FocalPieceViewModel vm) => vm.contentViewModel,
+            child: const FocalPieceContent(),
+          ),
         ),
       ),
     );

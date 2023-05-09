@@ -1,3 +1,4 @@
+import 'package:website/app/focal_piece/focal_piece_container.dart';
 import 'package:website/main.dart';
 
 class FocalPieceContentViewModel extends EmitterContainer {
@@ -120,24 +121,67 @@ class _ContactCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(18.0),
-      child: Column(children: [
-        Container(
-          alignment: Alignment.topRight,
-          child: Material(
-            color: Theme.of(context).primaryColor,
-            child: IconButton(
-              onPressed: context
-                  .appViewModel.focalPiece.contentViewModel.onCloseContactCard,
-              icon: const Icon(
-                Icons.close,
-                color: Colors.white,
-              ),
-            ),
+    final containerParameters =
+        context.read<FocalPieceContainerViewModel>()!.parameters;
+    return FittedBox(
+      fit: BoxFit.contain,
+      child: SizedBox(
+        width: containerParameters.width,
+        height: containerParameters.height,
+        child: Padding(
+          padding: const EdgeInsets.all(18.0),
+          child: Column(
+            children: const [_CloseButton(), Gap(25), _Email()],
           ),
         ),
-      ]),
+      ),
+    );
+  }
+}
+
+class _CloseButton extends StatelessWidget {
+  const _CloseButton();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      alignment: Alignment.topRight,
+      child: IconButton(
+        onPressed:
+            context.appViewModel.focalPiece.contentViewModel.onCloseContactCard,
+        tooltip: 'Close',
+        icon: const Icon(
+          Icons.close,
+          color: Colors.white,
+        ),
+      ),
+    );
+  }
+}
+
+class _Email extends StatelessWidget {
+  const _Email();
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        const Text('jonathan.aird@gmail.com',
+            style: TextStyle(
+                fontSize: 19,
+                color: Colors.white,
+                fontWeight: FontWeight.bold)),
+        Tooltip(
+          message: 'Copy to clipboard',
+          child: ElevatedButton.icon(
+            onPressed: () => null,
+            icon: const Icon(Icons.copy),
+            label: const Text('Copy'),
+            // style: ElevatedButton.styleFrom(backgroundColor: Colors.)),
+          ),
+        )
+      ],
     );
   }
 }
