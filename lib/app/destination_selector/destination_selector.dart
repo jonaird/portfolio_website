@@ -32,13 +32,13 @@ class _DestinationSelectorState extends State<DestinationSelector>
           Tween<Offset>(begin: const Offset(0, 0), end: const Offset(0, 0)));
       _initialBuild = false;
     } else {
-      goTo(destination, context.windowSize);
+      goTo(destination);
     }
 
     super.didChangeDependencies();
   }
 
-  void goTo(Destination newDestination, Size size) {
+  void goTo(Destination newDestination) {
     var curved = CurvedAnimation(
       parent: _controller,
       curve: newDestination == Destinations.home
