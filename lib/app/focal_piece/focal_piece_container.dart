@@ -113,7 +113,6 @@ class _FocalPieceContainerState
     return Padding(
       padding: const EdgeInsets.all(16.0 * 3),
       child: AnimatedContainer(
-        key: const Key('animatedCotnainer'),
         width: fp.parameters.width,
         height: fp.parameters.height,
         curve: FocalPieceViewModel.animationCurve,

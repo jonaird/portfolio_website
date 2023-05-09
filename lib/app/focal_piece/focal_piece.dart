@@ -63,7 +63,6 @@ class FocalPieceViewModel extends EmitterContainer {
   }
 
   static const fabScale = 1.6;
-  // static const animationDuration = Duration(milliseconds: 500);
   static const animationCurve = Curves.easeInOutExpo;
 
   @override

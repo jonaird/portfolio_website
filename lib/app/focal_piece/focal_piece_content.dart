@@ -6,8 +6,6 @@ class FocalPieceContentViewModel extends EmitterContainer {
 
   Duration get animationDuration {
     return parent.animationDuration;
-    // if (parent.stage == FocalPieceStages.firstBuild) return Duration.zero;
-    // return FocalPieceViewModel.animationDuration;
   }
 
   Widget get firstChild {
@@ -81,27 +79,34 @@ class _Logo extends StatelessWidget {
   }
 }
 
-const _scale = 300;
+const _scale = 1;
 
 class _FabContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Theme.of(context).primaryColor,
-      shape: const CircleBorder(),
+    final fab = context.select<FocalPieceViewModel, bool>(
+        (vm) => vm.stage == FocalPieceStages.fab)!;
+    return SizedBox(
+      width: fab ? 300 : null,
+      height: fab ? 300 : null,
       child: FittedBox(
         fit: BoxFit.contain,
-        child: InkWell(
-          onTap: context.appViewModel.focalPiece.contentViewModel.onFABPressed,
-          borderRadius:
-              BorderRadius.circular(56 * FocalPieceViewModel.fabScale * _scale),
-          child: const Padding(
-            padding:
-                EdgeInsets.all(16.0 * FocalPieceViewModel.fabScale * _scale),
-            child: Icon(
-              size: 24 * FocalPieceViewModel.fabScale * _scale,
-              Icons.email_sharp,
-              color: Colors.white,
+        child: Material(
+          color: Theme.of(context).primaryColor,
+          shape: const CircleBorder(),
+          child: InkWell(
+            onTap:
+                context.appViewModel.focalPiece.contentViewModel.onFABPressed,
+            borderRadius: BorderRadius.circular(
+                56 * FocalPieceViewModel.fabScale * _scale),
+            child: const Padding(
+              padding:
+                  EdgeInsets.all(16.0 * FocalPieceViewModel.fabScale * _scale),
+              child: Icon(
+                size: 24 * FocalPieceViewModel.fabScale * _scale,
+                Icons.email_sharp,
+                color: Colors.white,
+              ),
             ),
           ),
         ),
