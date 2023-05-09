@@ -11,7 +11,7 @@ class DestinationSelector extends StatefulWidget {
 class _DestinationSelectorState extends State<DestinationSelector>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
-  late Animation<double> _scaleAnim;
+  late Animation<double> _scaleAnimation;
   late Animation<Offset> _originAnimation;
   late Destination _destination;
   var _initialBuild = true;
@@ -23,8 +23,8 @@ class _DestinationSelectorState extends State<DestinationSelector>
       _destination = destination;
       _controller = AnimationController(
           vsync: this, duration: const Duration(milliseconds: 400));
-      _controller.addListener((() => setState(() {})));
-      _scaleAnim = _controller.drive<double>(Tween<double>(
+      _controller.addListener(rebuild);
+      _scaleAnimation = _controller.drive<double>(Tween<double>(
         begin: _destination.scale,
         end: _destination.scale,
       ));
@@ -52,7 +52,7 @@ class _DestinationSelectorState extends State<DestinationSelector>
             ? Curves.easeOutExpo
             : Curves.fastOutSlowIn);
 
-    _scaleAnim = curved.drive<double>(Tween<double>(
+    _scaleAnimation = curved.drive<double>(Tween<double>(
       begin: _destination.scale,
       end: newDestination.scale,
     ));
@@ -81,8 +81,8 @@ class _DestinationSelectorState extends State<DestinationSelector>
     return Stack(
       children: [
         Transform.scale(
-          scale: _scaleAnim.status == AnimationStatus.forward
-              ? _scaleAnim.value
+          scale: _scaleAnimation.status == AnimationStatus.forward
+              ? _scaleAnimation.value
               : _destination.scale,
           origin: _originAnimation.value,
           alignment: Alignment.topLeft,
