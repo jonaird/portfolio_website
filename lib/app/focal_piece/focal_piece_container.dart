@@ -30,7 +30,7 @@ class FocalPieceContainerViewModel extends EmitterContainer {
   final _boxShadow = kElevationToShadow[2];
 
   double get focalPieceDimmerOpacity {
-    if (parent.stage == FocalPieceStages.contact) return 0.21225;
+    if (parent.stage == FocalPieceStages.contact) return 0.2128;
     return 0;
   }
 
