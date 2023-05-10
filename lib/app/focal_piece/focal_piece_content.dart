@@ -156,11 +156,14 @@ class _Email extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        const Text('jonathan.aird@gmail.com',
-            style: TextStyle(
-                fontSize: 19,
-                color: Colors.white,
-                fontWeight: FontWeight.bold)),
+        const SelectableText(
+          'jonathan.aird@gmail.com',
+          style: TextStyle(
+            fontSize: 19,
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         Tooltip(
           message: 'Copy to clipboard',
           child: ElevatedButton.icon(
