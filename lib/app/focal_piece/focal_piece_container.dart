@@ -29,6 +29,11 @@ class FocalPieceContainerViewModel extends EmitterContainer {
 
   final _boxShadow = kElevationToShadow[2];
 
+  double get focalPieceDimmerOpacity {
+    if (parent.stage == FocalPieceStages.contact) return 0.21225;
+    return 0;
+  }
+
   ContainerParameters get _getParameters {
     switch (parent.stage) {
       case FocalPieceStages.firstBuild:
@@ -36,38 +41,29 @@ class FocalPieceContainerViewModel extends EmitterContainer {
           width: 2000,
           height: 2000,
           decoration: BoxDecoration(
-              color: const Color(0xFFFF5252),
-              borderRadius: BorderRadius.circular(1000),
-              boxShadow: _boxShadow),
+              borderRadius: BorderRadius.circular(1000), boxShadow: _boxShadow),
         );
       case FocalPieceStages.intro:
         return ContainerParameters(
           width: 300,
           height: 300,
           decoration: BoxDecoration(
-              color: const Color(0xFFFF5252),
-              borderRadius: BorderRadius.circular(150),
-              boxShadow: _boxShadow),
+              borderRadius: BorderRadius.circular(150), boxShadow: _boxShadow),
         );
       case FocalPieceStages.fab:
         return ContainerParameters(
-          // width: 120 * FocalPieceViewModel.fabScale,
           width: 56 * FocalPieceViewModel.fabScale,
           height: 56 * FocalPieceViewModel.fabScale,
           decoration: BoxDecoration(
-              color: const Color(0xFFFF5252),
-              // color: !useInkwell ? const Color(0xFFFF5252) : null,
               borderRadius:
                   BorderRadius.circular(28 * FocalPieceViewModel.fabScale),
               boxShadow: _boxShadow),
         );
       case FocalPieceStages.contact:
         return ContainerParameters(
-          width: 400,
-          height: 400,
+          width: 450,
+          height: 200,
           decoration: BoxDecoration(
-              // color: const Color(0xFFFF5252),
-              color: const Color(0xFFFF5252),
               borderRadius:
                   BorderRadius.circular(6 * FocalPieceViewModel.fabScale),
               boxShadow: _boxShadow),
@@ -122,9 +118,20 @@ class _FocalPieceContainerState
         clipBehavior: Clip.antiAlias,
         child: Material(
           color: Theme.of(context).primaryColor,
-          child: Reprovider(
-            selector: (FocalPieceViewModel vm) => vm.contentViewModel,
-            child: const FocalPieceContent(),
+          child: Stack(
+            children: [
+              IgnorePointer(
+                child: AnimatedOpacity(
+                  opacity: fp.focalPieceDimmerOpacity,
+                  duration: fp.animationDuration,
+                  child: Container(color: Colors.black),
+                ),
+              ),
+              Reprovider(
+                selector: (FocalPieceViewModel vm) => vm.contentViewModel,
+                child: const FocalPieceContent(),
+              ),
+            ],
           ),
         ),
       ),

@@ -1,4 +1,3 @@
-import 'package:website/app/focal_piece/focal_piece_container.dart';
 import 'package:website/main.dart';
 
 class FocalPieceContentViewModel extends EmitterContainer {
@@ -80,8 +79,6 @@ class _Logo extends StatelessWidget {
   }
 }
 
-const _scale = 1;
-
 class _FabContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -92,22 +89,16 @@ class _FabContent extends StatelessWidget {
       height: fab ? 300 : null,
       child: FittedBox(
         fit: BoxFit.contain,
-        child: Material(
-          color: Theme.of(context).primaryColor,
-          shape: const CircleBorder(),
-          child: InkWell(
-            onTap:
-                context.appViewModel.focalPiece.contentViewModel.onFABPressed,
-            borderRadius: BorderRadius.circular(
-                56 * FocalPieceViewModel.fabScale * _scale),
-            child: const Padding(
-              padding:
-                  EdgeInsets.all(16.0 * FocalPieceViewModel.fabScale * _scale),
-              child: Icon(
-                size: 24 * FocalPieceViewModel.fabScale * _scale,
-                Icons.email_sharp,
-                color: Colors.white,
-              ),
+        child: InkWell(
+          onTap: context.appViewModel.focalPiece.contentViewModel.onFABPressed,
+          borderRadius:
+              BorderRadius.circular(56 * FocalPieceViewModel.fabScale),
+          child: const Padding(
+            padding: EdgeInsets.all(16.0 * FocalPieceViewModel.fabScale),
+            child: Icon(
+              size: 24 * FocalPieceViewModel.fabScale,
+              Icons.email_sharp,
+              color: Colors.white,
             ),
           ),
         ),
@@ -121,17 +112,15 @@ class _ContactCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final containerParameters =
-        context.read<FocalPieceContainerViewModel>()!.parameters;
     return FittedBox(
       fit: BoxFit.contain,
       child: SizedBox(
-        width: containerParameters.width,
-        height: containerParameters.height,
+        width: 450,
+        height: 200,
         child: Padding(
-          padding: const EdgeInsets.all(18.0),
+          padding: const EdgeInsets.all(16.0),
           child: Column(
-            children: const [_CloseButton(), Gap(25), _Email()],
+            children: const [_CloseButton(), Gap(20), _Email()],
           ),
         ),
       ),
