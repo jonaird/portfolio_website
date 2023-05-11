@@ -95,8 +95,6 @@ class _Logo extends StatelessWidget {
 class _FabContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final fab = context.select<FocalPieceViewModel, bool>(
-        (vm) => vm.stage == FocalPieceStages.fab)!;
     return Container(
       constraints: const BoxConstraints.expand(),
       child: FittedBox(
