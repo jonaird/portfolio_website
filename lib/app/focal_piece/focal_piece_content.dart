@@ -58,6 +58,17 @@ class FocalPieceContent
         secondChild: vm.secondChild,
         crossFadeState: vm.crossFadeState,
         alignment: Alignment.center,
+        layoutBuilder: (Widget topChild, Key topChildKey, Widget bottomChild,
+            Key bottomChildKey) {
+          return Stack(
+            clipBehavior: Clip.none,
+            fit: StackFit.passthrough,
+            children: <Widget>[
+              bottomChild,
+              topChild,
+            ],
+          );
+        },
       ),
     );
   }
@@ -68,12 +79,14 @@ class _Logo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(12.0),
-      child: Image.memory(
-        logoBytes,
-        width: 300,
-        height: 300,
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Image.memory(
+          logoBytes,
+          width: 300,
+          height: 300,
+        ),
       ),
     );
   }
@@ -84,9 +97,8 @@ class _FabContent extends StatelessWidget {
   Widget build(BuildContext context) {
     final fab = context.select<FocalPieceViewModel, bool>(
         (vm) => vm.stage == FocalPieceStages.fab)!;
-    return SizedBox(
-      width: fab ? 300 : null,
-      height: fab ? 300 : null,
+    return Container(
+      constraints: const BoxConstraints.expand(),
       child: FittedBox(
         fit: BoxFit.contain,
         child: InkWell(
@@ -112,15 +124,18 @@ class _ContactCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FittedBox(
-      fit: BoxFit.contain,
-      child: SizedBox(
-        width: 450,
-        height: 200,
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: const [_CloseButton(), Gap(20), _Email()],
+    return Container(
+      constraints: const BoxConstraints.expand(),
+      child: FittedBox(
+        fit: BoxFit.contain,
+        child: SizedBox(
+          width: 450,
+          height: 200,
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: const [_CloseButton(), Gap(20), _Email()],
+            ),
           ),
         ),
       ),
