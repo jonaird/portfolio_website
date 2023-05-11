@@ -45,10 +45,10 @@ class FocalPieceContainerViewModel extends EmitterContainer {
         );
       case FocalPieceStages.intro:
         return ContainerParameters(
-          width: 300,
-          height: 300,
+          width: 450,
+          height: 450,
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(150), boxShadow: _boxShadow),
+              borderRadius: BorderRadius.circular(225), boxShadow: _boxShadow),
         );
       case FocalPieceStages.fab:
         return ContainerParameters(
