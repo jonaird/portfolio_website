@@ -30,7 +30,8 @@ void main() {
 late Uint8List logoBytes;
 //we're inlining the website logo png in order to minimize
 //the gap between showing the html page (which includes the logo)
-//and the very first frame that flutter renders with the logo centered
+//and the very first frame that flutter renders with the logo in
+//the same location
 const logoBytesList = [
   0x89,
   0x50,
