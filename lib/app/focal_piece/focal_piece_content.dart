@@ -130,9 +130,15 @@ class _ContactCard extends StatelessWidget {
           width: 450,
           height: 200,
           child: Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(8.0),
             child: Column(
-              children: const [_CloseButton(), Gap(20), _Email()],
+              children: const [
+                _CloseButton(),
+                Gap(8),
+                _Email(),
+                Gap(8),
+                _Github(),
+              ],
             ),
           ),
         ),
@@ -161,32 +167,74 @@ class _CloseButton extends StatelessWidget {
   }
 }
 
+const _listTileTextStyle = TextStyle(
+  fontSize: 19,
+  color: Colors.white,
+  fontWeight: FontWeight.bold,
+);
+
 class _Email extends StatelessWidget {
   const _Email();
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        const SelectableText(
-          'jonathan.aird@gmail.com',
-          style: TextStyle(
-            fontSize: 19,
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          ),
+    return ListTile(
+      title: const SelectableText(
+        'jonathan.aird@gmail.com',
+        style: _listTileTextStyle,
+      ),
+      trailing: Tooltip(
+        message: 'Copy to clipboard',
+        child: ElevatedButton.icon(
+          onPressed: () => null,
+          icon: const Icon(Icons.copy),
+          label: const Text('Copy'),
+          // style: ElevatedButton.styleFrom(backgroundColor: Colors.)),
         ),
-        Tooltip(
-          message: 'Copy to clipboard',
-          child: ElevatedButton.icon(
+      ),
+      tileColor: Colors.black12,
+    );
+    // return Row(
+    //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+    //   children: [
+    //     const SelectableText(
+    //       'jonathan.aird@gmail.com',
+    //       style: TextStyle(
+    //         fontSize: 19,
+    //         color: Colors.white,
+    //         fontWeight: FontWeight.bold,
+    //       ),
+    //     ),
+    //     Tooltip(
+    //       message: 'Copy to clipboard',
+    //       child: ElevatedButton.icon(
+    //         onPressed: () => null,
+    //         icon: const Icon(Icons.copy),
+    //         label: const Text('Copy'),
+    //         // style: ElevatedButton.styleFrom(backgroundColor: Colors.)),
+    //       ),
+    //     )
+    //   ],
+    // );
+  }
+}
+
+class _Github extends StatelessWidget {
+  const _Github();
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      title:
+          const SelectableText('github.com/jonaird', style: _listTileTextStyle),
+      trailing: Tooltip(
+        message: 'Open in new tab',
+        child: ElevatedButton.icon(
             onPressed: () => null,
-            icon: const Icon(Icons.copy),
-            label: const Text('Copy'),
-            // style: ElevatedButton.styleFrom(backgroundColor: Colors.)),
-          ),
-        )
-      ],
+            icon: const Icon(Icons.open_in_browser),
+            label: const Text('Visit')),
+      ),
+      tileColor: Colors.black12,
     );
   }
 }
