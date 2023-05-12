@@ -99,16 +99,22 @@ class _FabContent extends StatelessWidget {
       constraints: const BoxConstraints.expand(),
       child: FittedBox(
         fit: BoxFit.contain,
-        child: InkWell(
-          onTap: context.appViewModel.focalPiece.contentViewModel.onFABPressed,
-          borderRadius:
-              BorderRadius.circular(56 * FocalPieceViewModel.fabScale),
-          child: const Padding(
-            padding: EdgeInsets.all(16.0 * FocalPieceViewModel.fabScale),
-            child: Icon(
-              size: 24 * FocalPieceViewModel.fabScale,
-              Icons.email_sharp,
-              color: Colors.white,
+        child: Tooltip(
+          message: "email & github",
+          preferBelow: false,
+          verticalOffset: 30,
+          child: InkWell(
+            onTap:
+                context.appViewModel.focalPiece.contentViewModel.onFABPressed,
+            borderRadius:
+                BorderRadius.circular(56 * FocalPieceViewModel.fabScale),
+            child: const Padding(
+              padding: EdgeInsets.all(16.0 * FocalPieceViewModel.fabScale),
+              child: Icon(
+                size: 24 * FocalPieceViewModel.fabScale,
+                Icons.email_sharp,
+                color: Colors.white,
+              ),
             ),
           ),
         ),
