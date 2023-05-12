@@ -6,6 +6,7 @@ export 'package:change_emitter/change_emitter.dart';
 export 'package:flutter/material.dart';
 export 'package:google_fonts/google_fonts.dart';
 export 'package:gap/gap.dart';
+export 'package:super_banners/super_banners.dart';
 
 export './app/app.dart';
 export 'app/home.dart';
@@ -23,6 +24,7 @@ void main() {
       routeInformationParser: RouteInfoParser(),
       routerDelegate: _routerDelegate,
       theme: ThemeData(primaryColor: const Color(0xFFFF5252)),
+      debugShowCheckedModeBanner: false,
     ),
   );
 }

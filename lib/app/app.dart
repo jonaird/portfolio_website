@@ -83,6 +83,13 @@ class Overlays extends StatelessWidget {
       initialEntries: [
         OverlayEntry(builder: (_) => child),
         OverlayEntry(
+          builder: (_) => BuiltWithFlutterCornerBanner.positioned(
+            bannerPosition: CornerBannerPosition.topRight,
+            bannerColor: Colors.blueGrey.shade400,
+            elevation: 2,
+          ),
+        ),
+        OverlayEntry(
           builder: (_) => Reprovider(
             selector: (AppViewModel appViewModel) => appViewModel.focalPiece,
             child: const FocalPieceBackground(),
