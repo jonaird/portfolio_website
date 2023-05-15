@@ -73,7 +73,18 @@ class Bio extends StatelessWidget {
                         ],
                       ),
                       const Gap(24),
-                      Container(width: 225, height: 225, color: Colors.grey),
+                      Material(
+                        color: Colors.blueGrey.shade500,
+                        elevation: 2,
+                        child: Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: SizedBox(
+                            width: 225,
+                            height: 225,
+                            child: Image.asset('assets/headshot.jpeg'),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                   const Gap(24),
