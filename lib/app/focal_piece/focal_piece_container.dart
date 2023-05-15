@@ -62,7 +62,7 @@ class FocalPieceContainerViewModel extends EmitterContainer {
       case FocalPieceStages.contact:
         return ContainerParameters(
           width: 450,
-          height: 212,
+          height: 200,
           decoration: BoxDecoration(
               borderRadius:
                   BorderRadius.circular(6 * FocalPieceViewModel.fabScale),

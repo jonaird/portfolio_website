@@ -136,11 +136,11 @@ class _ContactCard extends StatelessWidget {
           width: 450,
           height: 200,
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 14),
             child: Column(
               children: const [
                 _CloseButton(),
-                Gap(8),
+                Gap(10),
                 _Email(),
                 Gap(8),
                 _Github(),
