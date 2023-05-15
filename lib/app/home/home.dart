@@ -56,7 +56,8 @@ class Bio extends StatelessWidget {
                 children: [
                   const Gap(80),
                   Row(
-                    mainAxisSize: MainAxisSize.min,
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Column(
                         mainAxisSize: MainAxisSize.min,
