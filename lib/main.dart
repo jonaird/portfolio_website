@@ -9,13 +9,14 @@ export 'package:gap/gap.dart';
 export 'package:super_banners/super_banners.dart';
 
 export './app/app.dart';
-export 'app/home.dart';
+export 'app/home/home.dart';
 export 'app/destination_selector/destination_selector.dart';
 export 'utils.dart';
 export 'app/app_router.dart';
 export 'app/focal_piece/focal_piece.dart';
 
 final _routerDelegate = RouterDelegateState();
+const _textTheme = Typography.whiteHelsinki;
 
 void main() {
   logoBytes = Uint8List.fromList(logoBytesList);
@@ -23,7 +24,17 @@ void main() {
     MaterialApp.router(
       routeInformationParser: RouteInfoParser(),
       routerDelegate: _routerDelegate,
-      theme: ThemeData(primaryColor: const Color(0xFFFF5252)),
+      theme: ThemeData(
+        primaryColor: Colors.redAccent.shade200,
+        textTheme: _textTheme.copyWith(
+          bodyLarge: _textTheme.bodyMedium!
+              .copyWith(fontSize: 24, color: Colors.white.withAlpha(160)),
+          displayLarge: _textTheme.displayLarge!
+              .copyWith(fontSize: 84, color: Colors.white.withAlpha(200)),
+          displayMedium: _textTheme.displayMedium!
+              .copyWith(color: Colors.white.withAlpha(200)),
+        ),
+      ),
       debugShowCheckedModeBanner: false,
     ),
   );
