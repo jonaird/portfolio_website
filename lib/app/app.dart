@@ -7,6 +7,7 @@ class AppViewModel extends RootEmitter {
   late final showBackButton = ValueEmitter.reactive(
       reactTo: [destination],
       withValue: () => destination.value != Destinations.home);
+  final showFullBio = ValueEmitter(false);
 
   void handleBackButton() {
     destination.value = Destinations.home;
@@ -27,6 +28,7 @@ class AppViewModel extends RootEmitter {
         destination,
         focalPiece,
         showBackButton,
+        showFullBio,
       };
   @override
   get dependencies => {destination};
