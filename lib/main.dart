@@ -27,12 +27,19 @@ void main() {
       theme: ThemeData(
         primaryColor: Colors.redAccent.shade200,
         textTheme: _textTheme.copyWith(
-          bodyLarge: _textTheme.bodyMedium!
-              .copyWith(fontSize: 24, color: Colors.white.withAlpha(160)),
-          displayLarge: _textTheme.displayLarge!
-              .copyWith(fontSize: 84, color: Colors.white.withAlpha(200)),
-          displayMedium: _textTheme.displayMedium!
-              .copyWith(color: Colors.white.withAlpha(200)),
+          bodyLarge: _textTheme.bodyMedium!.copyWith(
+            fontSize: 24,
+            color: Colors.white.withAlpha(170),
+          ),
+          displayLarge: _textTheme.displayLarge!.copyWith(
+            fontSize: 84,
+            color: Colors.white.withAlpha(200),
+            height: 0.98,
+          ),
+          displayMedium: _textTheme.displayMedium!.copyWith(
+            color: Colors.white.withAlpha(200),
+            height: 0.98,
+          ),
         ),
       ),
       debugShowCheckedModeBanner: false,

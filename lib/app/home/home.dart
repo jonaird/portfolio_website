@@ -58,9 +58,19 @@ class Bio extends StatelessWidget {
                   Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text(
-                        'Hi! My name is\nJonathan Aird \nand I build apps',
-                        style: Theme.of(context).textTheme.displayMedium,
+                      Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Hi! My name is',
+                            style: Theme.of(context).textTheme.displaySmall,
+                          ),
+                          Text(
+                            'Jonathan Aird \nand I build apps',
+                            style: Theme.of(context).textTheme.displayMedium,
+                          ),
+                        ],
                       ),
                       const Gap(24),
                       Container(width: 225, height: 225, color: Colors.grey),
