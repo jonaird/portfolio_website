@@ -117,7 +117,7 @@ class _FocalPieceContainerState
         decoration: fp.parameters.decoration,
         clipBehavior: Clip.antiAlias,
         child: Material(
-          color: Theme.of(context).primaryColor,
+          color: Theme.of(context).colorScheme.secondary,
           child: Stack(
             children: [
               IgnorePointer(

@@ -75,7 +75,7 @@ class Bio extends StatelessWidget {
                       ),
                       const Gap(24),
                       Material(
-                        color: Colors.blueGrey.shade500,
+                        color: Theme.of(context).colorScheme.surface,
                         elevation: 2,
                         child: Padding(
                           padding: const EdgeInsets.all(4.0),

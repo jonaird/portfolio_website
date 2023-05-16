@@ -42,12 +42,11 @@ class App extends ConsumerStatelessWidget<AppViewModel> {
     return Overlays(
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.blueGrey.shade700,
           title: const _Title(),
           automaticallyImplyLeading: false,
           leading: const _Leading(),
         ),
-        backgroundColor: Colors.blueGrey.shade900,
+        backgroundColor: Theme.of(context).colorScheme.background,
         body: const DestinationSelector(),
       ),
     );
@@ -87,7 +86,7 @@ class Overlays extends StatelessWidget {
         OverlayEntry(
           builder: (_) => BuiltWithFlutterCornerBanner.positioned(
             bannerPosition: CornerBannerPosition.topRight,
-            bannerColor: Colors.blueGrey.shade400,
+            bannerColor: Theme.of(context).primaryColorLight,
             elevation: 2,
           ),
         ),

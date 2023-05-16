@@ -53,11 +53,11 @@ class ProjectCard extends StatelessWidget {
     return Card(
       key: project.key,
       elevation: 5,
-      color: const Color(0xFF455A64),
+      clipBehavior: Clip.antiAlias,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(_borderRadius)),
       child: Material(
-        color: const Color(0xFF455A64),
+        color: Theme.of(context).colorScheme.surface,
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(_borderRadius)),
         child: InkWell(
