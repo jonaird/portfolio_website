@@ -1,5 +1,4 @@
 import 'package:flutter/foundation.dart';
-import 'app/app_router.dart';
 import 'package:flutter/material.dart';
 
 export 'package:change_emitter/change_emitter.dart';
@@ -9,67 +8,23 @@ export 'package:gap/gap.dart';
 export 'package:super_banners/super_banners.dart';
 
 export './app/app.dart';
+import './app/app.dart';
 export 'app/home/home.dart';
 export 'app/destination_selector/destination_selector.dart';
 export 'utils.dart';
 export 'app/app_router.dart';
 export 'app/focal_piece/focal_piece.dart';
 
-final _routerDelegate = RouterDelegateState();
-const _textTheme = Typography.whiteHelsinki;
-
 void main() {
   logoBytes = Uint8List.fromList(logoBytesList);
-  runApp(
-    MaterialApp.router(
-      routeInformationParser: RouteInfoParser(),
-      routerDelegate: _routerDelegate,
-      theme: ThemeData(
-          primaryColorLight: Colors.blueGrey.shade400,
-          colorScheme: ColorScheme(
-            brightness: Brightness.dark,
-            primary: Colors.blueGrey.shade700,
-            onPrimary: Colors.white,
-            secondary: Colors.redAccent.shade200,
-            onSecondary: Colors.white,
-            error: Colors.red,
-            onError: Colors.white,
-            background: Colors.blueGrey.shade900,
-            onBackground: Colors.white,
-            surface: Colors.blueGrey.shade700,
-            onSurface: Colors.white,
-          ),
-          textTheme: _textTheme.copyWith(
-            bodyLarge: _textTheme.bodyMedium!.copyWith(
-                fontSize: 24,
-                color: Colors.white.withAlpha(170),
-                fontWeight: FontWeight.w100),
-            displaySmall: _textTheme.displaySmall!.copyWith(
-              color: Colors.white.withAlpha(200),
-            ),
-            displayMedium: _textTheme.displayMedium!.copyWith(
-              color: Colors.white.withAlpha(200),
-              height: 0.98,
-            ),
-            displayLarge: _textTheme.displayLarge!.copyWith(
-              fontSize: 84,
-              color: Colors.white.withAlpha(200),
-              height: 0.98,
-            ),
-          ),
-          textButtonTheme: TextButtonThemeData(
-              style: TextButton.styleFrom(
-                  foregroundColor: Colors.lightBlue.shade600))),
-      debugShowCheckedModeBanner: false,
-    ),
-  );
+  runApp(const App());
 }
 
-late Uint8List logoBytes;
 //we're inlining the website logo png in order to minimize
 //the gap between showing the html page (which includes the logo)
 //and the very first frame that flutter renders with the logo in
 //the same location
+late Uint8List logoBytes;
 const logoBytesList = [
   0x89,
   0x50,
