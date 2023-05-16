@@ -123,11 +123,12 @@ class Bio extends StatelessWidget {
                             ),
                     ),
                   ),
-                  OutlinedButton(
-                      onPressed: showFullBio.toggle,
-                      child: Text(showFullBio.value
-                          ? "Less about me"
-                          : 'More about me'))
+                  TextButton(
+                    onPressed: showFullBio.toggle,
+                    child: Text(
+                      showFullBio.value ? "Less about me" : 'More about me',
+                    ),
+                  )
                 ],
               ),
             ),
