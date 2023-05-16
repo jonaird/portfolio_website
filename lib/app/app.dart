@@ -9,6 +9,7 @@ class AppViewModel extends RootEmitter {
       reactTo: [destination],
       withValue: () => destination.value != Destinations.home);
   final showFullBio = ValueEmitter(false);
+  final theme = ValueEmitter(AppTheme.dark);
 
   void handleBackButton() {
     destination.value = Destinations.home;
@@ -16,6 +17,17 @@ class AppViewModel extends RootEmitter {
 
   void selectProject(ProjectDestination project) {
     destination.value = project;
+  }
+
+  void toggleTheme() {
+    switch (theme.value) {
+      case AppTheme.light:
+        theme.value = AppTheme.dark;
+        break;
+      case AppTheme.dark:
+        theme.value = AppTheme.light;
+        break;
+    }
   }
 
   String get title {
@@ -30,24 +42,29 @@ class AppViewModel extends RootEmitter {
         focalPiece,
         showBackButton,
         showFullBio,
+        theme,
       };
   @override
-  get dependencies => {destination};
+  get dependencies => {destination, theme};
 }
 
-final _routerDelegate = RouterDelegateState(const _RouterChild());
+final _appViewModel = AppViewModel();
 
 class App extends StatelessWidget {
   const App({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      routeInformationParser: RouteInfoParser(),
-      routerDelegate: _routerDelegate,
-      theme: appTheme,
-      debugShowCheckedModeBanner: false,
-    );
+    return Provider<AppViewModel>(_appViewModel,
+        builder: (context, appViewModel) {
+      return MaterialApp.router(
+        routeInformationParser: RouteInfoParser(),
+        routerDelegate:
+            RouterDelegateState(const _RouterChild(), _appViewModel),
+        theme: appViewModel.theme.value.themeData,
+        debugShowCheckedModeBanner: false,
+      );
+    });
   }
 }
 
@@ -87,7 +104,7 @@ class _Leading extends ConsumerStatelessWidget<AppViewModel> {
         ? BackButton(
             onPressed: context.appViewModel.handleBackButton,
           )
-        : const Placeholder();
+        : const SizedBox();
   }
 }
 
@@ -119,6 +136,32 @@ class Overlays extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class ThemeSwitcher extends StatelessWidget {
+  const ThemeSwitcher({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      left: 0,
+      bottom: 0,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(8, 20, 20, 8),
+        child: Reprovider<AppViewModel, ValueEmitter<AppTheme>>(
+            selector: (appViewModel) => appViewModel.theme,
+            builder: (context, theme) {
+              return IconButton(
+                  onPressed: theme.toggle,
+                  icon: Icon(theme.isLightTheme
+                      ? Icons.mode_night_outlined
+                      : Icons.wb_sunny_outlined));
+            }),
+      ),
     );
   }
 }

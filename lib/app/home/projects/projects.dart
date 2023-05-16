@@ -46,20 +46,18 @@ class ProjectCard extends StatelessWidget {
   const ProjectCard(this.project, {super.key});
   final ProjectDestination project;
 
-  final _borderRadius = 11.0;
+  final _borderRadius = 9.0;
 
   @override
   Widget build(BuildContext context) {
     return Card(
       key: project.key,
-      elevation: 5,
+      elevation: 1.5,
       clipBehavior: Clip.antiAlias,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(_borderRadius)),
       child: Material(
         color: Theme.of(context).colorScheme.surface,
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(_borderRadius)),
         child: InkWell(
           onTap: () => context.appViewModel.selectProject(project),
           borderRadius: BorderRadius.circular(_borderRadius),
@@ -71,13 +69,12 @@ class ProjectCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    project.title,
-                    style: const TextStyle(color: _textColor, fontSize: 36),
-                  ),
+                  Text(project.title,
+                      // style: const TextStyle(color: _textColor, fontSize: 36),
+                      style: Theme.of(context).textTheme.headlineMedium),
                   Text(
                     project.subtitle,
-                    style: const TextStyle(color: _textColor, fontSize: 24),
+                    style: Theme.of(context).textTheme.headlineSmall,
                   ),
                 ],
               ),

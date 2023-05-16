@@ -22,13 +22,13 @@ class RouteInfoParser extends RouteInformationParser<AppRouterConfig> {
 class RouterDelegateState extends EmitterContainer
     with ListenableEmitterMixin<ContainerChange>
     implements RouterDelegate<AppRouterConfig> {
-  RouterDelegateState(this.child);
+  RouterDelegateState(this.child, this.appViewModel);
   final Widget child;
-  final AppViewModel appState = AppViewModel();
+  final AppViewModel appViewModel;
 
   @override
   Widget build(BuildContext context) {
-    return Provider(appState, child: child);
+    return Provider(appViewModel, child: child);
   }
 
   @override
@@ -38,16 +38,16 @@ class RouterDelegateState extends EmitterContainer
 
   @override
   AppRouterConfig? get currentConfiguration =>
-      AppRouterConfig(appState.destination.value);
+      AppRouterConfig(appViewModel.destination.value);
 
   @override
   Future<void> setInitialRoutePath(AppRouterConfig configuration) async {
-    appState.initialDestination = configuration.destination;
+    appViewModel.initialDestination = configuration.destination;
   }
 
   @override
   Future<void> setNewRoutePath(AppRouterConfig configuration) async {
-    appState.destination.value = configuration.destination;
+    appViewModel.destination.value = configuration.destination;
   }
 
   @override
@@ -56,8 +56,8 @@ class RouterDelegateState extends EmitterContainer
   }
 
   @override
-  Set<ChangeEmitter> get children => {appState};
+  Set<ChangeEmitter> get children => {appViewModel};
 
   @override
-  get dependencies => {appState.destination};
+  get dependencies => {appViewModel.destination};
 }
