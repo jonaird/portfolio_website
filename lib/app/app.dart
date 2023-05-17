@@ -68,6 +68,7 @@ class _RouterChild extends StatelessWidget {
           title: const _Title(),
           automaticallyImplyLeading: false,
           leading: const _Leading(),
+          // backgroundColor: Theme.of(context).colorScheme.primary,
         ),
         body: const DestinationSelector(),
       ),
@@ -75,12 +76,15 @@ class _RouterChild extends StatelessWidget {
   }
 }
 
-class _Title extends ConsumerStatelessWidget<AppViewModel> {
+class _Title extends StatelessWidget {
   const _Title();
 
   @override
-  Widget consume(BuildContext context, vm) {
-    return Text(vm.title);
+  Widget build(BuildContext context) {
+    final title = context.select<AppViewModel, String>((vm) => vm.title)!;
+    return Text(
+      title,
+    );
   }
 }
 
