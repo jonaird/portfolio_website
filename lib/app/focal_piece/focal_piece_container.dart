@@ -1,6 +1,12 @@
 import 'package:website/main.dart';
 import 'focal_piece_content.dart';
 
+typedef ContainerParameters = ({
+  double width,
+  double height,
+  BoxDecoration decoration
+});
+
 class FocalPieceContainerViewModel extends EmitterContainer {
   @override
   FocalPieceViewModel get parent => super.parent as FocalPieceViewModel;
@@ -37,60 +43,49 @@ class FocalPieceContainerViewModel extends EmitterContainer {
   ContainerParameters get _getParameters {
     switch (parent.stage) {
       case FocalPieceStages.firstBuild:
-        return ContainerParameters(
+        return (
           width: 2000,
           height: 2000,
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(1000), boxShadow: _boxShadow),
+            borderRadius: BorderRadius.circular(1000),
+            boxShadow: _boxShadow,
+          ),
         );
       case FocalPieceStages.intro:
-        return ContainerParameters(
+        return (
           width: 450,
           height: 450,
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(225), boxShadow: _boxShadow),
+            borderRadius: BorderRadius.circular(225),
+            boxShadow: _boxShadow,
+          ),
         );
       case FocalPieceStages.fab:
-        return ContainerParameters(
+        return (
           width: 56 * FocalPieceViewModel.fabScale,
           height: 56 * FocalPieceViewModel.fabScale,
           decoration: BoxDecoration(
-              borderRadius:
-                  BorderRadius.circular(28 * FocalPieceViewModel.fabScale),
-              boxShadow: _boxShadow),
+            borderRadius: BorderRadius.circular(
+              28 * FocalPieceViewModel.fabScale,
+            ),
+            boxShadow: _boxShadow,
+          ),
         );
       case FocalPieceStages.contact:
-        return ContainerParameters(
+        return (
           width: 450,
           height: 200,
           decoration: BoxDecoration(
-              borderRadius:
-                  BorderRadius.circular(6 * FocalPieceViewModel.fabScale),
-              boxShadow: _boxShadow),
+            borderRadius:
+                BorderRadius.circular(6 * FocalPieceViewModel.fabScale),
+            boxShadow: _boxShadow,
+          ),
         );
     }
   }
 
   @override
   get dependencies => {_parameters};
-}
-
-class ContainerParameters {
-  const ContainerParameters(
-      {required this.width, required this.height, required this.decoration});
-  final double width;
-  final double height;
-  final BoxDecoration decoration;
-
-  @override
-  bool operator ==(Object other) =>
-      other is ContainerParameters &&
-      other.width == width &&
-      other.height == height &&
-      other.decoration == decoration;
-
-  @override
-  int get hashCode => Object.hash(width, height, decoration);
 }
 
 class FocalPieceContainer extends StatefulWidget {
