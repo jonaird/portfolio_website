@@ -4,10 +4,6 @@ extension StateExtensions on State {
   Size get size {
     return MediaQuery.of(context).size;
   }
-
-  void rebuild() {
-    setState(() {});
-  }
 }
 
 extension StatelessExtensions on StatelessWidget {

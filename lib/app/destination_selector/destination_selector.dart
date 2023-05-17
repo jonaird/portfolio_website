@@ -23,7 +23,7 @@ class _DestinationSelectorState extends State<DestinationSelector>
       _destination = destination;
       _controller = AnimationController(
           vsync: this, duration: const Duration(milliseconds: 400));
-      _controller.addListener(rebuild);
+      _controller.addListener(() => setState(() {}));
       _scaleAnimation = _controller.drive<double>(Tween<double>(
         begin: _destination.scale,
         end: _destination.scale,
