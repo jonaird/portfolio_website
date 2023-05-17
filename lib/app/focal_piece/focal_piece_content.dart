@@ -18,16 +18,12 @@ class FocalPieceContentViewModel extends EmitterContainer {
   }
 
   CrossFadeState get crossFadeState {
-    switch (parent.stage) {
-      case FocalPieceStages.firstBuild:
-        return CrossFadeState.showFirst;
-      case FocalPieceStages.intro:
-        return CrossFadeState.showFirst;
-      case FocalPieceStages.fab:
-        return CrossFadeState.showSecond;
-      case FocalPieceStages.contact:
-        return CrossFadeState.showFirst;
-    }
+    return switch (parent.stage) {
+      FocalPieceStages.firstBuild => CrossFadeState.showFirst,
+      FocalPieceStages.intro => CrossFadeState.showFirst,
+      FocalPieceStages.fab => CrossFadeState.showSecond,
+      FocalPieceStages.contact => CrossFadeState.showFirst,
+    };
   }
 
   void onCloseContactCard() {
@@ -130,15 +126,15 @@ class _ContactCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       constraints: const BoxConstraints.expand(),
-      child: FittedBox(
+      child: const FittedBox(
         fit: BoxFit.contain,
         child: SizedBox(
           width: 450,
           height: 200,
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 14),
+            padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 14),
             child: Column(
-              children: const [
+              children: [
                 _CloseButton(),
                 Gap(10),
                 _Email(),
@@ -192,7 +188,7 @@ class _Email extends StatelessWidget {
       trailing: Tooltip(
         message: 'Copy to clipboard',
         child: ElevatedButton.icon(
-          onPressed: () => null,
+          onPressed: () {},
           icon: const Icon(Icons.copy),
           label: const Text('Copy'),
           // style: ElevatedButton.styleFrom(backgroundColor: Colors.)),
@@ -236,7 +232,7 @@ class _Github extends StatelessWidget {
       trailing: Tooltip(
         message: 'Open in new tab',
         child: ElevatedButton.icon(
-            onPressed: () => null,
+            onPressed: () {},
             icon: const Icon(Icons.open_in_browser),
             label: const Text('Visit')),
       ),

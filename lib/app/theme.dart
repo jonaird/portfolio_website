@@ -5,28 +5,20 @@ enum AppTheme {
   light;
 
   ThemeData get themeData {
-    switch (this) {
-      case AppTheme.light:
-        return _lightTheme;
-      case AppTheme.dark:
-        return _darkTheme;
-    }
+    return switch (this) {
+      AppTheme.light => _lightTheme,
+      AppTheme.dark => _darkTheme
+    };
   }
 }
 
 extension ThemeToggle on ValueEmitter<AppTheme> {
   void toggle() {
-    switch (value) {
-      case AppTheme.light:
-        value = AppTheme.dark;
-        break;
-      case AppTheme.dark:
-        value = AppTheme.light;
-        break;
-    }
+    value = switch (value) {
+      AppTheme.light => AppTheme.dark,
+      AppTheme.dark => AppTheme.light
+    };
   }
-
-  bool get isLightTheme => value == AppTheme.light;
 }
 
 const _textTheme = Typography.whiteHelsinki;

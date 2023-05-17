@@ -1,12 +1,6 @@
 import 'package:website/main.dart';
 import 'focal_piece_content.dart';
 
-typedef ContainerParameters = ({
-  double width,
-  double height,
-  BoxDecoration decoration
-});
-
 class FocalPieceContainerViewModel extends EmitterContainer {
   @override
   FocalPieceViewModel get parent => super.parent as FocalPieceViewModel;
@@ -41,27 +35,24 @@ class FocalPieceContainerViewModel extends EmitterContainer {
   }
 
   ContainerParameters get _getParameters {
-    switch (parent.stage) {
-      case FocalPieceStages.firstBuild:
-        return (
+    return switch (parent.stage) {
+      FocalPieceStages.firstBuild => (
           width: 2000,
           height: 2000,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(1000),
             boxShadow: _boxShadow,
           ),
-        );
-      case FocalPieceStages.intro:
-        return (
+        ),
+      FocalPieceStages.intro => (
           width: 450,
           height: 450,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(225),
             boxShadow: _boxShadow,
           ),
-        );
-      case FocalPieceStages.fab:
-        return (
+        ),
+      FocalPieceStages.fab => (
           width: 56 * FocalPieceViewModel.fabScale,
           height: 56 * FocalPieceViewModel.fabScale,
           decoration: BoxDecoration(
@@ -70,9 +61,8 @@ class FocalPieceContainerViewModel extends EmitterContainer {
             ),
             boxShadow: _boxShadow,
           ),
-        );
-      case FocalPieceStages.contact:
-        return (
+        ),
+      FocalPieceStages.contact => (
           width: 450,
           height: 200,
           decoration: BoxDecoration(
@@ -80,13 +70,19 @@ class FocalPieceContainerViewModel extends EmitterContainer {
                 BorderRadius.circular(6 * FocalPieceViewModel.fabScale),
             boxShadow: _boxShadow,
           ),
-        );
-    }
+        )
+    };
   }
 
   @override
   get dependencies => {_parameters};
 }
+
+typedef ContainerParameters = ({
+  double width,
+  double height,
+  BoxDecoration decoration
+});
 
 class FocalPieceContainer extends StatefulWidget {
   const FocalPieceContainer({super.key});

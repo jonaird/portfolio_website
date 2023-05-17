@@ -19,17 +19,6 @@ class AppViewModel extends RootEmitter {
     destination.value = project;
   }
 
-  void toggleTheme() {
-    switch (theme.value) {
-      case AppTheme.light:
-        theme.value = AppTheme.dark;
-        break;
-      case AppTheme.dark:
-        theme.value = AppTheme.light;
-        break;
-    }
-  }
-
   String get title {
     final dest = destination.value;
     if (dest is ProjectDestination) return dest.title;
@@ -156,10 +145,14 @@ class ThemeSwitcher extends StatelessWidget {
             selector: (appViewModel) => appViewModel.theme,
             builder: (context, theme) {
               return IconButton(
-                  onPressed: theme.toggle,
-                  icon: Icon(theme.isLightTheme
-                      ? Icons.mode_night_outlined
-                      : Icons.wb_sunny_outlined));
+                onPressed: theme.toggle,
+                icon: Icon(
+                  switch (theme.value) {
+                    AppTheme.light => Icons.mode_night_outlined,
+                    AppTheme.dark => Icons.wb_sunny_outlined
+                  },
+                ),
+              );
             }),
       ),
     );
