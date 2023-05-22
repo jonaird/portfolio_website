@@ -152,8 +152,8 @@ class ThemeSwitcher extends StatelessWidget {
                 onPressed: theme.toggle,
                 icon: Icon(
                   switch (theme.value) {
-                    AppTheme.light => Icons.mode_night_outlined,
-                    AppTheme.dark => Icons.wb_sunny_outlined
+                    AppTheme.light => Icons.dark_mode_outlined,
+                    AppTheme.dark => Icons.light_mode_outlined
                   },
                 ),
               );
