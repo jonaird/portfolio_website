@@ -1,6 +1,7 @@
 import 'package:website/main.dart';
 import 'focal_piece_container.dart';
 import 'focal_piece_content.dart';
+import 'dart:ui' as ui;
 
 enum FocalPieceStages { firstBuild, intro, fab, contact }
 
@@ -9,6 +10,9 @@ class FocalPieceViewModel extends EmitterContainer {
   final animating = ValueEmitter(true);
   final containerViewModel = FocalPieceContainerViewModel();
   final contentViewModel = FocalPieceContentViewModel();
+  final key = GlobalKey();
+
+  final previousFrames = <ui.Image>[];
 
   var _introSequenceCompleted = false;
 
@@ -23,6 +27,11 @@ class FocalPieceViewModel extends EmitterContainer {
   }
 
   bool get backgroundShouldIgnorePointer => stage != FocalPieceStages.contact;
+
+  void acceptPreviousFrame(ui.Image frame) {
+    if (previousFrames.length > 4) previousFrames.removeLast();
+    previousFrames.insert(0, frame);
+  }
 
   void finishedAnimating() {
     if (stage == FocalPieceStages.intro) {
@@ -82,15 +91,18 @@ class FocalPiece extends ConsumerStatelessWidget<FocalPieceViewModel> {
 
   @override
   Widget consume(_, vm) {
-    return AnimatedAlign(
-      alignment: vm.alignment,
-      duration: vm.animationDuration,
-      curve: FocalPieceViewModel.animationCurve,
-      child: FittedBox(
-        fit: BoxFit.none,
-        child: Reprovider(
-          selector: (FocalPieceViewModel vm) => vm.containerViewModel,
-          child: const FocalPieceContainer(),
+    return RepaintBoundary(
+      key: vm.key,
+      child: AnimatedAlign(
+        alignment: vm.alignment,
+        duration: vm.animationDuration,
+        curve: FocalPieceViewModel.animationCurve,
+        child: FittedBox(
+          fit: BoxFit.none,
+          child: Reprovider(
+            selector: (FocalPieceViewModel vm) => vm.containerViewModel,
+            child: const FocalPieceContainer(),
+          ),
         ),
       ),
     );
