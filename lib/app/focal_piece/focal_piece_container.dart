@@ -163,9 +163,11 @@ class _AnimationFrameRetrieverState extends State<AnimationFrameRetriever> {
 
   void _animationListener() async {
     final vm = context.read<FocalPieceViewModel>()!;
-    (vm.key.currentContext!.findRenderObject()! as RenderRepaintBoundary)
-        .toImage(pixelRatio: 1)
-        .then((value) => vm.acceptPreviousFrame(value));
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      (vm.key.currentContext!.findRenderObject()! as RenderRepaintBoundary)
+          .toImage(pixelRatio: 1)
+          .then((value) => vm.acceptPreviousFrame(value));
+    });
   }
 
   @override

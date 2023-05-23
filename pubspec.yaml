@@ -14,12 +14,15 @@ dependencies:
     path: /Users/jonathanaird/Developer/Libraries/force_directed_graph
   change_emitter:
     path: /Users/jonathanaird/Developer/Libraries/change_emitter
-  flutter:
-    sdk: flutter
-
-  cupertino_icons: ^1.0.2
   gap: ^2.0.0
   super_banners:
+  flutter_shaders:
+
+  flutter:
+    sdk: flutter
+    
+
+
 
 dev_dependencies:
   flutter_test:
@@ -37,4 +40,6 @@ flutter:
   assets:
     - assets/logo.png
     - assets/headshot.jpeg
-
+  shaders:
+    - shaders/motion_blur.glsl
+    - packages/flutter_shaders/shaders/pixelation.frag

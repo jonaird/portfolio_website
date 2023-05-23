@@ -86,8 +86,73 @@ class FocalPieceViewModel extends EmitterContainer {
   get dependencies => {_stage, animating};
 }
 
-class FocalPiece extends ConsumerStatelessWidget<FocalPieceViewModel> {
+class FocalPiece extends StatelessWidget {
   const FocalPiece({super.key});
+
+  // @override
+  // build(context) {
+  //   return const Center(child: SampledText(text: 'hello', value: 30));
+  // }
+  @override
+  Widget build(BuildContext context) {
+    return ShaderBuilder((context, shader, child) {
+      final animating = context
+          .select<FocalPieceViewModel, bool>((vm) => vm.animating.value)!;
+      return AnimatedSampler(
+        enabled: animating,
+        (image, size, canvas) {
+          final prevFrames =
+              context.read<FocalPieceViewModel>()!.previousFrames;
+          final prevFrame0 = prevFrames.isEmpty ? image : prevFrames.first;
+          final prevFrame1 = prevFrames.length > 1 ? prevFrames[1] : image;
+          // shader.setFloat(0, value);
+          // shader.setFloat(1, value);
+          shader.setFloat(0, size.width);
+          shader.setFloat(1, size.height);
+          shader.setImageSampler(0, image);
+          shader.setImageSampler(1, prevFrame0);
+          shader.setImageSampler(2, prevFrame1);
+
+          canvas.drawRect(
+            Offset.zero & size,
+            Paint()..shader = shader,
+          );
+        },
+        child: const _ShaderChild(),
+      );
+    }, assetKey: 'shaders/motion_blur.glsl');
+  }
+  // @override
+  // Widget build(BuildContext context) {
+  //   return ShaderBuilder(
+  //     assetKey: 'shaders/motion_blur.glsl',
+  //     (_, shader, child) {
+  //       return AnimatedSampler(
+  //         (image, size, canvas) {
+  //           final devicePixelRatio = MediaQuery.of(context).devicePixelRatio;
+  //           shader
+  //             ..setFloat(0, image.width.toDouble() / devicePixelRatio)
+  //             ..setFloat(1, image.height.toDouble() / devicePixelRatio)
+  //             ..setFloat(2, 0)
+  //             ..setImageSampler(0, image);
+
+  //           canvas
+  //             ..save()
+  //             ..drawRect(
+  //               Offset.zero & size,
+  //               Paint()..shader = shader,
+  //             )
+  //             ..restore();
+  //         },
+  //         child: const _ShaderChild(),
+  //       );
+  //     },
+  //   );
+  // }
+}
+
+class _ShaderChild extends ConsumerStatelessWidget<FocalPieceViewModel> {
+  const _ShaderChild();
 
   @override
   Widget consume(_, vm) {
