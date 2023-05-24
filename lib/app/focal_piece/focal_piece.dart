@@ -2,6 +2,7 @@ import 'package:website/main.dart';
 import 'focal_piece_container.dart';
 import 'focal_piece_content.dart';
 import 'dart:ui' as ui;
+export 'motion_blur.dart';
 
 enum FocalPieceStages { firstBuild, intro, fab, contact }
 
@@ -95,6 +96,7 @@ class FocalPiece extends StatelessWidget {
   // }
   @override
   Widget build(BuildContext context) {
+    return const _ShaderChild();
     return ShaderBuilder((context, shader, child) {
       final animating = context
           .select<FocalPieceViewModel, bool>((vm) => vm.animating.value)!;
@@ -166,7 +168,7 @@ class _ShaderChild extends ConsumerStatelessWidget<FocalPieceViewModel> {
           fit: BoxFit.none,
           child: Reprovider(
             selector: (FocalPieceViewModel vm) => vm.containerViewModel,
-            child: const FocalPieceContainer(),
+            child: const MotionBlur(child: FocalPieceContainer()),
           ),
         ),
       ),

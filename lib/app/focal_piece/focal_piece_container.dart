@@ -43,24 +43,24 @@ class FocalPieceContainerViewModel extends EmitterContainer {
   ContainerParameters get _getParameters {
     return switch (parent.stage) {
       FocalPieceStages.firstBuild => (
-          width: 2000,
-          height: 2000,
+          width: 2000.0,
+          height: 2000.0,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(1000),
             boxShadow: _boxShadow,
           ),
         ),
       FocalPieceStages.intro => (
-          width: 450,
-          height: 450,
+          width: 450.0,
+          height: 450.0,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(225),
             boxShadow: _boxShadow,
           ),
         ),
       FocalPieceStages.fab => (
-          width: 56 * FocalPieceViewModel.fabScale,
-          height: 56 * FocalPieceViewModel.fabScale,
+          width: 56.0 * FocalPieceViewModel.fabScale,
+          height: 56.0 * FocalPieceViewModel.fabScale,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(
               28 * FocalPieceViewModel.fabScale,
@@ -69,8 +69,8 @@ class FocalPieceContainerViewModel extends EmitterContainer {
           ),
         ),
       FocalPieceStages.contact => (
-          width: 450,
-          height: 200,
+          width: 450.0,
+          height: 200.0,
           decoration: BoxDecoration(
             borderRadius:
                 BorderRadius.circular(6 * FocalPieceViewModel.fabScale),
@@ -128,7 +128,7 @@ class _FocalPieceContainerState
                 selector: (FocalPieceViewModel vm) => vm.contentViewModel,
                 child: const FocalPieceContent(),
               ),
-              const AnimationFrameRetriever()
+              // const AnimationFrameRetriever()
             ],
           ),
         ),
