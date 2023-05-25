@@ -1,4 +1,3 @@
-import 'package:flutter/rendering.dart';
 import 'package:website/main.dart';
 import 'focal_piece_content.dart';
 
@@ -134,51 +133,5 @@ class _FocalPieceContainerState
         ),
       ),
     );
-  }
-}
-
-class AnimationFrameRetriever extends StatefulWidget {
-  const AnimationFrameRetriever({super.key});
-
-  @override
-  State<AnimationFrameRetriever> createState() =>
-      _AnimationFrameRetrieverState();
-}
-
-class _AnimationFrameRetrieverState extends State<AnimationFrameRetriever> {
-  late final Animation _animatedContainerController;
-
-  bool _elementVisitor(Element element) {
-    if (element is StatefulElement &&
-        element.state.widget is AnimatedContainer) {
-      debugPrint(element.state.toString());
-      _animatedContainerController =
-          ((element.state as ImplicitlyAnimatedWidgetState).animation
-                  as CurvedAnimation)
-              .parent;
-      return false;
-    }
-    return true;
-  }
-
-  void _animationListener() async {
-    final vm = context.read<FocalPieceViewModel>()!;
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      (vm.key.currentContext!.findRenderObject()! as RenderRepaintBoundary)
-          .toImage(pixelRatio: 1)
-          .then((value) => vm.acceptPreviousFrame(value));
-    });
-  }
-
-  @override
-  void initState() {
-    context.visitAncestorElements(_elementVisitor);
-    _animatedContainerController.addListener(_animationListener);
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return const SizedBox();
   }
 }
