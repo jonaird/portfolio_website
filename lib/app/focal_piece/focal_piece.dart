@@ -87,12 +87,9 @@ class FocalPiece extends ConsumerStatelessWidget<FocalPieceViewModel> {
       alignment: vm.alignment,
       duration: vm.animationDuration,
       curve: FocalPieceViewModel.animationCurve,
-      child: FittedBox(
-        fit: BoxFit.none,
-        child: Reprovider(
-          selector: (FocalPieceViewModel vm) => vm.containerViewModel,
-          child: const MotionBlur(child: FocalPieceContainer()),
-        ),
+      child: Reprovider(
+        selector: (FocalPieceViewModel vm) => vm.containerViewModel,
+        child: const MotionBlur(child: FocalPieceContainer()),
       ),
     );
   }

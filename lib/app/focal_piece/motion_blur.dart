@@ -22,7 +22,7 @@ class _MotionBlurState extends State<MotionBlur> {
       final animating = context
           .select<FocalPieceViewModel, bool>((vm) => vm.animating.value)!;
       return AnimatedSampler(
-        enabled: animating,
+        enabled: false,
         (frame, size, canvas) {
           final position = (context.findRenderObject()! as RenderBox)
               .localToGlobal(Offset.zero);

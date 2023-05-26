@@ -20,8 +20,9 @@ class FocalPieceContainerViewModel extends EmitterContainer {
   void finishedAnimating() => parent.finishedAnimating();
 
   void onFirstBuild() async {
-    await Future.delayed(const Duration(milliseconds: 500));
-    parent.stage = FocalPieceStages.intro;
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      parent.stage = FocalPieceStages.intro;
+    });
   }
 
   bool get firstBuild => parent.stage == FocalPieceStages.firstBuild;
@@ -84,8 +85,8 @@ class FocalPieceContainerViewModel extends EmitterContainer {
 }
 
 typedef ContainerParameters = ({
-  double width,
-  double height,
+  num width,
+  num height,
   BoxDecoration decoration
 });
 
@@ -98,15 +99,14 @@ class FocalPieceContainer extends StatefulWidget {
 
 class _FocalPieceContainerState
     extends ConsumerState<FocalPieceContainer, FocalPieceContainerViewModel> {
-  var initialBuild = true;
   @override
   Widget consume(context, fp) {
     if (fp.firstBuild) fp.onFirstBuild();
     return Padding(
       padding: const EdgeInsets.all(16.0 * 3),
       child: AnimatedContainer(
-        width: fp.parameters.width,
-        height: fp.parameters.height,
+        width: fp.parameters.width.toDouble(),
+        height: fp.parameters.height.toDouble(),
         curve: FocalPieceViewModel.animationCurve,
         duration: fp.animationDuration,
         onEnd: fp.finishedAnimating,
