@@ -35,7 +35,7 @@ void main() {
   //simple radial blur
   const float intensity = 1.0;
   for(int i=0;i<numSteps;i++){
-    pixel += texture(frame, uv + float(i)* deltaPosition/float(numSteps) * intensity);
+    pixel += texture(frame, uv - float(i)* deltaPosition/float(numSteps) * intensity);
   }
 
   pixel/=numSteps;
