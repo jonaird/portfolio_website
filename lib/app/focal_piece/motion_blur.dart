@@ -19,10 +19,8 @@ class _MotionBlurState extends State<MotionBlur> {
   Widget build(BuildContext context) {
     // return widget.child;
     return ShaderBuilder((context, shader, child) {
-      final animating = context
-          .select<FocalPieceViewModel, bool>((vm) => vm.animating.value)!;
       return AnimatedSampler(
-        enabled: false,
+        enabled: true,
         (frame, size, canvas) {
           final position = (context.findRenderObject()! as RenderBox)
               .localToGlobal(Offset.zero);
