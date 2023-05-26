@@ -37,13 +37,14 @@ class _MotionBlurState extends State<MotionBlur> {
             ..setFloat(4, deltaPosition.dx)
             ..setFloat(5, deltaPosition.dy)
             ..setImageSampler(0, frame)
-            ..setImageSampler(1, frame);
+            ..setImageSampler(1, prevFrame ?? frame);
           canvas.drawRect(
             Offset.zero & size,
             Paint()..shader = shader,
           );
           prevSize = size;
-          prevFrame = frame;
+          prevFrame?.dispose();
+          prevFrame = frame.clone();
           prevPosition = position;
         },
         child: widget.child,

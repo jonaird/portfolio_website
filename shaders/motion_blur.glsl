@@ -15,19 +15,29 @@ layout(location = 4) uniform sampler2D prevFrame;
 out vec4 fragColor;
 
 void main() {
-  //vec2 uv = FlutterFragCoord().xy / uSize;
- // vec2 puv = round(uv * uPixels) / uPixels;
-  //fragColor = texture(uTexture, puv);
-  //fragColor = vec4(1.0);
+ 
   vec2 uv = FlutterFragCoord().xy/size;
- // vec4 frame = texture(uTexture,uv);
-  //vec4 prevFrame0 = texture(prevFrame0,uv);
-  //vec4 prevFrame1 = texture(prevFrame1,uv);
-  const int n = 50;
+  vec2 deltaPositionUv = deltaPosition/size;
+  vec2 deltaSize = size/prevSize;
+
+  const int numSteps = 20;
   vec4 pixel = vec4(0);
-  for(int i=0;i<n;i++){
-    pixel+=texture(frame, uv + vec2(float(i)));
+
+  for(int i=0;i<numSteps;i++){
+    float currentStep = float(i)/float( numSteps );
+    float stepInv = 1.0 - currentStep;
+    vec4 framePart = texture(frame, uv + deltaPositionUv * currentStep);
+    vec4 prevFamePart = texture(prevFrame, uv + deltaPositionUv * stepInv);
+    pixel+= (framePart + prevFamePart)/2.0;
   }
-  pixel/=n;
+  pixel/=numSteps;
   fragColor = pixel;
+  // const int n = 50;
+  // vec4 pixel = vec4(0);
+  // for(int i=0;i<n;i++){
+  //   pixel+=texture(frame, uv + vec2(float(i)));
+  // }
+  // pixel/=n;
+  // fragColor = pixel;
+  // fragColor = texture(frame, uv);
 }
