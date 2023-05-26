@@ -20,7 +20,8 @@ class _MotionBlurState extends State<MotionBlur> {
     // return widget.child;
     return ShaderBuilder((context, shader, child) {
       return AnimatedSampler(
-        enabled: true,
+        enabled: context
+            .select<FocalPieceViewModel, bool>((vm) => vm.animating.value)!,
         (frame, size, canvas) {
           final position = (context.findRenderObject()! as RenderBox)
               .localToGlobal(Offset.zero);
@@ -28,7 +29,7 @@ class _MotionBlurState extends State<MotionBlur> {
           var deltaPosition = (prevPosition ?? position) - position;
           // //Flutter's Y axis starts at the top left of the screen but
           // //our shader's y axis starts at the bottom left
-          deltaPosition = Offset(deltaPosition.dx, -deltaPosition.dy);
+          // deltaPosition = Offset(deltaPosition.dx, -deltaPosition.dy);
           shader
             ..setFloat(0, size.width)
             ..setFloat(1, size.height)

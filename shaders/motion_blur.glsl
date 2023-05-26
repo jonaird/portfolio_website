@@ -23,21 +23,27 @@ void main() {
   const int numSteps = 20;
   vec4 pixel = vec4(0);
 
+  //frame interpolation
+  // for(int i=0;i<numSteps;i++){
+  //   float currentStep = float(i)/float( numSteps );
+  //   float stepInv = 1.0 - currentStep;
+  //   vec4 framePart = texture(frame, uv + deltaPositionUv * currentStep);
+  //   vec4 prevFamePart = texture(prevFrame, uv + deltaPositionUv * stepInv);
+  //   pixel+= (framePart + prevFamePart)/2.0;
+  // }
+
+  //simple radial blur
+  const float intensity = 1.0;
   for(int i=0;i<numSteps;i++){
-    float currentStep = float(i)/float( numSteps );
-    float stepInv = 1.0 - currentStep;
-    vec4 framePart = texture(frame, uv + deltaPositionUv * currentStep);
-    vec4 prevFamePart = texture(prevFrame, uv + deltaPositionUv * stepInv);
-    pixel+= (framePart + prevFamePart)/2.0;
+    pixel += texture(frame, uv + float(i)* deltaPosition/float(numSteps) * intensity);
   }
+
   pixel/=numSteps;
-  fragColor = pixel;
+
   // const int n = 50;
-  // vec4 pixel = vec4(0);
   // for(int i=0;i<n;i++){
   //   pixel+=texture(frame, uv + vec2(float(i)));
   // }
   // pixel/=n;
-  // fragColor = pixel;
-  // fragColor = texture(frame, uv);
+  fragColor = pixel;
 }
