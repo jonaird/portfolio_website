@@ -25,15 +25,17 @@ class _MotionBlurState extends State<MotionBlur> {
           final position = (context.findRenderObject()! as RenderBox)
               .localToGlobal(Offset.zero);
           // const position = Offset.zero;
+          var deltaPosition = (prevPosition ?? position) - position;
+          // //Flutter's Y axis starts at the top left of the screen but
+          // //our shader's y axis starts at the bottom left
+          deltaPosition = Offset(deltaPosition.dx, -deltaPosition.dy);
           shader
             ..setFloat(0, size.width)
             ..setFloat(1, size.height)
-            // ..setFloat(2, position.dx)
-            // ..setFloat(3, position.dy)
-            // ..setFloat(4, (prevSize ?? size).width)
-            // ..setFloat(5, (prevSize ?? size).height)
-            // ..setFloat(6, (prevPosition ?? position).dx)
-            // ..setFloat(7, (prevPosition ?? position).dy)
+            ..setFloat(2, (prevSize ?? size).width)
+            ..setFloat(3, (prevSize ?? size).height)
+            ..setFloat(4, deltaPosition.dx)
+            ..setFloat(5, deltaPosition.dy)
             ..setImageSampler(0, frame)
             ..setImageSampler(1, frame);
           canvas.drawRect(

@@ -6,11 +6,10 @@ precision highp float;
 
 
 layout(location = 0) uniform vec2 size;
-// layout(location = 1) uniform vec2 position;
-// layout(location = 2) uniform vec2 prevSize;
-// layout(location = 3) uniform vec2 prevPosition;
-layout(location = 1) uniform sampler2D frame;
-layout(location = 2) uniform sampler2D prevFrame;
+layout(location = 1) uniform vec2 prevSize;
+layout(location = 2) uniform vec2 deltaPosition;
+layout(location = 3) uniform sampler2D frame;
+layout(location = 4) uniform sampler2D prevFrame;
 //layout(location = 3) uniform sampler2D prevFrame1;
 
 out vec4 fragColor;
