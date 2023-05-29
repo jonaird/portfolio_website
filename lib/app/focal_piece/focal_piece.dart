@@ -3,8 +3,6 @@ import 'focal_piece_container.dart';
 import 'focal_piece_content.dart';
 export 'motion_blur.dart';
 
-enum FocalPieceStages { firstBuild, intro, fab, contact }
-
 class FocalPieceViewModel extends EmitterContainer {
   final _stage = ValueEmitter(FocalPieceStages.firstBuild, keepHistory: true);
   final animating = ValueEmitter(true);
@@ -63,6 +61,15 @@ class FocalPieceViewModel extends EmitterContainer {
     return const Duration(milliseconds: 500);
   }
 
+  Size get outerSize {
+    if (stage == FocalPieceStages.contact && !animating.value) {
+      return Size(stage.parameters.width.toDouble(),
+          stage.parameters.height.toDouble());
+    }
+    final fab = FocalPieceStages.fab.parameters;
+    return Size(fab.width + 3 * 16, fab.height + 3 * 16);
+  }
+
   static const fabScale = 1.6;
   static const animationCurve = Curves.easeInOutExpo;
 
@@ -78,6 +85,55 @@ class FocalPieceViewModel extends EmitterContainer {
   get dependencies => {_stage, animating};
 }
 
+final _boxShadow = kElevationToShadow[2];
+
+enum FocalPieceStages {
+  firstBuild,
+  intro,
+  fab,
+  contact;
+
+  ContainerParameters get parameters {
+    return switch (this) {
+      FocalPieceStages.firstBuild => (
+          width: 2000.0,
+          height: 2000.0,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(1000),
+            boxShadow: _boxShadow,
+          ),
+        ),
+      FocalPieceStages.intro => (
+          width: 450.0,
+          height: 450.0,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(225),
+            boxShadow: _boxShadow,
+          ),
+        ),
+      FocalPieceStages.fab => (
+          width: 56.0 * FocalPieceViewModel.fabScale,
+          height: 56.0 * FocalPieceViewModel.fabScale,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(
+              28 * FocalPieceViewModel.fabScale,
+            ),
+            boxShadow: _boxShadow,
+          ),
+        ),
+      FocalPieceStages.contact => (
+          width: 450.0,
+          height: 200.0,
+          decoration: BoxDecoration(
+            borderRadius:
+                BorderRadius.circular(6 * FocalPieceViewModel.fabScale),
+            boxShadow: _boxShadow,
+          ),
+        )
+    };
+  }
+}
+
 class FocalPiece extends ConsumerStatelessWidget<FocalPieceViewModel> {
   const FocalPiece({super.key});
 
@@ -88,8 +144,8 @@ class FocalPiece extends ConsumerStatelessWidget<FocalPieceViewModel> {
       duration: vm.animationDuration,
       curve: FocalPieceViewModel.animationCurve,
       child: SizedBox(
-        width: 56.0 * FocalPieceViewModel.fabScale + 3 * 16,
-        height: 56.0 * FocalPieceViewModel.fabScale + 3 * 16,
+        width: vm.outerSize.width,
+        height: vm.outerSize.height,
         child: OverflowBox(
           maxHeight: double.infinity,
           maxWidth: double.infinity,

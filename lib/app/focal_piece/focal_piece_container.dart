@@ -6,7 +6,7 @@ class FocalPieceContainerViewModel extends EmitterContainer {
   FocalPieceViewModel get parent => super.parent as FocalPieceViewModel;
   late final _parameters = ValueEmitter.reactive(
     reactTo: [parent],
-    withValue: () => _getParameters,
+    withValue: () => parent.stage.parameters,
     keepHistory: true,
   );
 
