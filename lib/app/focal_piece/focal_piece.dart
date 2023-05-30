@@ -153,7 +153,7 @@ class FocalPiece extends ConsumerStatelessWidget<FocalPieceViewModel> {
             selector: (FocalPieceViewModel vm) => vm.containerViewModel,
             child: const MotionBlur(
               child: Padding(
-                padding: EdgeInsets.all(500),
+                padding: EdgeInsets.all(300),
                 child: FocalPieceContainer(),
               ),
             ),

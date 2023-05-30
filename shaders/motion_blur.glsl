@@ -9,7 +9,7 @@ layout(location = 0) uniform vec2 size;
 layout(location = 1) uniform vec2 prevSize;
 layout(location = 2) uniform vec2 deltaPosition;
 layout(location = 3) uniform sampler2D frame;
-layout(location = 4) uniform sampler2D prevFrame;
+// layout(location = 4) uniform sampler2D prevFrame;
 //layout(location = 3) uniform sampler2D prevFrame1;
 
 out vec4 fragColor;
@@ -44,18 +44,17 @@ void main() {
   vec2 scaled = uv*sizeRatio;
   vec2 translated = scaled - deltaPositionUv*sizeRatio;
 
-  pixel +=texture(frame, uv);
-  pixel +=texture(frame, translated);
-  pixel /= 2;
+  if(texture(frame, uv).w !=0.0 || texture(frame,translated).w!=0.0){
+      for(int i=0;i<numSteps;i++){
+        vec2 scaled = uv+(uv*sizeRatio-uv)*float(i)/float(numSteps);
+        vec2 translated = scaled - deltaPositionUv*sizeRatio*float(i)/float(numSteps);
+        pixel+=texture(frame,translated);
+      }
 
-  
-  for(int i=0;i<numSteps;i++){
-   vec2 scaled = uv+(uv*sizeRatio-uv)*float(i)/float(numSteps);
-   vec2 translated = scaled - deltaPositionUv*sizeRatio*float(i)/float(numSteps);
-    pixel+=texture(frame,translated);
+      pixel/=numSteps;
   }
-
-  pixel/=numSteps;
+  
+ 
 
   // const int n = 50;
   // for(int i=0;i<n;i++){
