@@ -18,10 +18,11 @@ void main() {
  
   vec2 uv = FlutterFragCoord().xy/size;
   vec2 deltaPositionUv = deltaPosition/size;
-  vec2 deltaSize = size/prevSize;
+  vec2 sizeRatio = size/prevSize;
 
   const int numSteps = 20;
   vec4 pixel = vec4(0);
+  const float intensity = 2.0;
 
   //frame interpolation
   // for(int i=0;i<numSteps;i++){
@@ -33,9 +34,25 @@ void main() {
   // }
 
   //simple radial blur
-  const float intensity = 1.0;
+
+  // for(int i=0;i<numSteps;i++){
+  //   pixel += texture(frame, uv - float(i)* deltaPosition/float(numSteps) * intensity);
+  // }
+
+  //scaling and translating blur
+
+  vec2 scaled = uv*sizeRatio;
+  vec2 translated = scaled - deltaPositionUv*sizeRatio;
+
+  pixel +=texture(frame, uv);
+  pixel +=texture(frame, translated);
+  pixel /= 2;
+
+  
   for(int i=0;i<numSteps;i++){
-    pixel += texture(frame, uv - float(i)* deltaPosition/float(numSteps) * intensity);
+   vec2 scaled = uv+(uv*sizeRatio-uv)*float(i)/float(numSteps);
+   vec2 translated = scaled - deltaPositionUv*sizeRatio*float(i)/float(numSteps);
+    pixel+=texture(frame,translated);
   }
 
   pixel/=numSteps;

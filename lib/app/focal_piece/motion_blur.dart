@@ -23,6 +23,7 @@ class _MotionBlurState extends State<MotionBlur> {
         enabled: context
             .select<FocalPieceViewModel, bool>((vm) => vm.animating.value)!,
         (frame, size, canvas) {
+          print(size.width / (prevSize ?? size).width);
           final position = (context.findRenderObject()! as RenderBox)
               .localToGlobal(Offset.zero);
           // const position = Offset.zero;
