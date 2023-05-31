@@ -14,7 +14,7 @@ dependencies:
     path: /Users/jonathanaird/Developer/Libraries/force_directed_graph
   change_emitter:
     path: /Users/jonathanaird/Developer/Libraries/change_emitter
-  motion_blur:
+  motion_blur: ^0.0.2
   gap: ^2.0.0
   super_banners:
   flutter_shaders:
