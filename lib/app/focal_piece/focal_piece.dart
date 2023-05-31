@@ -57,7 +57,7 @@ class FocalPieceViewModel extends EmitterContainer {
     if (stage == FocalPieceStages.firstBuild) {
       return const Duration(milliseconds: 0);
     }
-    if (introSequenceCompleted) return const Duration(milliseconds: 300);
+    if (introSequenceCompleted) return const Duration(milliseconds: 350);
     return const Duration(milliseconds: 500);
   }
 
@@ -153,7 +153,7 @@ class FocalPiece extends ConsumerStatelessWidget<FocalPieceViewModel> {
             selector: (FocalPieceViewModel vm) => vm.containerViewModel,
             child: const MotionBlur(
               child: Padding(
-                padding: EdgeInsets.all(300),
+                padding: EdgeInsets.all(100),
                 child: FocalPieceContainer(),
               ),
             ),
