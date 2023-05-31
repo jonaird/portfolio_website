@@ -14,6 +14,7 @@ dependencies:
     path: /Users/jonathanaird/Developer/Libraries/force_directed_graph
   change_emitter:
     path: /Users/jonathanaird/Developer/Libraries/change_emitter
+  motion_blur:
   gap: ^2.0.0
   super_banners:
   flutter_shaders:
@@ -41,5 +42,4 @@ flutter:
     - assets/logo.png
     - assets/headshot.jpeg
   shaders:
-    - shaders/motion_blur.glsl
-    - packages/flutter_shaders/shaders/pixelation.frag
+    - packages/motion_blur/shaders/motion_blur.glsl

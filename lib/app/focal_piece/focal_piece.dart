@@ -1,7 +1,7 @@
 import 'package:website/main.dart';
 import 'focal_piece_container.dart';
 import 'focal_piece_content.dart';
-export 'motion_blur.dart';
+import 'package:motion_blur/motion_blur.dart';
 
 class FocalPieceViewModel extends EmitterContainer {
   final _stage = ValueEmitter(FocalPieceStages.firstBuild, keepHistory: true);
@@ -152,6 +152,7 @@ class FocalPiece extends ConsumerStatelessWidget<FocalPieceViewModel> {
           child: Reprovider(
             selector: (FocalPieceViewModel vm) => vm.containerViewModel,
             child: const MotionBlur(
+              intensity: 0.4,
               child: Padding(
                 padding: EdgeInsets.all(100),
                 child: FocalPieceContainer(),
