@@ -3,7 +3,6 @@ import 'package:website/main.dart';
 class FocalPieceContentViewModel extends EmitterContainer {
   @override
   FocalPieceViewModel get parent => super.parent as FocalPieceViewModel;
-  bool get showContent => !parent.showLogoOverlay.value;
   Duration get animationDuration {
     return parent.animationDuration;
   }
@@ -44,7 +43,6 @@ class FocalPieceContent
 
   @override
   Widget consume(_, vm) {
-    if (!vm.showContent) return const SizedBox();
     return Center(
       child: AnimatedCrossFade(
         duration: vm.animationDuration,

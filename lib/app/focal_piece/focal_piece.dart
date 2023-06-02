@@ -8,11 +8,6 @@ class FocalPieceViewModel extends EmitterContainer {
   final animating = ValueEmitter(true);
   final containerViewModel = FocalPieceContainerViewModel();
   final contentViewModel = FocalPieceContentViewModel();
-  late final showLogoOverlay = ValueEmitter.reactive(
-    reactTo: [this],
-    withValue: () =>
-        stage == FocalPieceStages.firstBuild || stage == FocalPieceStages.intro,
-  );
 
   var _introSequenceCompleted = false;
 
@@ -71,7 +66,7 @@ class FocalPieceViewModel extends EmitterContainer {
     return Size(fab.width + 3 * 16, fab.height + 3 * 16);
   }
 
-  bool get enableMotionBlur => animating.value;
+  bool get enableMotionBlur => animating.value && introSequenceCompleted;
 
   static const fabScale = 1.6;
   static const animationCurve = Curves.easeInOutExpo;
@@ -82,7 +77,6 @@ class FocalPieceViewModel extends EmitterContainer {
         animating,
         containerViewModel,
         contentViewModel,
-        showLogoOverlay,
       };
 
   @override
@@ -150,41 +144,29 @@ class FocalPiece extends ConsumerStatelessWidget<FocalPieceViewModel> {
 
   @override
   Widget consume(_, vm) {
-    return Stack(
-      children: [
-        AnimatedAlign(
-          alignment: vm.alignment,
-          duration: vm.animationDuration,
-          curve: FocalPieceViewModel.animationCurve,
-          child: SizedBox(
-            width: vm.outerSize.width,
-            height: vm.outerSize.height,
-            child: OverflowBox(
-              maxHeight: double.infinity,
-              maxWidth: double.infinity,
-              child: Reprovider(
-                selector: (FocalPieceViewModel vm) => vm.containerViewModel,
-                child: MotionBlur(
-                  enabled: vm.enableMotionBlur,
-                  intensity: 0.6,
-                  child: const Padding(
-                    padding: EdgeInsets.all(100),
-                    child: FocalPieceContainer(),
-                  ),
-                ),
+    return AnimatedAlign(
+      alignment: vm.alignment,
+      duration: vm.animationDuration,
+      curve: FocalPieceViewModel.animationCurve,
+      child: SizedBox(
+        width: vm.outerSize.width,
+        height: vm.outerSize.height,
+        child: OverflowBox(
+          maxHeight: double.infinity,
+          maxWidth: double.infinity,
+          child: Reprovider(
+            selector: (FocalPieceViewModel vm) => vm.containerViewModel,
+            child: MotionBlur(
+              enabled: vm.enableMotionBlur,
+              intensity: 0.4,
+              child: const Padding(
+                padding: EdgeInsets.all(100),
+                child: FocalPieceContainer(),
               ),
             ),
           ),
         ),
-        if (vm.showLogoOverlay.value)
-          Center(
-            child: Image.memory(
-              logoBytes,
-              width: 300,
-              height: 300,
-            ),
-          )
-      ],
+      ),
     );
   }
 }
