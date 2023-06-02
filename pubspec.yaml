@@ -17,7 +17,6 @@ dependencies:
   motion_blur: ^0.0.2
   gap: ^2.0.0
   super_banners:
-  flutter_shaders:
 
   flutter:
     sdk: flutter

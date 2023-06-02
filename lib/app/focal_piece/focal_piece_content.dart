@@ -54,18 +54,24 @@ class FocalPieceContent
         secondChild: vm.secondChild,
         crossFadeState: vm.crossFadeState,
         alignment: Alignment.center,
-        layoutBuilder: (Widget topChild, Key topChildKey, Widget bottomChild,
-            Key bottomChildKey) {
-          return Stack(
-            clipBehavior: Clip.none,
-            fit: StackFit.passthrough,
-            children: <Widget>[
-              bottomChild,
-              topChild,
-            ],
-          );
-        },
+        layoutBuilder: _layoutBuilder,
       ),
+    );
+  }
+
+  Widget _layoutBuilder(
+    Widget topChild,
+    Key topChildKey,
+    Widget bottomChild,
+    Key bottomChildKey,
+  ) {
+    return Stack(
+      clipBehavior: Clip.none,
+      fit: StackFit.passthrough,
+      children: <Widget>[
+        bottomChild,
+        topChild,
+      ],
     );
   }
 }

@@ -70,6 +70,8 @@ class FocalPieceViewModel extends EmitterContainer {
     return Size(fab.width + 3 * 16, fab.height + 3 * 16);
   }
 
+  bool get enableMotionBlur => animating.value;
+
   static const fabScale = 1.6;
   static const animationCurve = Curves.easeInOutExpo;
 
@@ -152,7 +154,7 @@ class FocalPiece extends ConsumerStatelessWidget<FocalPieceViewModel> {
           child: Reprovider(
             selector: (FocalPieceViewModel vm) => vm.containerViewModel,
             child: MotionBlur(
-              enabled: vm.animating.value,
+              enabled: vm.enableMotionBlur,
               intensity: 0.4,
               child: const Padding(
                 padding: EdgeInsets.all(100),

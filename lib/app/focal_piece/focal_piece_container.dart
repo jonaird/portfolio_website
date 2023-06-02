@@ -33,51 +33,9 @@ class FocalPieceContainerViewModel extends EmitterContainer {
 
   Duration get animationDuration => parent.animationDuration;
 
-  final _boxShadow = kElevationToShadow[2];
-
   double get focalPieceDimmerOpacity {
     if (parent.stage == FocalPieceStages.contact) return 0.2128;
     return 0;
-  }
-
-  ContainerParameters get _getParameters {
-    return switch (parent.stage) {
-      FocalPieceStages.firstBuild => (
-          width: 2000.0,
-          height: 2000.0,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(1000),
-            boxShadow: _boxShadow,
-          ),
-        ),
-      FocalPieceStages.intro => (
-          width: 450.0,
-          height: 450.0,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(225),
-            boxShadow: _boxShadow,
-          ),
-        ),
-      FocalPieceStages.fab => (
-          width: 56.0 * FocalPieceViewModel.fabScale,
-          height: 56.0 * FocalPieceViewModel.fabScale,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(
-              28 * FocalPieceViewModel.fabScale,
-            ),
-            boxShadow: _boxShadow,
-          ),
-        ),
-      FocalPieceStages.contact => (
-          width: 450.0,
-          height: 200.0,
-          decoration: BoxDecoration(
-            borderRadius:
-                BorderRadius.circular(6 * FocalPieceViewModel.fabScale),
-            boxShadow: _boxShadow,
-          ),
-        )
-    };
   }
 
   @override
