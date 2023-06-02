@@ -50,3 +50,20 @@ abstract class ConsumerState<S extends StatefulWidget, C extends ChangeEmitter>
     );
   }
 }
+
+abstract class StatelessWidgetReprovider<E extends ChangeEmitter,
+    S extends ChangeEmitter> extends StatelessWidget {
+  const StatelessWidgetReprovider({super.key});
+
+  S select(E emitter);
+
+  Widget reprovide(BuildContext context, S emitter);
+
+  @override
+  Widget build(BuildContext context) {
+    return Reprovider<E, S>(
+      selector: select,
+      builder: reprovide,
+    );
+  }
+}

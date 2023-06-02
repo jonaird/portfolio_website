@@ -8,6 +8,11 @@ class FocalPieceViewModel extends EmitterContainer {
   final animating = ValueEmitter(true);
   final containerViewModel = FocalPieceContainerViewModel();
   final contentViewModel = FocalPieceContentViewModel();
+  late final showLogoOverlay = ValueEmitter.reactive(
+    reactTo: [this],
+    withValue: () =>
+        stage == FocalPieceStages.firstBuild || stage == FocalPieceStages.intro,
+  );
 
   var _introSequenceCompleted = false;
 
@@ -45,12 +50,8 @@ class FocalPieceViewModel extends EmitterContainer {
   FocalPieceStages? get previousStage => _stage.previous;
 
   Alignment get alignment {
-    if (stage == FocalPieceStages.firstBuild ||
-        stage == FocalPieceStages.intro ||
-        stage == FocalPieceStages.contact) {
-      return Alignment.center;
-    }
-    return Alignment.bottomRight;
+    if (stage == FocalPieceStages.fab) return Alignment.bottomRight;
+    return Alignment.center;
   }
 
   Duration get animationDuration {
@@ -81,6 +82,7 @@ class FocalPieceViewModel extends EmitterContainer {
         animating,
         containerViewModel,
         contentViewModel,
+        showLogoOverlay,
       };
 
   @override
@@ -91,6 +93,7 @@ final _boxShadow = kElevationToShadow[2];
 
 enum FocalPieceStages {
   firstBuild,
+  // renderApp,
   intro,
   fab,
   contact;
@@ -136,34 +139,52 @@ enum FocalPieceStages {
   }
 }
 
+typedef ContainerParameters = ({
+  num width,
+  num height,
+  BoxDecoration decoration
+});
+
 class FocalPiece extends ConsumerStatelessWidget<FocalPieceViewModel> {
   const FocalPiece({super.key});
 
   @override
   Widget consume(_, vm) {
-    return AnimatedAlign(
-      alignment: vm.alignment,
-      duration: vm.animationDuration,
-      curve: FocalPieceViewModel.animationCurve,
-      child: SizedBox(
-        width: vm.outerSize.width,
-        height: vm.outerSize.height,
-        child: OverflowBox(
-          maxHeight: double.infinity,
-          maxWidth: double.infinity,
-          child: Reprovider(
-            selector: (FocalPieceViewModel vm) => vm.containerViewModel,
-            child: MotionBlur(
-              enabled: vm.enableMotionBlur,
-              intensity: 0.4,
-              child: const Padding(
-                padding: EdgeInsets.all(100),
-                child: FocalPieceContainer(),
+    return Stack(
+      children: [
+        AnimatedAlign(
+          alignment: vm.alignment,
+          duration: vm.animationDuration,
+          curve: FocalPieceViewModel.animationCurve,
+          child: SizedBox(
+            width: vm.outerSize.width,
+            height: vm.outerSize.height,
+            child: OverflowBox(
+              maxHeight: double.infinity,
+              maxWidth: double.infinity,
+              child: Reprovider(
+                selector: (FocalPieceViewModel vm) => vm.containerViewModel,
+                child: MotionBlur(
+                  enabled: vm.enableMotionBlur,
+                  intensity: 0.6,
+                  child: const Padding(
+                    padding: EdgeInsets.all(100),
+                    child: FocalPieceContainer(),
+                  ),
+                ),
               ),
             ),
           ),
         ),
-      ),
+        if (vm.showLogoOverlay.value)
+          Center(
+            child: Image.memory(
+              logoBytes,
+              width: 300,
+              height: 300,
+            ),
+          )
+      ],
     );
   }
 }

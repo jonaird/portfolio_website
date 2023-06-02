@@ -10,6 +10,10 @@ class AppViewModel extends RootEmitter {
       withValue: () => destination.value != Destinations.home);
   final showFullBio = ValueEmitter(false);
   final theme = ValueEmitter(AppTheme.dark);
+  late final showMainApp = ValueEmitter.reactive(
+    reactTo: [focalPiece],
+    withValue: () => focalPiece.stage != FocalPieceStages.firstBuild,
+  );
 
   void handleBackButton() {
     destination.value = Destinations.home;
@@ -29,6 +33,7 @@ class AppViewModel extends RootEmitter {
   get children => {
         destination,
         focalPiece,
+        showMainApp,
         showBackButton,
         showFullBio,
         theme,
@@ -63,15 +68,28 @@ class _RouterChild extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Overlays(
-      child: Scaffold(
-        appBar: AppBar(
-          title: const _Title(),
-          automaticallyImplyLeading: false,
-          leading: const _Leading(),
-          // backgroundColor: Theme.of(context).colorScheme.primary,
-        ),
-        body: const DestinationSelector(),
-      ),
+      child: Reprovider<AppViewModel, ValueEmitter<bool>>(
+          selector: (vm) => vm.showMainApp,
+          builder: (context, showMainApp) {
+            if (!showMainApp.value) return const SizedBox();
+            return Stack(
+              children: [
+                Scaffold(
+                  appBar: AppBar(
+                    title: const _Title(),
+                    automaticallyImplyLeading: false,
+                    leading: const _Leading(),
+                  ),
+                  body: const DestinationSelector(),
+                ),
+                BuiltWithFlutterCornerBanner.positioned(
+                  bannerPosition: CornerBannerPosition.topRight,
+                  bannerColor: Theme.of(context).primaryColorLight,
+                  elevation: 2,
+                ),
+              ],
+            );
+          }),
     );
   }
 }
@@ -109,13 +127,9 @@ class Overlays extends StatelessWidget {
     return Overlay(
       initialEntries: [
         OverlayEntry(builder: (_) => child),
-        OverlayEntry(
-          builder: (_) => BuiltWithFlutterCornerBanner.positioned(
-            bannerPosition: CornerBannerPosition.topRight,
-            bannerColor: Theme.of(context).primaryColorLight,
-            elevation: 2,
-          ),
-        ),
+        // OverlayEntry(
+        //   builder: (_) => ,
+        // ),
         OverlayEntry(
           builder: (_) => Reprovider(
             selector: (AppViewModel appViewModel) => appViewModel.focalPiece,
@@ -133,31 +147,31 @@ class Overlays extends StatelessWidget {
   }
 }
 
-class ThemeSwitcher extends StatelessWidget {
+class ThemeSwitcher
+    extends StatelessWidgetReprovider<AppViewModel, ValueEmitter<AppTheme>> {
   const ThemeSwitcher({
     super.key,
   });
 
   @override
-  Widget build(BuildContext context) {
+  select(appViewModel) => appViewModel.theme;
+
+  @override
+  Widget reprovide(BuildContext context, theme) {
     return Positioned(
       left: 0,
       bottom: 0,
       child: Padding(
         padding: const EdgeInsets.fromLTRB(8, 20, 20, 8),
-        child: Reprovider<AppViewModel, ValueEmitter<AppTheme>>(
-            selector: (appViewModel) => appViewModel.theme,
-            builder: (context, theme) {
-              return IconButton(
-                onPressed: theme.toggle,
-                icon: Icon(
-                  switch (theme.value) {
-                    AppTheme.light => Icons.dark_mode_outlined,
-                    AppTheme.dark => Icons.light_mode_outlined
-                  },
-                ),
-              );
-            }),
+        child: IconButton(
+          onPressed: theme.toggle,
+          icon: Icon(
+            switch (theme.value) {
+              AppTheme.light => Icons.dark_mode_outlined,
+              AppTheme.dark => Icons.light_mode_outlined
+            },
+          ),
+        ),
       ),
     );
   }

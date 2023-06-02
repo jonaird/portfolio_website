@@ -5,7 +5,6 @@ export 'package:change_emitter/change_emitter.dart';
 export 'package:flutter/material.dart';
 export 'package:gap/gap.dart';
 export 'package:super_banners/super_banners.dart';
-export 'package:flutter_shaders/flutter_shaders.dart';
 
 export './app/app.dart';
 import './app/app.dart';

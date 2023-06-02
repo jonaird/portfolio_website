@@ -21,7 +21,9 @@ class FocalPieceContainerViewModel extends EmitterContainer {
 
   void onFirstBuild() async {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      parent.stage = FocalPieceStages.intro;
+      Future.delayed(const Duration(milliseconds: 200), () {
+        parent.stage = FocalPieceStages.intro;
+      });
     });
   }
 
@@ -42,12 +44,6 @@ class FocalPieceContainerViewModel extends EmitterContainer {
   get dependencies => {_parameters};
 }
 
-typedef ContainerParameters = ({
-  num width,
-  num height,
-  BoxDecoration decoration
-});
-
 class FocalPieceContainer extends StatefulWidget {
   const FocalPieceContainer({super.key});
 
@@ -61,35 +57,34 @@ class _FocalPieceContainerState
   Widget consume(context, fp) {
     if (fp.firstBuild) fp.onFirstBuild();
     return Padding(
-      padding: const EdgeInsets.all(16.0 * 3),
-      child: AnimatedContainer(
-        width: fp.parameters.width.toDouble(),
-        height: fp.parameters.height.toDouble(),
-        curve: FocalPieceViewModel.animationCurve,
-        duration: fp.animationDuration,
-        onEnd: fp.finishedAnimating,
-        decoration: fp.parameters.decoration,
-        clipBehavior: Clip.antiAlias,
-        child: Material(
-          color: Theme.of(context).colorScheme.secondary,
-          child: Stack(
-            children: [
-              IgnorePointer(
-                child: AnimatedOpacity(
-                  opacity: fp.focalPieceDimmerOpacity,
-                  duration: fp.animationDuration,
-                  child: Container(color: Colors.black),
+        padding: const EdgeInsets.all(16.0 * 3),
+        child: AnimatedContainer(
+          width: fp.parameters.width.toDouble(),
+          height: fp.parameters.height.toDouble(),
+          curve: FocalPieceViewModel.animationCurve,
+          duration: fp.animationDuration,
+          onEnd: fp.finishedAnimating,
+          decoration: fp.parameters.decoration,
+          clipBehavior: Clip.antiAlias,
+          child: Material(
+            color: Theme.of(context).colorScheme.secondary,
+            child: Stack(
+              children: [
+                IgnorePointer(
+                  child: AnimatedOpacity(
+                    opacity: fp.focalPieceDimmerOpacity,
+                    duration: fp.animationDuration,
+                    child: Container(color: Colors.black),
+                  ),
                 ),
-              ),
-              Reprovider(
-                selector: (FocalPieceViewModel vm) => vm.contentViewModel,
-                child: const FocalPieceContent(),
-              ),
-              // const AnimationFrameRetriever()
-            ],
+                Reprovider(
+                  selector: (FocalPieceViewModel vm) => vm.contentViewModel,
+                  child: const FocalPieceContent(),
+                ),
+                // const AnimationFrameRetriever()
+              ],
+            ),
           ),
-        ),
-      ),
-    );
+        ));
   }
 }
