@@ -122,7 +122,7 @@ enum FocalPieceStages {
         ),
       FocalPieceStages.contact => (
           width: 450.0,
-          height: 200.0,
+          height: 400.0,
           decoration: BoxDecoration(
             borderRadius:
                 BorderRadius.circular(6 * FocalPieceViewModel.fabScale),

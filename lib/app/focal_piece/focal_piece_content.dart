@@ -1,6 +1,34 @@
+import 'dart:convert';
+
 import 'package:website/main.dart';
+import 'package:http/http.dart' as http;
 
 class FocalPieceContentViewModel extends EmitterContainer {
+  final nameField = TextEditingEmitter();
+  final emailField = TextEditingEmitter();
+  final messageField = TextEditingEmitter();
+
+  sendMessage() async {
+    final success = await _sendMessage();
+    if (success) {
+      //success case
+      debugPrint("success");
+    } else {
+      // failure case
+      debugPrint('failure');
+    }
+  }
+
+  Future<bool> _sendMessage() {
+    return http.post(
+        Uri.parse('https://hooks.zapier.com/hooks/catch/15567945/3t0c6va/'),
+        body: {
+          "name": nameField.text,
+          "email": emailField.text,
+          "message": messageField.text
+        }).then((value) => jsonDecode(value.body)['status'] == 'success');
+  }
+
   @override
   FocalPieceViewModel get parent => super.parent as FocalPieceViewModel;
   Duration get animationDuration {
@@ -129,22 +157,35 @@ class _ContactCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final vm = context.read<FocalPieceContentViewModel>()!;
     return Container(
       constraints: const BoxConstraints.expand(),
-      child: const FittedBox(
+      child: FittedBox(
         fit: BoxFit.contain,
         child: SizedBox(
           width: 450,
-          height: 200,
+          height: 400,
           child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 14),
+            padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 14),
             child: Column(
               children: [
-                _CloseButton(),
-                Gap(10),
-                _Email(),
-                Gap(8),
-                _Github(),
+                const _CloseButton(),
+                const Gap(10),
+                TextField(
+                  controller: vm.nameField,
+                ),
+                const Gap(8),
+                TextField(
+                  controller: vm.emailField,
+                ),
+                const Gap(8),
+                TextField(
+                  controller: vm.messageField,
+                ),
+                ElevatedButton(
+                  onPressed: vm.sendMessage,
+                  child: const Text('email test'),
+                )
               ],
             ),
           ),
