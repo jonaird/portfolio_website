@@ -1,6 +1,4 @@
 import 'package:website/main.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 class ContactCardViewModel extends EmitterContainer {
   @override
@@ -27,10 +25,9 @@ class ContactCardViewModel extends EmitterContainer {
     if (success) {
       messageSent = true;
       parent.stage = FocalPieceStages.fab;
-    } else {
-      // failure case
-      debugPrint('failure');
-    }
+      findAncestorOfExactType<AppViewModel>()!
+          .showSnackBarMessage('Message sent! I will get back to you shortly!');
+    } else {}
   }
 
   void close() {
@@ -54,17 +51,17 @@ class ContactCardViewModel extends EmitterContainer {
   }
 
   Future<bool> _sendMessage() {
-    // return Future.value(true);
-    return http.post(
-        Uri.parse(
-            'https://connect.pabbly.com/workflow/sendwebhookdata/IjU3NjUwNTZkMDYzNTA0M2M1MjZkNTUzNTUxMzUi_pc'),
-        body: {
-          "name": nameField.text,
-          "email": emailField.text,
-          "message": messageField.text
-        }).then((value) {
-      return jsonDecode(value.body)['status'] == 'success';
-    });
+    return Future.delayed(const Duration(milliseconds: 400), () => false);
+    // return http.post(
+    //     Uri.parse(
+    //         'https://connect.pabbly.com/workflow/sendwebhookdata/IjU3NjUwNTZkMDYzNTA0M2M1MjZkNTUzNTUxMzUi_pc'),
+    //     body: {
+    //       "name": nameField.text,
+    //       "email": emailField.text,
+    //       "message": messageField.text
+    //     }).then((value) {
+    //   return jsonDecode(value.body)['status'] == 'success';
+    // });
   }
 
   @override

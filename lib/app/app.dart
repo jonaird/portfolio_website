@@ -14,6 +14,7 @@ class AppViewModel extends RootEmitter {
     reactTo: [focalPiece],
     withValue: () => focalPiece.stage != FocalPieceStages.firstBuild,
   );
+  ScaffoldMessengerState? _scaffoldMessenger;
 
   void handleBackButton() {
     destination.value = Destinations.home;
@@ -21,6 +22,17 @@ class AppViewModel extends RootEmitter {
 
   void selectProject(ProjectDestination project) {
     destination.value = project;
+  }
+
+  void setScaffoldMessanger(ScaffoldMessengerState messanger) =>
+      _scaffoldMessenger = messanger;
+
+  void showSnackBarMessage(String message) {
+    _scaffoldMessenger?.showSnackBar(SnackBar(
+      content: Center(child: Text(message)),
+      behavior: SnackBarBehavior.floating,
+      width: 350,
+    ));
   }
 
   String get title {
@@ -80,7 +92,7 @@ class _RouterChild extends StatelessWidget {
                     automaticallyImplyLeading: false,
                     leading: const _Leading(),
                   ),
-                  body: const DestinationSelector(),
+                  body: const ScaffoldCapture(child: DestinationSelector()),
                 ),
                 BuiltWithFlutterCornerBanner.positioned(
                   bannerPosition: CornerBannerPosition.topRight,
@@ -91,6 +103,19 @@ class _RouterChild extends StatelessWidget {
             );
           }),
     );
+  }
+}
+
+class ScaffoldCapture extends StatelessWidget {
+  const ScaffoldCapture({super.key, required this.child});
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    context
+        .read<AppViewModel>()!
+        .setScaffoldMessanger(ScaffoldMessenger.of(context));
+    return child;
   }
 }
 
