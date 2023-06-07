@@ -78,7 +78,7 @@ class _FocalPieceContainerState
                   ),
                 ),
                 Reprovider(
-                  selector: (FocalPieceViewModel vm) => vm.contentViewModel,
+                  selector: (FocalPieceViewModel vm) => vm.content,
                   child: const FocalPieceContent(),
                 ),
                 // const AnimationFrameRetriever()

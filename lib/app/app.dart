@@ -106,7 +106,7 @@ class _Title extends StatelessWidget {
   }
 }
 
-class _Leading extends ConsumerStatelessWidget<AppViewModel> {
+class _Leading extends StatelessWidgetConsumer<AppViewModel> {
   const _Leading();
 
   @override

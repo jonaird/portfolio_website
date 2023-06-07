@@ -1,3 +1,4 @@
+import 'package:website/app/focal_piece/contact_card.dart';
 import 'package:website/main.dart';
 import 'focal_piece_container.dart';
 import 'focal_piece_content.dart';
@@ -6,8 +7,9 @@ import 'package:motion_blur/motion_blur.dart';
 class FocalPieceViewModel extends EmitterContainer {
   final _stage = ValueEmitter(FocalPieceStages.firstBuild, keepHistory: true);
   final animating = ValueEmitter(true);
-  final containerViewModel = FocalPieceContainerViewModel();
-  final contentViewModel = FocalPieceContentViewModel();
+  final container = FocalPieceContainerViewModel();
+  final content = FocalPieceContentViewModel();
+  final contactCard = ContactCardViewModel();
 
   var _introSequenceCompleted = false;
 
@@ -41,6 +43,8 @@ class FocalPieceViewModel extends EmitterContainer {
     }
   }
 
+  void sendMessage() => contactCard.sendMessage();
+
   FocalPieceStages get stage => _stage.value;
   FocalPieceStages? get previousStage => _stage.previous;
 
@@ -66,6 +70,13 @@ class FocalPieceViewModel extends EmitterContainer {
     return Size(fab.width + 3 * 16, fab.height + 3 * 16);
   }
 
+  EdgeInsets get padding {
+    if (introSequenceCompleted) {
+      return const EdgeInsets.fromLTRB(250, 260, 0, 0);
+    }
+    return const EdgeInsets.all(0);
+  }
+
   bool get enableMotionBlur => animating.value && introSequenceCompleted;
 
   static const fabScale = 1.6;
@@ -75,8 +86,9 @@ class FocalPieceViewModel extends EmitterContainer {
   get children => {
         _stage,
         animating,
-        containerViewModel,
-        contentViewModel,
+        container,
+        content,
+        contactCard,
       };
 
   @override
@@ -121,11 +133,10 @@ enum FocalPieceStages {
           ),
         ),
       FocalPieceStages.contact => (
-          width: 450.0,
-          height: 400.0,
+          width: 93.0,
+          height: 28.0,
           decoration: BoxDecoration(
-            borderRadius:
-                BorderRadius.circular(6 * FocalPieceViewModel.fabScale),
+            borderRadius: BorderRadius.circular(5),
             boxShadow: _boxShadow,
           ),
         )
@@ -139,40 +150,48 @@ typedef ContainerParameters = ({
   BoxDecoration decoration
 });
 
-class FocalPiece extends ConsumerStatelessWidget<FocalPieceViewModel> {
+class FocalPiece extends StatelessWidgetConsumer<FocalPieceViewModel> {
   const FocalPiece({super.key});
 
   @override
   Widget consume(_, vm) {
-    return AnimatedAlign(
-      alignment: vm.alignment,
-      duration: vm.animationDuration,
-      curve: FocalPieceViewModel.animationCurve,
-      child: SizedBox(
-        width: vm.outerSize.width,
-        height: vm.outerSize.height,
-        child: OverflowBox(
-          maxHeight: double.infinity,
-          maxWidth: double.infinity,
-          child: Reprovider(
-            selector: (FocalPieceViewModel vm) => vm.containerViewModel,
-            child: MotionBlur(
-              enabled: vm.enableMotionBlur,
-              intensity: 0.4,
-              child: const Padding(
-                padding: EdgeInsets.all(100),
-                child: FocalPieceContainer(),
+    return Stack(
+      children: [
+        Provider(vm.contactCard, child: const ContactCardContainer()),
+        AnimatedAlign(
+          alignment: vm.alignment,
+          duration: vm.animationDuration,
+          curve: FocalPieceViewModel.animationCurve,
+          child: Padding(
+            padding: vm.padding,
+            child: SizedBox(
+              width: vm.outerSize.width,
+              height: vm.outerSize.height,
+              child: OverflowBox(
+                maxHeight: double.infinity,
+                maxWidth: double.infinity,
+                child: Reprovider(
+                  selector: (FocalPieceViewModel vm) => vm.container,
+                  child: MotionBlur(
+                    enabled: vm.enableMotionBlur,
+                    intensity: 0.4,
+                    child: const Padding(
+                      padding: EdgeInsets.all(100),
+                      child: FocalPieceContainer(),
+                    ),
+                  ),
+                ),
               ),
             ),
           ),
         ),
-      ),
+      ],
     );
   }
 }
 
 class FocalPieceBackground
-    extends ConsumerStatelessWidget<FocalPieceViewModel> {
+    extends StatelessWidgetConsumer<FocalPieceViewModel> {
   const FocalPieceBackground({super.key});
 
   @override
@@ -180,7 +199,7 @@ class FocalPieceBackground
     return IgnorePointer(
       ignoring: vm.backgroundShouldIgnorePointer,
       child: GestureDetector(
-        onTap: vm.contentViewModel.onCloseContactCard,
+        onTap: vm.content.onCloseContactCard,
         child: AnimatedContainer(
           duration: vm.animationDuration,
           color: vm.backgroundColor,

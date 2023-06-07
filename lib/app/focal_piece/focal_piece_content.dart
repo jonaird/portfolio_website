@@ -1,34 +1,6 @@
-import 'dart:convert';
-
 import 'package:website/main.dart';
-import 'package:http/http.dart' as http;
 
 class FocalPieceContentViewModel extends EmitterContainer {
-  final nameField = TextEditingEmitter();
-  final emailField = TextEditingEmitter();
-  final messageField = TextEditingEmitter();
-
-  sendMessage() async {
-    final success = await _sendMessage();
-    if (success) {
-      //success case
-      debugPrint("success");
-    } else {
-      // failure case
-      debugPrint('failure');
-    }
-  }
-
-  Future<bool> _sendMessage() {
-    return http.post(
-        Uri.parse('https://hooks.zapier.com/hooks/catch/15567945/3t0c6va/'),
-        body: {
-          "name": nameField.text,
-          "email": emailField.text,
-          "message": messageField.text
-        }).then((value) => jsonDecode(value.body)['status'] == 'success');
-  }
-
   @override
   FocalPieceViewModel get parent => super.parent as FocalPieceViewModel;
   Duration get animationDuration {
@@ -61,12 +33,14 @@ class FocalPieceContentViewModel extends EmitterContainer {
     parent.stage = FocalPieceStages.contact;
   }
 
+  void sendMessage() => parent.sendMessage();
+
   @override
   get dependencies => {parent};
 }
 
 class FocalPieceContent
-    extends ConsumerStatelessWidget<FocalPieceContentViewModel> {
+    extends StatelessWidgetConsumer<FocalPieceContentViewModel> {
   const FocalPieceContent({super.key});
 
   @override
@@ -129,12 +103,11 @@ class _FabContent extends StatelessWidget {
       child: FittedBox(
         fit: BoxFit.contain,
         child: Tooltip(
-          message: "email & github",
+          message: "Contact",
           preferBelow: false,
           verticalOffset: 30,
           child: InkWell(
-            onTap:
-                context.appViewModel.focalPiece.contentViewModel.onFABPressed,
+            onTap: context.appViewModel.focalPiece.content.onFABPressed,
             borderRadius:
                 BorderRadius.circular(56 * FocalPieceViewModel.fabScale),
             child: const Padding(
@@ -157,59 +130,16 @@ class _ContactCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final vm = context.read<FocalPieceContentViewModel>()!;
     return Container(
       constraints: const BoxConstraints.expand(),
       child: FittedBox(
         fit: BoxFit.contain,
-        child: SizedBox(
-          width: 450,
-          height: 400,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 14),
-            child: Column(
-              children: [
-                const _CloseButton(),
-                const Gap(10),
-                TextField(
-                  controller: vm.nameField,
-                ),
-                const Gap(8),
-                TextField(
-                  controller: vm.emailField,
-                ),
-                const Gap(8),
-                TextField(
-                  controller: vm.messageField,
-                ),
-                ElevatedButton(
-                  onPressed: vm.sendMessage,
-                  child: const Text('email test'),
-                )
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _CloseButton extends StatelessWidget {
-  const _CloseButton();
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.topRight,
-      child: IconButton(
-        onPressed:
-            context.appViewModel.focalPiece.contentViewModel.onCloseContactCard,
-        tooltip: 'Close',
-        icon: const Icon(
-          Icons.close,
-          color: Colors.white,
-        ),
+        child: ElevatedButton.icon(
+            onPressed: context.read<FocalPieceContentViewModel>()!.sendMessage,
+            icon: const Icon(Icons.send),
+            label: const Text('Send'),
+            style: ElevatedButton.styleFrom(
+                backgroundColor: Theme.of(context).colorScheme.secondary)),
       ),
     );
   }

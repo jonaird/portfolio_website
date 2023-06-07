@@ -1,7 +1,7 @@
 import 'package:website/main.dart';
 import './projects/projects.dart';
 
-class HomePage extends ConsumerStatelessWidget<AppViewModel> {
+class HomePage extends StatelessWidgetConsumer<AppViewModel> {
   const HomePage({super.key});
 
   @override

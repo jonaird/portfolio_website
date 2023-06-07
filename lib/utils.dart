@@ -19,9 +19,9 @@ extension ContextExtensions on BuildContext {
   AppViewModel get appViewModel => read<AppViewModel>()!;
 }
 
-abstract class ConsumerStatelessWidget<C extends ChangeEmitter>
+abstract class StatelessWidgetConsumer<C extends ChangeEmitter>
     extends StatelessWidget {
-  const ConsumerStatelessWidget({super.key});
+  const StatelessWidgetConsumer({super.key});
 
   Widget consume(BuildContext context, C changeEmitter);
 

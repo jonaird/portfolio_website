@@ -72,7 +72,7 @@ final _lightTheme = ThemeData(
     primary: Colors.blueGrey.shade500,
     onPrimary: Colors.white,
     secondary: Colors.redAccent.shade200,
-    onSecondary: Colors.white,
+    onSecondary: Colors.blueGrey.shade50,
     error: Colors.red,
     onError: Colors.white,
     background: Colors.blueGrey.shade100,

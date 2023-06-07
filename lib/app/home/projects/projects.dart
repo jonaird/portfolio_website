@@ -28,7 +28,7 @@ class Projects extends StatelessWidget {
   }
 }
 
-class Project extends ConsumerStatelessWidget<AppViewModel> {
+class Project extends StatelessWidgetConsumer<AppViewModel> {
   const Project(this.project, {super.key});
   final ProjectDestination project;
 
