@@ -72,12 +72,14 @@ class FocalPieceViewModel extends EmitterContainer {
 
   EdgeInsets get padding {
     if (introSequenceCompleted) {
-      return const EdgeInsets.fromLTRB(250, 260, 0, 0);
+      return const EdgeInsets.fromLTRB(290, 320, 0, 0);
     }
     return const EdgeInsets.all(0);
   }
 
-  bool get enableMotionBlur => animating.value && introSequenceCompleted;
+  bool get motionBlurEnabled {
+    return animating.value && introSequenceCompleted;
+  }
 
   static const fabScale = 1.6;
   static const animationCurve = Curves.easeInOutExpo;
@@ -173,7 +175,7 @@ class FocalPiece extends StatelessWidgetConsumer<FocalPieceViewModel> {
                 child: Reprovider(
                   selector: (FocalPieceViewModel vm) => vm.container,
                   child: MotionBlur(
-                    enabled: vm.enableMotionBlur,
+                    enabled: vm.motionBlurEnabled,
                     intensity: 0.4,
                     child: const Padding(
                       padding: EdgeInsets.all(100),

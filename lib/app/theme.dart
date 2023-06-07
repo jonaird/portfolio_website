@@ -63,7 +63,6 @@ final _darkTheme = ThemeData(
     ),
   ),
 );
-
 final _lightTheme = ThemeData(
   scaffoldBackgroundColor: Colors.grey.shade50,
   primaryColorLight: Colors.blueGrey.shade300,

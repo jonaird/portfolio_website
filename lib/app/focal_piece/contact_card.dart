@@ -55,6 +55,17 @@ class ContactCardContainer
 
   @override
   Widget consume(BuildContext context, vm) {
+    final inputDecoration = InputDecoration(
+      border: const OutlineInputBorder(),
+      labelText: 'Name',
+      floatingLabelStyle:
+          TextStyle(color: Theme.of(context).colorScheme.secondary),
+      focusedBorder: OutlineInputBorder(
+        borderSide: BorderSide(
+          color: Theme.of(context).colorScheme.secondary,
+        ),
+      ),
+    );
     return OverflowBox(
       maxHeight: double.infinity,
       child: SizedBox(
@@ -76,14 +87,21 @@ class ContactCardContainer
                     const Gap(10),
                     TextField(
                       controller: vm.nameField,
+                      decoration: inputDecoration,
                     ),
                     const Gap(8),
                     TextField(
                       controller: vm.emailField,
+                      decoration: inputDecoration.copyWith(labelText: 'Email'),
                     ),
                     const Gap(8),
                     TextField(
                       controller: vm.messageField,
+                      decoration: inputDecoration.copyWith(
+                        labelText: 'Message',
+                      ),
+                      minLines: 7,
+                      maxLines: 7,
                     ),
                   ],
                 ),
