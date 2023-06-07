@@ -12,14 +12,13 @@ class ContactCardViewModel extends EmitterContainer {
     withValue: () => parent.stage == FocalPieceStages.contact,
   );
   var messageSent = false;
-  late final alignment = ValueEmitter.reactive(
-    reactTo: [_contactCardOpen],
-    withValue: () {
-      if (_contactCardOpen.value) return Alignment.center;
-      if (messageSent) return Alignment.topCenter;
-      return Alignment.bottomCenter;
-    },
-  );
+  var duration = const Duration(milliseconds: 400);
+
+  Alignment get alignment {
+    if (_contactCardOpen.value) return Alignment.center;
+    if (messageSent) return Alignment.topCenter;
+    return Alignment.bottomCenter;
+  }
 
   sendMessage() async {
     final success = await _sendMessage();
@@ -37,9 +36,17 @@ class ContactCardViewModel extends EmitterContainer {
   }
 
   void finishedAnimating() {
+    if (duration == Duration.zero) {
+      duration = const Duration(milliseconds: 400);
+    }
     if (!_contactCardOpen.value) {
       for (var element in [nameField, emailField, messageField]) {
         element.clear();
+      }
+      if (messageSent) {
+        messageSent = false;
+        duration = Duration.zero;
+        emit();
       }
     }
   }
@@ -56,7 +63,7 @@ class ContactCardViewModel extends EmitterContainer {
   }
 
   @override
-  get children => {alignment};
+  get children => {_contactCardOpen};
 }
 
 enum ContactCardStage { inactive, active, messageSent }
@@ -83,10 +90,10 @@ class ContactCardContainer
       child: SizedBox(
         height: MediaQuery.of(context).size.height + 800,
         child: AnimatedAlign(
-          alignment: vm.alignment.value,
+          alignment: vm.alignment,
           onEnd: vm.finishedAnimating,
           curve: FocalPieceViewModel.animationCurve,
-          duration: const Duration(milliseconds: 400),
+          duration: vm.duration,
           child: SizedBox(
             width: 450,
             height: 400,
