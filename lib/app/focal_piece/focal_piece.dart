@@ -45,6 +45,8 @@ class FocalPieceViewModel extends EmitterContainer {
 
   void sendMessage() => contactCard.sendMessage();
 
+  void closeContactCard() => contactCard.close();
+
   FocalPieceStages get stage => _stage.value;
   FocalPieceStages? get previousStage => _stage.previous;
 
@@ -201,7 +203,7 @@ class FocalPieceBackground
     return IgnorePointer(
       ignoring: vm.backgroundShouldIgnorePointer,
       child: GestureDetector(
-        onTap: vm.content.onCloseContactCard,
+        onTap: vm.closeContactCard,
         child: AnimatedContainer(
           duration: vm.animationDuration,
           color: vm.backgroundColor,

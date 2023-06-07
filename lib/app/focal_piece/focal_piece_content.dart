@@ -25,10 +25,6 @@ class FocalPieceContentViewModel extends EmitterContainer {
     };
   }
 
-  void onCloseContactCard() {
-    parent.stage = FocalPieceStages.fab;
-  }
-
   void onFABPressed() {
     parent.stage = FocalPieceStages.contact;
   }

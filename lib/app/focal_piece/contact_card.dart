@@ -32,6 +32,18 @@ class ContactCardViewModel extends EmitterContainer {
     }
   }
 
+  void close() {
+    parent.stage = FocalPieceStages.fab;
+  }
+
+  void finishedAnimating() {
+    if (!_contactCardOpen.value) {
+      for (var element in [nameField, emailField, messageField]) {
+        element.clear();
+      }
+    }
+  }
+
   Future<bool> _sendMessage() {
     return Future.value(true);
     // return http.post(
@@ -72,6 +84,7 @@ class ContactCardContainer
         height: MediaQuery.of(context).size.height + 800,
         child: AnimatedAlign(
           alignment: vm.alignment.value,
+          onEnd: vm.finishedAnimating,
           curve: FocalPieceViewModel.animationCurve,
           duration: const Duration(milliseconds: 400),
           child: SizedBox(
@@ -122,7 +135,7 @@ class _CloseButton extends StatelessWidget {
     return Container(
       alignment: Alignment.topRight,
       child: IconButton(
-        onPressed: context.appViewModel.focalPiece.content.onCloseContactCard,
+        onPressed: context.read<ContactCardViewModel>()!.close,
         tooltip: 'Close',
         icon: const Icon(
           Icons.close,
