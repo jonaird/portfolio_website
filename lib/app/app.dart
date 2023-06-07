@@ -138,7 +138,7 @@ class _Leading extends StatelessWidgetConsumer<AppViewModel> {
   Widget consume(BuildContext context, vm) {
     return vm.showBackButton.value
         ? BackButton(
-            onPressed: context.appViewModel.handleBackButton,
+            onPressed: vm.handleBackButton,
           )
         : const SizedBox();
   }

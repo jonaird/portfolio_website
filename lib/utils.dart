@@ -15,8 +15,6 @@ extension ContextExtensions on BuildContext {
 
   bool get atHome =>
       depend<AppViewModel>()!.destination.value == Destinations.home;
-
-  AppViewModel get appViewModel => read<AppViewModel>()!;
 }
 
 abstract class StatelessWidgetConsumer<C extends ChangeEmitter>

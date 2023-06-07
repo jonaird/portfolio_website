@@ -59,7 +59,7 @@ class ProjectCard extends StatelessWidget {
       child: Material(
         color: Theme.of(context).colorScheme.surface,
         child: InkWell(
-          onTap: () => context.appViewModel.selectProject(project),
+          onTap: () => context.read<AppViewModel>()!.selectProject(project),
           borderRadius: BorderRadius.circular(_borderRadius),
           child: SizedBox(
             width: 330,

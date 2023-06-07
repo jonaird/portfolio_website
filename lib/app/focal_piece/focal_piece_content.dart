@@ -103,7 +103,7 @@ class _FabContent extends StatelessWidget {
           preferBelow: false,
           verticalOffset: 30,
           child: InkWell(
-            onTap: context.appViewModel.focalPiece.content.onFABPressed,
+            onTap: context.read<FocalPieceContentViewModel>()!.onFABPressed,
             borderRadius:
                 BorderRadius.circular(56 * FocalPieceViewModel.fabScale),
             child: const Padding(

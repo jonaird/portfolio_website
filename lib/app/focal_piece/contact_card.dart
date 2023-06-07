@@ -55,17 +55,17 @@ class ContactCardViewModel extends EmitterContainer {
   }
 
   Future<bool> _sendMessage() {
-    return Future.delayed(const Duration(milliseconds: 400), () => true);
-    // return http.post(
-    //     Uri.parse(
-    //         'https://connect.pabbly.com/workflow/sendwebhookdata/IjU3NjUwNTZkMDYzNTA0M2M1MjZkNTUzNTUxMzUi_pc'),
-    //     body: {
-    //       "name": nameField.text,
-    //       "email": emailField.text,
-    //       "message": messageField.text
-    //     }).then((value) {
-    //   return jsonDecode(value.body)['status'] == 'success';
-    // });
+    // return Future.delayed(const Duration(milliseconds: 600), () => true);
+    return post(
+        Uri.parse(
+            'https://connect.pabbly.com/workflow/sendwebhookdata/IjU3NjUwNTZkMDYzNTA0M2M1MjZkNTUzNTUxMzUi_pc'),
+        body: {
+          "name": nameField.text,
+          "email": emailField.text,
+          "message": messageField.text
+        }).then((value) {
+      return jsonDecode(value.body)['status'] == 'success';
+    });
   }
 
   @override
