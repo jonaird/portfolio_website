@@ -31,7 +31,7 @@ class AppViewModel extends RootEmitter {
     _scaffoldMessenger?.showSnackBar(SnackBar(
       content: Center(child: Text(message)),
       behavior: SnackBarBehavior.floating,
-      width: 350,
+      width: 330,
     ));
   }
 

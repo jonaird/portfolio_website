@@ -11,6 +11,7 @@ class ContactCardViewModel extends EmitterContainer {
     reactTo: [parent],
     withValue: () => parent.stage == FocalPieceStages.contact,
   );
+  final somethingWentWrong = ValueEmitter(false);
   var messageSent = false;
   var duration = const Duration(milliseconds: 400);
 
@@ -27,7 +28,9 @@ class ContactCardViewModel extends EmitterContainer {
       parent.stage = FocalPieceStages.fab;
       findAncestorOfExactType<AppViewModel>()!
           .showSnackBarMessage('Message sent! I will get back to you shortly!');
-    } else {}
+    } else {
+      somethingWentWrong.value = true;
+    }
   }
 
   void close() {
@@ -39,6 +42,7 @@ class ContactCardViewModel extends EmitterContainer {
       duration = const Duration(milliseconds: 400);
     }
     if (!_contactCardOpen.value) {
+      somethingWentWrong.value = false;
       for (var element in [nameField, emailField, messageField]) {
         element.clear();
       }
@@ -51,7 +55,7 @@ class ContactCardViewModel extends EmitterContainer {
   }
 
   Future<bool> _sendMessage() {
-    return Future.delayed(const Duration(milliseconds: 400), () => false);
+    return Future.delayed(const Duration(milliseconds: 400), () => true);
     // return http.post(
     //     Uri.parse(
     //         'https://connect.pabbly.com/workflow/sendwebhookdata/IjU3NjUwNTZkMDYzNTA0M2M1MjZkNTUzNTUxMzUi_pc'),
@@ -65,7 +69,7 @@ class ContactCardViewModel extends EmitterContainer {
   }
 
   @override
-  get children => {_contactCardOpen};
+  get children => {_contactCardOpen, somethingWentWrong};
 }
 
 enum ContactCardStage { inactive, active, messageSent }
@@ -104,6 +108,7 @@ class ContactCardContainer
                 padding:
                     const EdgeInsets.symmetric(vertical: 8.0, horizontal: 14),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const _CloseButton(),
                     const Gap(10),
@@ -125,6 +130,10 @@ class ContactCardContainer
                       minLines: 7,
                       maxLines: 7,
                     ),
+                    const Gap(12),
+                    if (vm.somethingWentWrong.value)
+                      const SelectableText(
+                          'Oops something went wrong!\nYou can contact me at jonathan.aird@gmail.com')
                   ],
                 ),
               ),
