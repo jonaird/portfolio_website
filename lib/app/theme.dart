@@ -62,6 +62,10 @@ final _darkTheme = ThemeData(
       foregroundColor: Colors.lightBlue.shade600,
     ),
   ),
+  textSelectionTheme: TextSelectionThemeData(
+    cursorColor: Colors.redAccent.shade200,
+    selectionColor: Colors.redAccent.shade200,
+  ),
 );
 final _lightTheme = ThemeData(
   scaffoldBackgroundColor: Colors.grey.shade50,
