@@ -35,11 +35,6 @@ class FocalPieceContainerViewModel extends EmitterContainer {
 
   Duration get animationDuration => parent.animationDuration;
 
-  double get focalPieceDimmerOpacity {
-    if (parent.stage == FocalPieceStages.contact) return 0.2128;
-    return 0;
-  }
-
   @override
   get dependencies => {_parameters};
 }
@@ -68,21 +63,9 @@ class _FocalPieceContainerState
           clipBehavior: Clip.antiAlias,
           child: Material(
             color: Theme.of(context).colorScheme.secondary,
-            child: Stack(
-              children: [
-                IgnorePointer(
-                  child: AnimatedOpacity(
-                    opacity: fp.focalPieceDimmerOpacity,
-                    duration: fp.animationDuration,
-                    child: Container(color: Colors.black),
-                  ),
-                ),
-                Reprovider(
-                  selector: (FocalPieceViewModel vm) => vm.content,
-                  child: const FocalPieceContent(),
-                ),
-                // const AnimationFrameRetriever()
-              ],
+            child: Reprovider(
+              selector: (FocalPieceViewModel vm) => vm.content,
+              child: const FocalPieceContent(),
             ),
           ),
         ));
