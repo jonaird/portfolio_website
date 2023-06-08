@@ -7,6 +7,7 @@ export 'package:gap/gap.dart';
 export 'package:super_banners/super_banners.dart';
 export 'package:http/http.dart';
 export 'dart:convert';
+export 'package:blur/blur.dart';
 
 export './app/app.dart';
 import './app/app.dart';
@@ -15,6 +16,7 @@ export 'app/destination_selector/destination_selector.dart';
 export 'utils.dart';
 export 'app/app_router.dart';
 export 'app/focal_piece/focal_piece.dart';
+export 'app/animated_blur.dart';
 
 void main() {
   logoBytes = Uint8List.fromList(logoBytesList);

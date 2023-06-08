@@ -14,6 +14,13 @@ class AppViewModel extends RootEmitter {
     reactTo: [focalPiece],
     withValue: () => focalPiece.stage != FocalPieceStages.firstBuild,
   );
+  late final blurAmount = ValueEmitter.reactive(
+    reactTo: [focalPiece],
+    withValue: () {
+      if (focalPiece.stage == FocalPieceStages.contact) return 5.0;
+      return 0.0;
+    },
+  );
   ScaffoldMessengerState? _scaffoldMessenger;
 
   void handleBackButton() {
@@ -84,24 +91,44 @@ class _RouterChild extends StatelessWidget {
           selector: (vm) => vm.showMainApp,
           builder: (context, showMainApp) {
             if (!showMainApp.value) return const SizedBox();
-            return Stack(
-              children: [
-                Scaffold(
-                  appBar: AppBar(
-                    title: const _Title(),
-                    automaticallyImplyLeading: false,
-                    leading: const _Leading(),
+            return AppBlur(
+              child: Stack(
+                children: [
+                  Scaffold(
+                    appBar: AppBar(
+                      title: const _Title(),
+                      automaticallyImplyLeading: false,
+                      leading: const _Leading(),
+                    ),
+                    body: const ScaffoldCapture(child: DestinationSelector()),
                   ),
-                  body: const ScaffoldCapture(child: DestinationSelector()),
-                ),
-                BuiltWithFlutterCornerBanner.positioned(
-                  bannerPosition: CornerBannerPosition.topRight,
-                  bannerColor: Theme.of(context).primaryColorLight,
-                  elevation: 2,
-                ),
-              ],
+                  BuiltWithFlutterCornerBanner.positioned(
+                    bannerPosition: CornerBannerPosition.topRight,
+                    bannerColor: Theme.of(context).primaryColorLight,
+                    elevation: 2,
+                  ),
+                ],
+              ),
             );
           }),
+    );
+  }
+}
+
+class AppBlur
+    extends StatelessWidgetReprovider<AppViewModel, ValueEmitter<double>> {
+  const AppBlur({super.key, required this.child});
+  final Widget child;
+
+  @override
+  ValueEmitter<double> select(AppViewModel emitter) => emitter.blurAmount;
+
+  @override
+  Widget reprovide(BuildContext context, blurAmount) {
+    return AnimatedBlur(
+      blur: blurAmount.value,
+      curve: FocalPieceViewModel.animationCurve,
+      child: child,
     );
   }
 }
@@ -152,9 +179,6 @@ class Overlays extends StatelessWidget {
     return Overlay(
       initialEntries: [
         OverlayEntry(builder: (_) => child),
-        // OverlayEntry(
-        //   builder: (_) => ,
-        // ),
         OverlayEntry(
           builder: (_) => Reprovider(
             selector: (AppViewModel appViewModel) => appViewModel.focalPiece,
