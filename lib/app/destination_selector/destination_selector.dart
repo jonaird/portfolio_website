@@ -31,6 +31,13 @@ class _DestinationSelectorState extends State<DestinationSelector>
       _originAnimation = _controller.drive(
           Tween<Offset>(begin: const Offset(0, 0), end: const Offset(0, 0)));
       _initialBuild = false;
+      _controller.addStatusListener((status) {
+        if (status == AnimationStatus.forward) {
+          context.read<AppViewModel>()!.animating.value = true;
+        } else if (status == AnimationStatus.completed) {
+          context.read<AppViewModel>()!.animating.value = false;
+        }
+      });
     } else {
       goTo(destination);
     }
@@ -88,6 +95,7 @@ class _DestinationSelectorState extends State<DestinationSelector>
           alignment: Alignment.topLeft,
           child: const HomePage(),
         ),
+        const ThemeSwitcher()
       ],
     );
   }

@@ -6,33 +6,28 @@ class HomePage extends StatelessWidgetConsumer<AppViewModel> {
 
   @override
   Widget consume(BuildContext context, vm) {
-    return Stack(
-      children: [
-        SizedBox(
-          width: MediaQuery.of(context).size.width,
-          child: FittedBox(
-            fit: BoxFit.none,
-            alignment: Alignment.center,
-            child: SizedBox(
-              width: context.windowSize.width,
-              height: context.windowSize.height + 1000,
-              child: ListView(
-                physics: vm.destination.value == Destinations.home
-                    ? null
-                    : const NeverScrollableScrollPhysics(),
-                children: const [
-                  Gap(500),
-                  Bio(),
-                  Gap(48),
-                  Projects(),
-                  Gap(648),
-                ],
-              ),
-            ),
+    return SizedBox(
+      width: MediaQuery.of(context).size.width,
+      child: FittedBox(
+        fit: BoxFit.none,
+        alignment: Alignment.center,
+        child: SizedBox(
+          width: context.windowSize.width,
+          height: context.windowSize.height + 1000,
+          child: ListView(
+            physics: vm.destination.value == Destinations.home
+                ? null
+                : const NeverScrollableScrollPhysics(),
+            children: const [
+              Gap(500),
+              Bio(),
+              Gap(48),
+              Projects(),
+              Gap(648),
+            ],
           ),
         ),
-        const ThemeSwitcher(),
-      ],
+      ),
     );
   }
 }

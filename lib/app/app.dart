@@ -4,6 +4,7 @@ import 'theme.dart';
 class AppViewModel extends RootEmitter {
   late final Destination initialDestination;
   final destination = ValueEmitter<Destination>(Destinations.home);
+  final animating = ValueEmitter<bool>(false);
   final focalPiece = FocalPieceViewModel();
   late final showBackButton = ValueEmitter.reactive(
       reactTo: [destination],
@@ -20,6 +21,10 @@ class AppViewModel extends RootEmitter {
       if (focalPiece.stage == FocalPieceStages.contact) return 4.0;
       return 0.0;
     },
+  );
+  late final showThemeSwitcher = ValueEmitter.reactive(
+    reactTo: [animating],
+    withValue: () => !animating.value,
   );
   ScaffoldMessengerState? _scaffoldMessenger;
 
