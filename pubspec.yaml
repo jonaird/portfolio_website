@@ -18,7 +18,6 @@ dependencies:
   gap: ^2.0.0
   super_banners:
   http:
-  blur:
 
   flutter:
     sdk: flutter

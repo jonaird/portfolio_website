@@ -17,7 +17,7 @@ class AppViewModel extends RootEmitter {
   late final blurAmount = ValueEmitter.reactive(
     reactTo: [focalPiece],
     withValue: () {
-      if (focalPiece.stage == FocalPieceStages.contact) return 5.0;
+      if (focalPiece.stage == FocalPieceStages.contact) return 4.0;
       return 0.0;
     },
   );

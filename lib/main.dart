@@ -7,7 +7,6 @@ export 'package:gap/gap.dart';
 export 'package:super_banners/super_banners.dart';
 export 'package:http/http.dart';
 export 'dart:convert';
-export 'package:blur/blur.dart';
 
 export './app/app.dart';
 import './app/app.dart';
