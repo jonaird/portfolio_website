@@ -65,11 +65,11 @@ class FocalPieceViewModel extends EmitterContainer {
 
   Size get outerSize {
     if (stage == FocalPieceStages.contact && !animating.value) {
-      return Size(stage.parameters.width.toDouble(),
-          stage.parameters.height.toDouble());
+      return Size(stage.parameters.width!.toDouble(),
+          stage.parameters.height!.toDouble());
     }
     final fab = FocalPieceStages.fab.parameters;
-    return Size(fab.width + 3 * 16, fab.height + 3 * 16);
+    return Size(fab.width! + 3 * 16, fab.height! + 3 * 16);
   }
 
   EdgeInsets get padding {
@@ -140,7 +140,7 @@ enum FocalPieceStages {
           width: 93.0,
           height: 28.0,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5),
+            borderRadius: BorderRadius.circular(0),
             boxShadow: _boxShadow,
           ),
         )
@@ -149,8 +149,8 @@ enum FocalPieceStages {
 }
 
 typedef ContainerParameters = ({
-  num width,
-  num height,
+  num? width,
+  num? height,
   BoxDecoration decoration
 });
 

@@ -51,11 +51,14 @@ class _FocalPieceContainerState
   @override
   Widget consume(context, fp) {
     if (fp.firstBuild) fp.onFirstBuild();
+
     return Padding(
         padding: const EdgeInsets.all(16.0 * 3),
         child: AnimatedContainer(
-          width: fp.parameters.width.toDouble(),
-          height: fp.parameters.height.toDouble(),
+          width: fp.parameters.width?.toDouble() ??
+              MediaQuery.of(context).size.width,
+          height: fp.parameters.height?.toDouble() ??
+              MediaQuery.of(context).size.height,
           curve: FocalPieceViewModel.animationCurve,
           duration: fp.animationDuration,
           onEnd: fp.finishedAnimating,
