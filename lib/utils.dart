@@ -1,5 +1,29 @@
 import './main.dart';
 
+extension OS on GlobalKey {
+  Offset get offset {
+    late RenderObject canvasRenderObject;
+    currentContext!.visitAncestorElements(
+      (element) {
+        // if (element.widget is FullCanvas) {
+        if (element.widget is HomePage) {
+          canvasRenderObject = element.renderObject!;
+          return false;
+        }
+        return true;
+      },
+    );
+    return (currentContext?.findRenderObject() as RenderBox)
+        .localToGlobal(Offset.zero, ancestor: canvasRenderObject);
+  }
+
+  Size get projectCardSize {
+    return (currentContext!.findRenderObject()! as RenderBox).size;
+  }
+
+  bool get offsetIsAvailable => currentContext?.findRenderObject() is RenderBox;
+}
+
 extension StateExtensions on State {
   Size get size {
     return MediaQuery.of(context).size;
@@ -13,8 +37,7 @@ extension StatelessExtensions on StatelessWidget {
 extension ContextExtensions on BuildContext {
   Size get windowSize => MediaQuery.of(this).size;
 
-  bool get atHome =>
-      depend<AppViewModel>()!.destination.value == Destinations.home;
+  bool get atHome => depend<AppViewModel>()!.selectedProject.value == null;
 }
 
 abstract class StatelessWidgetConsumer<C extends ChangeEmitter>

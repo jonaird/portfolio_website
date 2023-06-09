@@ -2,13 +2,13 @@ import 'package:website/main.dart';
 import 'theme.dart';
 
 class AppViewModel extends RootEmitter {
-  late final Destination initialDestination;
-  final destination = ValueEmitter<Destination>(Destinations.home);
+  late final Project? initialRoute;
+  final selectedProject = ValueEmitter<Project?>(null);
   final animating = ValueEmitter<bool>(false);
   final focalPiece = FocalPieceViewModel();
   late final showBackButton = ValueEmitter.reactive(
-      reactTo: [destination],
-      withValue: () => destination.value != Destinations.home);
+      reactTo: [selectedProject],
+      withValue: () => selectedProject.value != null);
   final showFullBio = ValueEmitter(false);
   final theme = ValueEmitter(AppTheme.dark);
   late final showMainApp = ValueEmitter.reactive(
@@ -29,11 +29,11 @@ class AppViewModel extends RootEmitter {
   ScaffoldMessengerState? _scaffoldMessenger;
 
   void handleBackButton() {
-    destination.value = Destinations.home;
+    selectedProject.value = null;
   }
 
-  void selectProject(ProjectDestination project) {
-    destination.value = project;
+  void selectProject(Project project) {
+    selectedProject.value = project;
   }
 
   void setScaffoldMessanger(ScaffoldMessengerState messanger) =>
@@ -48,14 +48,14 @@ class AppViewModel extends RootEmitter {
   }
 
   String get title {
-    final dest = destination.value;
-    if (dest is ProjectDestination) return dest.title;
+    final dest = selectedProject.value;
+    if (dest is Project) return dest.title;
     return 'Portfolio';
   }
 
   @override
   get children => {
-        destination,
+        selectedProject,
         focalPiece,
         showMainApp,
         showBackButton,
@@ -63,7 +63,7 @@ class AppViewModel extends RootEmitter {
         theme,
       };
   @override
-  get dependencies => {destination, theme};
+  get dependencies => {selectedProject, theme};
 }
 
 final _appViewModel = AppViewModel();
@@ -105,7 +105,7 @@ class _RouterChild extends StatelessWidget {
                       automaticallyImplyLeading: false,
                       leading: const _Leading(),
                     ),
-                    body: const ScaffoldCapture(child: DestinationSelector()),
+                    body: const ScaffoldCapture(child: ProjectSelector()),
                   ),
                   BuiltWithFlutterCornerBanner.positioned(
                     bannerPosition: CornerBannerPosition.topRight,

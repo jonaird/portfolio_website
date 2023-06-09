@@ -11,7 +11,6 @@ export 'dart:convert';
 export './app/app.dart';
 import './app/app.dart';
 export 'app/home/home.dart';
-export 'app/destination_selector/destination_selector.dart';
 export 'utils.dart';
 export 'app/app_router.dart';
 export 'app/focal_piece/focal_piece.dart';

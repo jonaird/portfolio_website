@@ -1,5 +1,5 @@
 import 'package:website/main.dart';
-import './projects/projects.dart';
+export './projects/projects.dart';
 
 class HomePage extends StatelessWidgetConsumer<AppViewModel> {
   const HomePage({super.key});
@@ -15,14 +15,14 @@ class HomePage extends StatelessWidgetConsumer<AppViewModel> {
           width: context.windowSize.width,
           height: context.windowSize.height + 1000,
           child: ListView(
-            physics: vm.destination.value == Destinations.home
+            physics: vm.selectedProject.value == null
                 ? null
                 : const NeverScrollableScrollPhysics(),
             children: const [
               Gap(500),
               Bio(),
               Gap(48),
-              Projects(),
+              ProjectSection(),
               Gap(648),
             ],
           ),

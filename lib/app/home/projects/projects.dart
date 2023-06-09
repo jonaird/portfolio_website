@@ -1,9 +1,81 @@
 import 'package:website/main.dart';
+export 'bsv_news.dart';
+export 'project_selector.dart';
 
-const _textColor = Color(0xFFCFD8DC);
+enum Project {
+  bsvNews(
+    title: 'BSV News',
+    subtitle: 'Fullstack Development',
+    path: '/bsvNews',
+    content: SizedBox(
+      width: 330,
+      height: 200,
+      child: Center(child: BsvNews()),
+    ),
+  ),
 
-class Projects extends StatelessWidget {
-  const Projects({super.key});
+  changeEmitter(
+    path: '/changeEmitter',
+    title: 'change_emitter',
+    subtitle: 'Flutter Expertise',
+    content: Placeholder(),
+  ),
+
+  verso(
+    title: 'Verso',
+    subtitle: 'Product Design',
+    path: '/verso',
+    content: Placeholder(),
+  );
+
+  const Project({
+    required this.path,
+    required this.title,
+    required this.subtitle,
+    required this.content,
+  });
+  final String path;
+  final String title;
+  final String subtitle;
+  final Widget content;
+
+  static final keys =
+      Project.values.asMap().map((key, value) => MapEntry(value, GlobalKey()));
+
+  GlobalKey get key => keys[this]!;
+
+  static Project? of(BuildContext context) {
+    return context
+        .select<AppViewModel, Project?>((state) => state.selectedProject.value);
+  }
+
+  static Project? fromUri(String uri) {
+    final destList = List.from(values)
+      ..retainWhere((element) => element.path == uri);
+    if (destList.isEmpty) return null;
+    return destList.first;
+  }
+
+  Offset get origin {
+    final size = MediaQuery.of(key.currentContext!).size;
+    final y = key.offset.dy +
+        key.offset.dy / (size.height / key.projectCardSize.height - 1);
+    final scaledWidth = (size.width * key.projectCardSize.height / size.height);
+    final scaledOffsetX =
+        key.offset.dx + (key.projectCardSize.width - scaledWidth) / 2;
+    final x = scaledOffsetX +
+        scaledOffsetX / (size.height / key.projectCardSize.height - 1);
+    return Offset(x, y);
+  }
+
+  double get scale {
+    final size = MediaQuery.of(key.currentContext!).size;
+    return size.height / key.projectCardSize.height;
+  }
+}
+
+class ProjectSection extends StatelessWidget {
+  const ProjectSection({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,13 +86,13 @@ class Projects extends StatelessWidget {
           style: Theme.of(context).textTheme.displayLarge,
         ),
         const Gap(48),
-        Wrap(
+        const Wrap(
           spacing: 24,
           runSpacing: 24,
           children: [
-            Project(Destinations.bsvNews),
-            Project(Destinations.changeEmitter),
-            Project(Destinations.verso),
+            ProjectDisplay(Project.bsvNews),
+            ProjectDisplay(Project.changeEmitter),
+            ProjectDisplay(Project.verso),
           ],
         )
       ],
@@ -28,23 +100,33 @@ class Projects extends StatelessWidget {
   }
 }
 
-class Project extends StatelessWidgetConsumer<AppViewModel> {
-  const Project(this.project, {super.key});
-  final ProjectDestination project;
+class ProjectDisplay extends StatelessWidgetConsumer<AppViewModel> {
+  const ProjectDisplay(this.project, {super.key});
+  final Project project;
 
   @override
   Widget consume(BuildContext context, vm) {
-    return AnimatedOpacity(
-      opacity: vm.destination.value == project ? 0 : 1,
-      duration: const Duration(milliseconds: 400),
-      child: ProjectCard(project),
+    final selected = vm.selectedProject.value == project;
+    return SizedBox(
+      width: 330,
+      height: 200,
+      child: Stack(
+        children: [
+          if (selected) project.content,
+          AnimatedOpacity(
+            opacity: selected ? 0 : 1,
+            duration: const Duration(milliseconds: 400),
+            child: ProjectCard(project),
+          ),
+        ],
+      ),
     );
   }
 }
 
 class ProjectCard extends StatelessWidget {
   const ProjectCard(this.project, {super.key});
-  final ProjectDestination project;
+  final Project project;
 
   final _borderRadius = 9.0;
 

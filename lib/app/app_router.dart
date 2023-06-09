@@ -1,8 +1,8 @@
 import '../main.dart';
 
 class AppRouterConfig {
-  AppRouterConfig(this.destination);
-  final Destination destination;
+  AppRouterConfig(this.selectedProject);
+  final Project? selectedProject;
 }
 
 class RouteInfoParser extends RouteInformationParser<AppRouterConfig> {
@@ -10,12 +10,13 @@ class RouteInfoParser extends RouteInformationParser<AppRouterConfig> {
   Future<AppRouterConfig> parseRouteInformation(
       RouteInformation routeInformation) {
     final uri = routeInformation.location!;
-    return Future.value(AppRouterConfig(Destination.fromUri(uri)));
+    return Future.value(AppRouterConfig(Project.fromUri(uri)));
   }
 
   @override
   RouteInformation? restoreRouteInformation(AppRouterConfig configuration) {
-    return RouteInformation(location: configuration.destination.path);
+    return RouteInformation(
+        location: configuration.selectedProject?.path ?? '/');
   }
 }
 
@@ -38,16 +39,16 @@ class RouterDelegateState extends EmitterContainer
 
   @override
   AppRouterConfig? get currentConfiguration =>
-      AppRouterConfig(appViewModel.destination.value);
+      AppRouterConfig(appViewModel.selectedProject.value);
 
   @override
   Future<void> setInitialRoutePath(AppRouterConfig configuration) async {
-    appViewModel.initialDestination = configuration.destination;
+    appViewModel.initialRoute = configuration.selectedProject;
   }
 
   @override
   Future<void> setNewRoutePath(AppRouterConfig configuration) async {
-    appViewModel.destination.value = configuration.destination;
+    appViewModel.selectedProject.value = configuration.selectedProject;
   }
 
   @override
@@ -59,5 +60,5 @@ class RouterDelegateState extends EmitterContainer
   Set<ChangeEmitter> get children => {appViewModel};
 
   @override
-  get dependencies => {appViewModel.destination};
+  get dependencies => {appViewModel.selectedProject};
 }

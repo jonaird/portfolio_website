@@ -1,32 +1,31 @@
-import '../../main.dart';
-export 'destination.dart';
+import 'package:website/main.dart';
 
-class DestinationSelector extends StatefulWidget {
-  const DestinationSelector({Key? key}) : super(key: key);
+class ProjectSelector extends StatefulWidget {
+  const ProjectSelector({Key? key}) : super(key: key);
 
   @override
-  State<DestinationSelector> createState() => _DestinationSelectorState();
+  State<ProjectSelector> createState() => _ProjectSelectorState();
 }
 
-class _DestinationSelectorState extends State<DestinationSelector>
+class _ProjectSelectorState extends State<ProjectSelector>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
   late Animation<double> _scaleAnimation;
   late Animation<Offset> _originAnimation;
-  late Destination _destination;
+  late Project? _selectedProject;
   var _initialBuild = true;
 
   @override
   void didChangeDependencies() {
-    final destination = Destination.of(context);
+    final selectedProject = Project.of(context);
     if (_initialBuild) {
-      _destination = destination;
+      _selectedProject = selectedProject;
       _controller = AnimationController(
           vsync: this, duration: const Duration(milliseconds: 400));
       _controller.addListener(() => setState(() {}));
       _scaleAnimation = _controller.drive<double>(Tween<double>(
-        begin: _destination.scale,
-        end: _destination.scale,
+        begin: _selectedProject?.scale ?? 1,
+        end: _selectedProject?.scale ?? 1,
       ));
       _originAnimation = _controller.drive(
           Tween<Offset>(begin: const Offset(0, 0), end: const Offset(0, 0)));
@@ -39,42 +38,41 @@ class _DestinationSelectorState extends State<DestinationSelector>
         }
       });
     } else {
-      goTo(destination);
+      goTo(selectedProject);
     }
 
     super.didChangeDependencies();
   }
 
-  void goTo(Destination newDestination) {
+  void goTo(Project? newSelectedProject) {
     var curved = CurvedAnimation(
       parent: _controller,
-      curve: newDestination == Destinations.home
-          ? Curves.easeInOut
-          : Curves.fastOutSlowIn,
+      curve:
+          newSelectedProject == null ? Curves.easeInOut : Curves.fastOutSlowIn,
     );
 
     final originCurve = CurvedAnimation(
         parent: _controller,
-        curve: newDestination is ProjectDestination
+        curve: newSelectedProject is Project
             ? Curves.easeOutExpo
             : Curves.fastOutSlowIn);
 
     _scaleAnimation = curved.drive<double>(Tween<double>(
-      begin: _destination.scale,
-      end: newDestination.scale,
+      begin: _selectedProject?.scale ?? 1,
+      end: newSelectedProject?.scale ?? 1,
     ));
     _originAnimation = originCurve.drive(Tween<Offset>(
-      begin: _destination == Destinations.home
-          ? newDestination.origin
-          : _destination.origin,
-      end: newDestination == Destinations.home
-          ? _destination.origin
-          : newDestination.origin,
+      begin: _selectedProject == null
+          ? newSelectedProject!.origin
+          : _selectedProject!.origin,
+      end: newSelectedProject == null
+          ? _selectedProject!.origin
+          : newSelectedProject.origin,
     ));
     _controller.value = 0;
     _controller.forward();
 
-    _destination = newDestination;
+    _selectedProject = newSelectedProject;
   }
 
   @override
@@ -90,7 +88,7 @@ class _DestinationSelectorState extends State<DestinationSelector>
         Transform.scale(
           scale: _scaleAnimation.status == AnimationStatus.forward
               ? _scaleAnimation.value
-              : _destination.scale,
+              : _selectedProject?.scale ?? 1,
           origin: _originAnimation.value,
           alignment: Alignment.topLeft,
           child: const HomePage(),
