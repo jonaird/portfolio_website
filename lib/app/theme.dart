@@ -41,9 +41,15 @@ final _darkTheme = ThemeData(
   ),
   textTheme: _textTheme.copyWith(
     bodyLarge: _textTheme.bodyMedium!.copyWith(
-        fontSize: 24,
-        color: Colors.white.withAlpha(170),
-        fontWeight: FontWeight.w100),
+      fontSize: 24,
+      color: Colors.white.withAlpha(170),
+      fontWeight: FontWeight.w100,
+    ),
+    bodyMedium: _textTheme.bodyMedium!.copyWith(
+      fontSize: 20,
+      color: Colors.white.withAlpha(170),
+      fontWeight: FontWeight.w100,
+    ),
     displaySmall: _textTheme.displaySmall!.copyWith(
       color: Colors.white.withAlpha(200),
     ),

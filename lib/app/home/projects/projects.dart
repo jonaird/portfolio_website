@@ -7,11 +7,7 @@ enum Project {
     title: 'BSV News',
     subtitle: 'Fullstack Development',
     path: '/bsvNews',
-    content: SizedBox(
-      width: 330,
-      height: 200,
-      child: Center(child: BsvNews()),
-    ),
+    content: BsvNews(),
   ),
 
   changeEmitter(
@@ -162,6 +158,28 @@ class ProjectCard extends StatelessWidget {
               ),
             ),
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class ProjectContainer extends StatelessWidget {
+  const ProjectContainer({super.key, required this.child});
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    const width = 900.0;
+    return Container(
+      width: 330,
+      height: 200,
+      alignment: Alignment.topCenter,
+      child: SizedBox(
+        width: width / Project.bsvNews.scale,
+        child: FittedBox(
+          fit: BoxFit.contain,
+          child: SizedBox(width: width, child: child),
         ),
       ),
     );
