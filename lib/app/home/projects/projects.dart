@@ -102,15 +102,14 @@ class ProjectDisplay extends StatelessWidgetConsumer<AppViewModel> {
 
   @override
   Widget consume(BuildContext context, vm) {
-    final selected = vm.selectedProject.value == project;
     return SizedBox(
       width: 330,
       height: 200,
       child: Stack(
         children: [
-          if (selected) project.content,
+          if (vm.showProjectContent(project)) project.content,
           AnimatedOpacity(
-            opacity: selected ? 0 : 1,
+            opacity: vm.selectedProject.value == project ? 0 : 1,
             duration: const Duration(milliseconds: 400),
             child: ProjectCard(project),
           ),

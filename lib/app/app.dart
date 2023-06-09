@@ -3,7 +3,7 @@ import 'theme.dart';
 
 class AppViewModel extends RootEmitter {
   late final Project? initialRoute;
-  final selectedProject = ValueEmitter<Project?>(null);
+  final selectedProject = ValueEmitter<Project?>(null, keepHistory: true);
   final animating = ValueEmitter<bool>(false);
   final focalPiece = FocalPieceViewModel();
   late final showBackButton = ValueEmitter.reactive(
@@ -47,6 +47,11 @@ class AppViewModel extends RootEmitter {
     ));
   }
 
+  bool showProjectContent(Project project) {
+    return selectedProject.value == project ||
+        (selectedProject.previous == project && animating.value);
+  }
+
   String get title {
     final dest = selectedProject.value;
     if (dest is Project) return dest.title;
@@ -63,7 +68,7 @@ class AppViewModel extends RootEmitter {
         theme,
       };
   @override
-  get dependencies => {selectedProject, theme};
+  get dependencies => {selectedProject, theme, animating};
 }
 
 final _appViewModel = AppViewModel();
