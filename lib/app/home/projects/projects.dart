@@ -1,5 +1,5 @@
 import 'package:website/main.dart';
-export 'bsv_news.dart';
+export 'project_content.dart';
 export 'project_selector.dart';
 
 enum Project {
@@ -14,14 +14,27 @@ enum Project {
     path: '/changeEmitter',
     title: 'change_emitter',
     subtitle: 'Flutter Expertise',
-    content: Placeholder(),
+    content: ChangeEmitterContent(),
   ),
 
   verso(
     title: 'Verso',
     subtitle: 'Product Design',
     path: '/verso',
-    content: Placeholder(),
+    content: VersoContent(),
+  ),
+
+  forceDirectedGraph(
+    title: 'force_directed_graph',
+    subtitle: 'Fun with Graphs',
+    path: '/forceDirectedGraph',
+    content: ForceDirectedGraph(),
+  ),
+  motionBlur(
+    title: 'motion_blur',
+    subtitle: 'The Power of Shaders',
+    path: '/forceDirectedGraph',
+    content: MotionBlurContent(),
   );
 
   const Project({
@@ -82,14 +95,14 @@ class ProjectSection extends StatelessWidget {
           style: Theme.of(context).textTheme.displayLarge,
         ),
         const Gap(48),
-        const Wrap(
-          spacing: 24,
-          runSpacing: 24,
-          children: [
-            ProjectDisplay(Project.bsvNews),
-            ProjectDisplay(Project.changeEmitter),
-            ProjectDisplay(Project.verso),
-          ],
+        SizedBox(
+          width: 1200,
+          child: Wrap(
+            alignment: WrapAlignment.center,
+            spacing: 24,
+            runSpacing: 24,
+            children: Project.values.map((e) => ProjectDisplay(e)).toList(),
+          ),
         )
       ],
     );
@@ -108,10 +121,13 @@ class ProjectDisplay extends StatelessWidgetConsumer<AppViewModel> {
       child: Stack(
         children: [
           if (vm.showProjectContent(project)) project.content,
-          AnimatedOpacity(
-            opacity: vm.selectedProject.value == project ? 0 : 1,
-            duration: const Duration(milliseconds: 400),
-            child: ProjectCard(project),
+          IgnorePointer(
+            ignoring: vm.selectedProject.value == project,
+            child: AnimatedOpacity(
+              opacity: vm.selectedProject.value == project ? 0 : 1,
+              duration: const Duration(milliseconds: 400),
+              child: ProjectCard(project),
+            ),
           ),
         ],
       ),
@@ -146,9 +162,12 @@ class ProjectCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(project.title,
-                      // style: const TextStyle(color: _textColor, fontSize: 36),
-                      style: Theme.of(context).textTheme.headlineMedium),
+                  FittedBox(
+                    fit: BoxFit.contain,
+                    child: Text(project.title,
+                        // style: const TextStyle(color: _textColor, fontSize: 36),
+                        style: Theme.of(context).textTheme.headlineMedium),
+                  ),
                   Text(
                     project.subtitle,
                     style: Theme.of(context).textTheme.headlineSmall,
@@ -173,7 +192,7 @@ class ProjectContainer extends StatelessWidget {
     return Container(
       width: 330,
       height: 200,
-      alignment: Alignment.topCenter,
+      alignment: Alignment.center,
       child: SizedBox(
         width: width / Project.bsvNews.scale,
         child: FittedBox(
