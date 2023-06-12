@@ -140,7 +140,7 @@ enum FocalPieceStages {
           width: 93.0,
           height: 28.0,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(0),
+            borderRadius: BorderRadius.circular(3),
             boxShadow: _boxShadow,
           ),
         )
