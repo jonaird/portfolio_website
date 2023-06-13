@@ -138,6 +138,7 @@ class ForceDirectedGraph extends StatelessWidget {
 }
 
 const _motionBlurText = '''
+Flutter’s recent support for fragment shaders gives developers a huge new set of possibilities for immersive experiences in apps. motion_blur is a Flutter package that uses shaders to add motion blur to any moving widget. Simply add the motion_blur package to your project and wrap your moving widget in a MotionBlur widget and like magic, there’s motion blur!
 ''';
 
 class MotionBlurContent extends StatelessWidget {
