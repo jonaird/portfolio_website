@@ -18,7 +18,8 @@ extension OS on GlobalKey {
   }
 
   Size get projectCardSize {
-    return (currentContext!.findRenderObject()! as RenderBox).size;
+    return const Size(330, 200);
+    // return (currentContext!.findRenderObject()! as RenderBox).size;
   }
 
   bool get offsetIsAvailable => currentContext?.findRenderObject() is RenderBox;

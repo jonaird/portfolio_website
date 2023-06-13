@@ -14,6 +14,7 @@ class _ProjectSelectorState extends State<ProjectSelector>
   late Animation<Offset> _originAnimation;
   late Project? _selectedProject;
   var _initialBuild = true;
+  late Size _lastWindowSize = MediaQuery.of(context).size;
 
   @override
   void didChangeDependencies() {
@@ -75,6 +76,20 @@ class _ProjectSelectorState extends State<ProjectSelector>
     _selectedProject = newSelectedProject;
   }
 
+  void checkForWindowResize() {
+    final currentSize = MediaQuery.of(context).size;
+    if (currentSize != _lastWindowSize) {
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+        setState(() {
+          _originAnimation = _controller.drive(Tween<Offset>(
+              begin: _selectedProject?.origin ?? const Offset(0, 0),
+              end: _selectedProject?.origin ?? const Offset(0, 0)));
+        });
+      });
+    }
+    _lastWindowSize = currentSize;
+  }
+
   @override
   void dispose() {
     _controller.dispose();
@@ -83,6 +98,7 @@ class _ProjectSelectorState extends State<ProjectSelector>
 
   @override
   Widget build(BuildContext context) {
+    checkForWindowResize();
     return Stack(
       children: [
         Transform.scale(
