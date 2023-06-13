@@ -195,36 +195,40 @@ class _MotionBlurDemoState extends State<MotionBlurDemo>
   @override
   Widget build(BuildContext context) {
     // final width = 40 * (sin(_controller.value * 2 * pi) + 1) + 15;
-    const width = 100.0;
+    const width = 50.0;
     return Column(
       children: [
-        const SizedBox(
-          height: 200,
-        ),
-        SizedBox(
-          width: 400,
-          height: 350,
-          child: Center(
-            child: Transform.translate(
-              offset: Offset(sin(_controller.value * 2 * pi) * 150,
-                  cos(_controller.value * 2 * pi) * 150 - 150),
-              child: MotionBlur(
-                enabled: _enabled,
-                intensity: 1.5,
-                child: Padding(
-                  padding: const EdgeInsets.all(30),
-                  child: Container(
-                    width: width,
-                    height: width,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(width / 2),
-                        color: Colors.blueGrey.shade600),
+        Card(
+          color: Colors.white,
+          child: Padding(
+            padding: const EdgeInsets.only(top: 300),
+            child: SizedBox(
+              width: 400,
+              height: 150,
+              child: Center(
+                child: Transform.translate(
+                  offset: Offset(sin(_controller.value * 2 * pi) * 150,
+                      cos(_controller.value * 2 * pi) * 150 - 150),
+                  child: MotionBlur(
+                    enabled: _enabled,
+                    intensity: 1.5,
+                    child: Padding(
+                      padding: const EdgeInsets.all(30),
+                      child: Container(
+                        width: width,
+                        height: width,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(width / 2),
+                            color: Colors.green),
+                      ),
+                    ),
                   ),
                 ),
               ),
             ),
           ),
         ),
+        const Gap(24),
         Text('Motion blur: ${_enabled ? 'enabled' : 'disabled'}'),
         Switch(
           value: _enabled,
