@@ -12,7 +12,7 @@ class _ProjectSelectorState extends State<ProjectSelector>
   late final AnimationController _controller;
   late Animation<double> _scaleAnimation;
   late Animation<Offset> _originAnimation;
-  late Project? _selectedProject;
+  Project? _selectedProject;
   var _initialBuild = true;
   late Size _lastWindowSize = MediaQuery.of(context).size;
 
@@ -38,7 +38,7 @@ class _ProjectSelectorState extends State<ProjectSelector>
           context.read<AppViewModel>()!.animating.value = false;
         }
       });
-    } else {
+    } else if (selectedProject != _selectedProject) {
       goTo(selectedProject);
     }
 
