@@ -65,10 +65,24 @@ class Bio extends StatelessWidget {
                             'Hi! My name is',
                             style: Theme.of(context).textTheme.displaySmall,
                           ),
-                          Text(
-                            'Jonathan Aird \nand I build apps',
+                          RichText(
+                              text: TextSpan(
+                            children: [
+                              const TextSpan(text: "Jonathan Aird\nand "),
+                              TextSpan(
+                                text: 'I build apps',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .displayMedium!
+                                    .copyWith(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .secondary,
+                                    ),
+                              )
+                            ],
                             style: Theme.of(context).textTheme.displayMedium,
-                          ),
+                          )),
                         ],
                       ),
                       const Gap(24),
