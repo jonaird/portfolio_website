@@ -32,11 +32,8 @@ class _ProjectSelectorState extends State<ProjectSelector>
           Tween<Offset>(begin: const Offset(0, 0), end: const Offset(0, 0)));
       _initialBuild = false;
       _controller.addStatusListener((status) {
-        if (status == AnimationStatus.forward) {
-          context.read<AppViewModel>()!.animating.value = true;
-        } else if (status == AnimationStatus.completed) {
-          context.read<AppViewModel>()!.animating.value = false;
-        }
+        context.read<AppViewModel>()!.animating.value =
+            status == AnimationStatus.forward;
       });
     } else if (selectedProject != _selectedProject) {
       goTo(selectedProject);
