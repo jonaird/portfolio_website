@@ -188,7 +188,10 @@ class ProjectContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const width = 900.0;
+    var width = 900.0;
+    final screenWidth = MediaQuery.of(context).size.width;
+    if (screenWidth < width) width = screenWidth;
+
     return Container(
       width: 330,
       height: 200,
@@ -197,7 +200,8 @@ class ProjectContainer extends StatelessWidget {
         width: width / Project.bsvNews.scale,
         child: FittedBox(
           fit: BoxFit.contain,
-          child: SizedBox(width: width, child: child),
+          child: SizedBox(
+              width: width, height: 200 * Project.bsvNews.scale, child: child),
         ),
       ),
     );
