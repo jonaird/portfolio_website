@@ -66,7 +66,8 @@ enum Project {
   }
 
   Offset get origin {
-    final size = MediaQuery.of(key.currentContext!).size;
+    var size = MediaQuery.of(key.currentContext!).size;
+    size = Size(size.width, size.height - 56);
     final y = key.offset.dy +
         key.offset.dy / (size.height / key.projectCardSize.height - 1);
     final scaledWidth = (size.width * key.projectCardSize.height / size.height);
@@ -78,8 +79,9 @@ enum Project {
   }
 
   double get scale {
-    final size = MediaQuery.of(key.currentContext!).size;
-    return size.height / key.projectCardSize.height;
+    //have to subtract the height of the app bar
+    final height = MediaQuery.of(key.currentContext!).size.height - 56;
+    return height / key.projectCardSize.height;
   }
 }
 
@@ -124,7 +126,7 @@ class ProjectDisplay extends StatelessWidgetConsumer<AppViewModel> {
           IgnorePointer(
             ignoring: vm.selectedProject.value == project,
             child: AnimatedOpacity(
-              opacity: vm.selectedProject.value == project ? 0 : 1,
+              opacity: vm.selectedProject.isNotNull ? 0 : 1,
               duration: const Duration(milliseconds: 400),
               child: ProjectCard(project),
             ),

@@ -48,100 +48,106 @@ class Bio extends StatelessWidget {
         builder: (context, showFullBio) {
           return Container(
             alignment: Alignment.topCenter,
-            child: SizedBox(
-              width: 730,
-              child: Column(
-                children: [
-                  const Gap(80),
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: SizedBox(
+                width: 730,
+                child: Column(
+                  children: [
+                    const Gap(80),
+                    FittedBox(
+                      fit: BoxFit.fitWidth,
+                      child: Row(
                         children: [
-                          Text(
-                            'Hi! My name is',
-                            style: Theme.of(context).textTheme.displaySmall,
-                          ),
-                          RichText(
-                              text: TextSpan(
+                          Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const TextSpan(text: "Jonathan Aird\nand "),
-                              TextSpan(
-                                text: 'I build apps',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .displayMedium!
-                                    .copyWith(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .secondary,
-                                    ),
-                              )
+                              Text(
+                                'Hi! My name is',
+                                style: Theme.of(context).textTheme.displaySmall,
+                              ),
+                              RichText(
+                                  text: TextSpan(
+                                children: [
+                                  const TextSpan(text: "Jonathan Aird\nand "),
+                                  TextSpan(
+                                    text: 'I build apps',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .displayMedium!
+                                        .copyWith(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .secondary,
+                                        ),
+                                  )
+                                ],
+                                style:
+                                    Theme.of(context).textTheme.displayMedium,
+                              )),
                             ],
-                            style: Theme.of(context).textTheme.displayMedium,
-                          )),
+                          ),
+                          const Gap(101),
+                          Material(
+                            color: Theme.of(context).colorScheme.surface,
+                            elevation: 2,
+                            child: Padding(
+                              padding: const EdgeInsets.all(4.0),
+                              child: SizedBox(
+                                width: 225,
+                                height: 225,
+                                child: Image.asset('assets/headshot.jpeg'),
+                              ),
+                            ),
+                          ),
                         ],
                       ),
-                      const Gap(24),
-                      Material(
-                        color: Theme.of(context).colorScheme.surface,
-                        elevation: 2,
-                        child: Padding(
-                          padding: const EdgeInsets.all(4.0),
-                          child: SizedBox(
-                            width: 225,
-                            height: 225,
-                            child: Image.asset('assets/headshot.jpeg'),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const Gap(24),
-                  Text(
-                    _shortBio,
-                    style: Theme.of(context).textTheme.bodyLarge,
-                  ),
-                  ClipRRect(
-                    clipBehavior: Clip.antiAlias,
-                    child: AnimatedSize(
-                      duration: const Duration(milliseconds: 200),
-                      curve: Curves.easeInOut,
-                      alignment: Alignment.topCenter,
-                      child: showFullBio.value
-                          ? Text(
-                              _longBio,
-                              style: Theme.of(context).textTheme.bodyLarge,
-                            )
-                          : Container(
-                              alignment: Alignment.topCenter,
-                              height: 1,
-                              width: 730,
-                              child: FittedBox(
-                                fit: BoxFit.none,
+                    ),
+                    const Gap(24),
+                    Text(
+                      _shortBio,
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                    ClipRRect(
+                      clipBehavior: Clip.antiAlias,
+                      child: AnimatedSize(
+                        duration: const Duration(milliseconds: 200),
+                        curve: Curves.easeInOut,
+                        alignment: Alignment.topCenter,
+                        child: showFullBio.value
+                            ? Text(
+                                _longBio,
+                                style: Theme.of(context).textTheme.bodyLarge,
+                              )
+                            : Container(
                                 alignment: Alignment.topCenter,
-                                child: SizedBox(
-                                  width: 730,
-                                  child: Text(
-                                    _longBio,
-                                    style:
-                                        Theme.of(context).textTheme.bodyLarge,
+                                height: 1,
+                                width: 730,
+                                child: FittedBox(
+                                  fit: BoxFit.none,
+                                  alignment: Alignment.topCenter,
+                                  child: SizedBox(
+                                    width: 730,
+                                    child: Text(
+                                      _longBio,
+                                      style:
+                                          Theme.of(context).textTheme.bodyLarge,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
+                      ),
                     ),
-                  ),
-                  TextButton(
-                    onPressed: showFullBio.toggle,
-                    child: Text(
-                      showFullBio.value ? "Less about me" : 'More about me',
-                    ),
-                  )
-                ],
+                    const Gap(12),
+                    TextButton(
+                      onPressed: showFullBio.toggle,
+                      child: Text(
+                        showFullBio.value ? "Less about me" : 'More about me',
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
           );

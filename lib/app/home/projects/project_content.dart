@@ -60,39 +60,42 @@ class ChangeEmitterContent extends StatelessWidget {
       child: Container(
         width: 900,
         alignment: Alignment.topCenter,
-        child: SizedBox(
-          width: 650,
-          child: ListView(
-            children: [
-              const Gap(24),
-              Container(
-                alignment: Alignment.topCenter,
-                child: Image.asset(
-                  'assets/OST.png',
-                  fit: BoxFit.contain,
-                  width: 650,
-                ),
-              ),
-              const Gap(24),
-              const SizedBox(
-                width: 700,
-                child: Text(_changeEmitterText),
-              ),
-              const Gap(24),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  ElevatedButton(
-                      onPressed: () {}, child: const Text("View on Github")),
-                  const Gap(12),
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: const Text('Read the Design Doc'),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          child: SizedBox(
+            width: 650,
+            child: ListView(
+              children: [
+                const Gap(24),
+                Container(
+                  alignment: Alignment.topCenter,
+                  child: Image.asset(
+                    'assets/OST.png',
+                    fit: BoxFit.contain,
+                    width: 650,
                   ),
-                ],
-              ),
-              const Gap(24)
-            ],
+                ),
+                const Gap(24),
+                const SizedBox(
+                  width: 700,
+                  child: Text(_changeEmitterText),
+                ),
+                const Gap(24),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    ElevatedButton(
+                        onPressed: () {}, child: const Text("View on Github")),
+                    const Gap(12),
+                    ElevatedButton(
+                      onPressed: () {},
+                      child: const Text('Read the Design Doc'),
+                    ),
+                  ],
+                ),
+                const Gap(24)
+              ],
+            ),
           ),
         ),
       ),
