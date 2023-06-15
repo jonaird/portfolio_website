@@ -124,7 +124,7 @@ class ProjectDisplay extends StatelessWidgetConsumer<AppViewModel> {
         children: [
           if (vm.showProjectContent(project)) project.content,
           IgnorePointer(
-            ignoring: vm.selectedProject.value == project,
+            ignoring: vm.selectedProject.isNotNull,
             child: AnimatedOpacity(
               opacity: vm.selectedProject.isNotNull ? 0 : 1,
               duration: const Duration(milliseconds: 400),
@@ -193,6 +193,9 @@ class ProjectContainer extends StatelessWidget {
     var width = 900.0;
     final screenWidth = MediaQuery.of(context).size.width;
     if (screenWidth < width) width = screenWidth;
+    var height = 200 * Project.bsvNews.scale;
+    // final windowHeight = MediaQuery.of(context).size.height - 56;
+    // if (windowHeight < height) height = windowHeight;
 
     return Container(
       width: 330,
@@ -200,10 +203,10 @@ class ProjectContainer extends StatelessWidget {
       alignment: Alignment.center,
       child: SizedBox(
         width: width / Project.bsvNews.scale,
+        height: 200,
         child: FittedBox(
-          fit: BoxFit.contain,
-          child: SizedBox(
-              width: width, height: 200 * Project.bsvNews.scale, child: child),
+          fit: BoxFit.fitHeight,
+          child: SizedBox(width: width, height: height, child: child),
         ),
       ),
     );
