@@ -6,31 +6,25 @@ class HomePage extends StatelessWidgetConsumer<AppViewModel> {
 
   @override
   Widget consume(BuildContext context, vm) {
-    return Scrollbar(
-      child: SizedBox(
-        width: MediaQuery.of(context).size.width,
-        child: FittedBox(
-          fit: BoxFit.none,
-          alignment: Alignment.center,
-          child: SizedBox(
-            width: context.windowSize.width,
-            height: context.windowSize.height + 1000,
-            child: ScrollConfiguration(
-              behavior:
-                  ScrollConfiguration.of(context).copyWith(scrollbars: false),
-              child: ListView(
-                physics: vm.selectedProject.value == null
-                    ? null
-                    : const NeverScrollableScrollPhysics(),
-                children: const [
-                  Gap(500),
-                  Bio(),
-                  Gap(48),
-                  ProjectSection(),
-                  Gap(648),
-                ],
-              ),
-            ),
+    return SizedBox(
+      width: MediaQuery.of(context).size.width,
+      child: FittedBox(
+        fit: BoxFit.none,
+        alignment: Alignment.center,
+        child: SizedBox(
+          width: context.windowSize.width,
+          height: context.windowSize.height + 400,
+          child: ListView(
+            physics: vm.selectedProject.value == null
+                ? null
+                : const NeverScrollableScrollPhysics(),
+            children: const [
+              Gap(200),
+              Bio(),
+              Gap(48),
+              ProjectSection(),
+              Gap(348),
+            ],
           ),
         ),
       ),
