@@ -54,7 +54,13 @@ class ChangeEmitterContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isOverlay =
+        context.findAncestorWidgetOfExactType<ProjectContentOverlay>() != null;
+
     return SingleChildScrollView(
+      controller: isOverlay
+          ? Project.changeEmitter.controllers.overlayController
+          : Project.changeEmitter.controllers.baseController,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24),
         child: Container(

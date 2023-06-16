@@ -53,6 +53,23 @@ enum Project {
 
   GlobalKey get key => keys[this]!;
 
+  static final _controllers = Project.values.asMap().map((key, value) =>
+      MapEntry(value, (
+        baseController: ScrollController(),
+        overlayController: ScrollController()
+      )));
+
+  ({ScrollController baseController, ScrollController overlayController})
+      get controllers => _controllers[this]!;
+
+  static void linkControllers() {
+    for (final pair in _controllers.values) {
+      pair.overlayController.addListener(() {
+        pair.baseController.jumpTo(pair.overlayController.offset);
+      });
+    }
+  }
+
   static Project? of(BuildContext context) {
     return context
         .select<AppViewModel, Project?>((state) => state.selectedProject.value);

@@ -28,6 +28,10 @@ class AppViewModel extends RootEmitter {
   );
   ScaffoldMessengerState? _scaffoldMessenger;
 
+  AppViewModel() {
+    Project.linkControllers();
+  }
+
   void handleBackButton() {
     selectedProject.value = null;
   }
