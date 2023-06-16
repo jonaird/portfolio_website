@@ -72,6 +72,8 @@ final _darkTheme = ThemeData(
     cursorColor: Colors.redAccent.shade200,
     selectionColor: Colors.redAccent.shade200,
   ),
+  scrollbarTheme:
+      const ScrollbarThemeData(thumbVisibility: MaterialStatePropertyAll(true)),
 );
 final _lightTheme = ThemeData(
   scaffoldBackgroundColor: Colors.grey.shade50,

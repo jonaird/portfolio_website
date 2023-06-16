@@ -197,16 +197,15 @@ class ProjectContainer extends StatelessWidget {
     // final windowHeight = MediaQuery.of(context).size.height - 56;
     // if (windowHeight < height) height = windowHeight;
 
-    return Container(
+    return SizedBox(
       width: 330,
       height: 200,
-      alignment: Alignment.center,
-      child: SizedBox(
-        width: width / Project.bsvNews.scale,
-        height: 200,
-        child: FittedBox(
-          fit: BoxFit.fitHeight,
-          child: SizedBox(width: width, height: height, child: child),
+      child: FittedBox(
+        fit: BoxFit.fitHeight,
+        child: SizedBox(
+          width: screenWidth,
+          height: height,
+          child: child,
         ),
       ),
     );
