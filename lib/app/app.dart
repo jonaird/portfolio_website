@@ -112,11 +112,11 @@ class _RouterChild extends StatelessWidget {
                     ),
                     body: const ScaffoldCapture(child: ProjectSelector()),
                   ),
-                  // BuiltWithFlutterCornerBanner.positioned(
-                  //   bannerPosition: CornerBannerPosition.topRight,
-                  //   bannerColor: Theme.of(context).primaryColorLight,
-                  //   elevation: 2,
-                  // ),
+                  BuiltWithFlutterCornerBanner.positioned(
+                    bannerPosition: CornerBannerPosition.topRight,
+                    bannerColor: Theme.of(context).primaryColorLight,
+                    elevation: 2,
+                  ),
                 ],
               ),
             );
