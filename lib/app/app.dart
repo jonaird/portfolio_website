@@ -111,7 +111,7 @@ class _RouterChild extends StatelessWidget {
                       automaticallyImplyLeading: false,
                       leading: const _Leading(),
                     ),
-                    body: const ScaffoldCapture(child: ProjectSelector()),
+                    body: const ScaffoldCapture(child: Home()),
                   ),
                   BuiltWithFlutterCornerBanner.positioned(
                     bannerPosition: CornerBannerPosition.topRight,
@@ -123,6 +123,35 @@ class _RouterChild extends StatelessWidget {
             );
           }),
     );
+  }
+}
+
+class Home extends StatelessWidget {
+  const Home({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Stack(
+      children: [
+        ProjectSelector(),
+        ProjectContentOverlay(),
+      ],
+    );
+  }
+}
+
+class ProjectContentOverlay extends StatelessWidgetConsumer<AppViewModel> {
+  const ProjectContentOverlay({super.key});
+
+  @override
+  Widget consume(BuildContext context, vm) {
+    if (!vm.animating.value && vm.selectedProject.isNotNull) {
+      return Container(
+        color: Theme.of(context).colorScheme.background,
+        child: vm.selectedProject.value!.content,
+      );
+    }
+    return const SizedBox();
   }
 }
 
