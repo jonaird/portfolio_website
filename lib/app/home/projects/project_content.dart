@@ -16,28 +16,26 @@ class BsvNews extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ProjectContainer(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 24),
-        child: Row(
-          children: [
-            Expanded(
-              flex: 1,
-              child: Text(
-                _text,
-                overflow: TextOverflow.fade,
-                style: Theme.of(context).textTheme.bodyMedium,
-              ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 24),
+      child: Row(
+        children: [
+          Expanded(
+            flex: 1,
+            child: Text(
+              _text,
+              overflow: TextOverflow.fade,
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
-            const Gap(24),
-            const Expanded(
-              flex: 1,
-              child: Column(
-                children: [Placeholder(), Gap(12), Placeholder()],
-              ),
-            )
-          ],
-        ),
+          ),
+          const Gap(24),
+          const Expanded(
+            flex: 1,
+            child: Column(
+              children: [Placeholder(), Gap(12), Placeholder()],
+            ),
+          )
+        ],
       ),
     );
   }
@@ -56,41 +54,38 @@ class ChangeEmitterContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ProjectContainer(
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: Container(
-            alignment: Alignment.topCenter,
-            child: SizedBox(
-              width: 700,
-              child: Column(
-                children: [
-                  const Gap(24),
-                  Image.asset(
-                    'assets/OST.png',
-                    fit: BoxFit.contain,
-                    width: 650,
-                  ),
-                  const Gap(24),
-                  const Text(_changeEmitterText),
-                  const Gap(24),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      ElevatedButton(
-                          onPressed: () {},
-                          child: const Text("View on Github")),
-                      const Gap(12),
-                      ElevatedButton(
-                        onPressed: () {},
-                        child: const Text('Read the Design Doc'),
-                      ),
-                    ],
-                  ),
-                  const Gap(48)
-                ],
-              ),
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24),
+        child: Container(
+          alignment: Alignment.topCenter,
+          child: SizedBox(
+            width: 700,
+            child: Column(
+              children: [
+                const Gap(24),
+                Image.asset(
+                  'assets/OST.png',
+                  fit: BoxFit.contain,
+                  width: 650,
+                ),
+                const Gap(24),
+                const Text(_changeEmitterText),
+                const Gap(24),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    ElevatedButton(
+                        onPressed: () {}, child: const Text("View on Github")),
+                    const Gap(12),
+                    ElevatedButton(
+                      onPressed: () {},
+                      child: const Text('Read the Design Doc'),
+                    ),
+                  ],
+                ),
+                const Gap(48)
+              ],
             ),
           ),
         ),
@@ -108,20 +103,18 @@ class VersoContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ProjectContainer(
-      child: Column(
-        children: [
-          const Gap(24),
-          const Row(children: [
-            Expanded(child: Text(_versoText)),
-            Gap(24),
-            Expanded(child: Placeholder()),
-          ]),
-          const Gap(24),
-          ElevatedButton(
-              onPressed: () {}, child: const Text('Read the Case Study'))
-        ],
-      ),
+    return Column(
+      children: [
+        const Gap(24),
+        const Row(children: [
+          Expanded(child: Text(_versoText)),
+          Gap(24),
+          Expanded(child: Placeholder()),
+        ]),
+        const Gap(24),
+        ElevatedButton(
+            onPressed: () {}, child: const Text('Read the Case Study'))
+      ],
     );
   }
 }
@@ -135,20 +128,18 @@ class ForceDirectedGraph extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ProjectContainer(
-      child: Row(children: [
-        const Expanded(child: Text(_forceDirectedGraphText)),
-        Expanded(
-            child: Container(
-          clipBehavior: Clip.antiAlias,
-          width: 300,
-          height: 500,
-          decoration: const BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(5))),
-          child: const ForceDirectedGraphDemo(),
-        )),
-      ]),
-    );
+    return Row(children: [
+      const Expanded(child: Text(_forceDirectedGraphText)),
+      Expanded(
+          child: Container(
+        clipBehavior: Clip.antiAlias,
+        width: 300,
+        height: 500,
+        decoration: const BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(5))),
+        child: const ForceDirectedGraphDemo(),
+      )),
+    ]);
   }
 }
 
@@ -161,18 +152,16 @@ class MotionBlurContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const ProjectContainer(
-      child: Column(children: [
-        Row(
-          children: [
-            Expanded(child: Text(_motionBlurText)),
-            Expanded(
-              child: MotionBlurDemo(),
-            )
-          ],
-        ),
-      ]),
-    );
+    return const Column(children: [
+      Row(
+        children: [
+          Expanded(child: Text(_motionBlurText)),
+          Expanded(
+            child: MotionBlurDemo(),
+          )
+        ],
+      ),
+    ]);
   }
 }
 

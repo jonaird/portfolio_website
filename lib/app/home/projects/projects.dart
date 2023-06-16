@@ -122,7 +122,8 @@ class ProjectDisplay extends StatelessWidgetConsumer<AppViewModel> {
       height: 200,
       child: Stack(
         children: [
-          if (vm.showProjectContent(project)) project.content,
+          if (vm.showProjectContent(project))
+            ProjectContainer(child: project.content),
           IgnorePointer(
             ignoring: vm.selectedProject.isNotNull,
             child: AnimatedOpacity(

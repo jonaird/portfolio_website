@@ -34,6 +34,7 @@ class AppViewModel extends RootEmitter {
 
   void selectProject(Project project) {
     selectedProject.value = project;
+    animating.value = true;
   }
 
   void setScaffoldMessanger(ScaffoldMessengerState messanger) =>
