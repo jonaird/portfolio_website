@@ -18,7 +18,7 @@ dependencies:
   gap: ^2.0.0
   super_banners:
   http:
-
+  url_launcher:
   flutter:
     sdk: flutter
     

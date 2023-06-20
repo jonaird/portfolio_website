@@ -82,10 +82,15 @@ class ChangeEmitterContent extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     ElevatedButton(
-                        onPressed: () {}, child: const Text("View on Github")),
+                        onPressed: () => launchUrl(Uri.parse(
+                            'https://github.com/jonaird/change_emitter')),
+                        child: const Text("View on Github")),
                     const Gap(12),
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        launchUrl(Uri.parse(
+                            'https://medium.com/@jonathan.aird/observable-state-trees-a-state-management-pattern-for-flutter-af62e76da1b'));
+                      },
                       child: const Text('Read the Design Doc'),
                     ),
                   ],
@@ -119,7 +124,11 @@ class VersoContent extends StatelessWidget {
         ]),
         const Gap(24),
         ElevatedButton(
-            onPressed: () {}, child: const Text('Read the Case Study'))
+            onPressed: () {
+              launchUrl(Uri.parse(
+                  'https://medium.com/@jonathan.aird/verso-design-case-study-c43c03067cfe'));
+            },
+            child: const Text('Read the Case Study'))
       ],
     );
   }
