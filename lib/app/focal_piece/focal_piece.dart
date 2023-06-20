@@ -162,6 +162,7 @@ class FocalPiece extends StatelessWidgetConsumer<FocalPieceViewModel> {
   Widget consume(_, vm) {
     return Stack(
       children: [
+        const FocalPieceBackground(),
         Provider(vm.contactCard, child: const ContactCardContainer()),
         AnimatedAlign(
           alignment: vm.alignment,

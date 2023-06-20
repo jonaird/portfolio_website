@@ -23,13 +23,12 @@ class RouteInfoParser extends RouteInformationParser<AppRouterConfig> {
 class RouterDelegateState extends EmitterContainer
     with ListenableEmitterMixin<ContainerChange>
     implements RouterDelegate<AppRouterConfig> {
-  RouterDelegateState(this.child, this.appViewModel);
-  final Widget child;
+  RouterDelegateState(this.appViewModel);
   final AppViewModel appViewModel;
 
   @override
   Widget build(BuildContext context) {
-    return Provider(appViewModel, child: child);
+    return const RouterChild();
   }
 
   @override
