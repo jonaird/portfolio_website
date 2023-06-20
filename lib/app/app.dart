@@ -66,7 +66,7 @@ class AppViewModel extends RootEmitter {
         theme,
       };
   @override
-  get dependencies => {selectedProject, theme, animating};
+  get dependencies => {selectedProject, animating};
 }
 
 final _appViewModel = AppViewModel();
@@ -76,16 +76,21 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Provider<AppViewModel>(_appViewModel,
-        builder: (context, appViewModel) {
-      return MaterialApp.router(
-        routeInformationParser: RouteInfoParser(),
-        routerDelegate:
-            RouterDelegateState(const _RouterChild(), _appViewModel),
-        theme: appViewModel.theme.value.themeData,
-        debugShowCheckedModeBanner: false,
-      );
-    });
+    return Provider<AppViewModel>(
+      _appViewModel,
+      child: Reprovider<AppViewModel, ValueEmitter<AppTheme>>(
+        selector: (vm) => vm.theme,
+        builder: (context, theme) {
+          return MaterialApp.router(
+            routeInformationParser: RouteInfoParser(),
+            routerDelegate:
+                RouterDelegateState(const _RouterChild(), _appViewModel),
+            theme: theme.value.themeData,
+            debugShowCheckedModeBanner: false,
+          );
+        },
+      ),
+    );
   }
 }
 
