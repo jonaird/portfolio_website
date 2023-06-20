@@ -6,28 +6,10 @@ class AppViewModel extends RootEmitter {
   final selectedProject = ValueEmitter<Project?>(null, keepHistory: true);
   final animating = ValueEmitter<bool>(false);
   final focalPiece = FocalPieceViewModel();
-  late final showBackButton = ValueEmitter.reactive(
-      reactTo: [selectedProject],
-      withValue: () => selectedProject.value != null);
-  final showFullBio = ValueEmitter(false);
+  final home = HomeViewModel();
   final theme = ValueEmitter(AppTheme.dark);
-  late final showMainApp = ValueEmitter.reactive(
-    reactTo: [focalPiece],
-    withValue: () => focalPiece.stage != FocalPieceStages.firstBuild,
-  );
-  late final blurAmount = ValueEmitter.reactive(
-    reactTo: [focalPiece],
-    withValue: () {
-      if (focalPiece.stage == FocalPieceStages.contact) return 4.0;
-      return 0.0;
-    },
-  );
 
   ScaffoldMessengerState? _scaffoldMessenger;
-
-  void handleBackButton() {
-    selectedProject.value = null;
-  }
 
   void selectProject(Project project) {
     selectedProject.value = project;
@@ -56,9 +38,7 @@ class AppViewModel extends RootEmitter {
   get children => {
         selectedProject,
         focalPiece,
-        showMainApp,
-        showBackButton,
-        showFullBio,
+        home,
         theme,
       };
   @override
@@ -96,30 +76,9 @@ class RouterChild extends StatelessWidget {
     return AppOverlay(
       child: Stack(
         children: [
-          Reprovider<AppViewModel, ValueEmitter<bool>>(
-            selector: (vm) => vm.showMainApp,
-            builder: (context, showMainApp) {
-              if (!showMainApp.value) return const SizedBox();
-              return AppBlur(
-                child: Stack(
-                  children: [
-                    Scaffold(
-                      appBar: AppBar(
-                        title: const _Title(),
-                        automaticallyImplyLeading: false,
-                        leading: const _Leading(),
-                      ),
-                      body: const ScaffoldCapture(child: Home()),
-                    ),
-                    BuiltWithFlutterCornerBanner.positioned(
-                      bannerPosition: CornerBannerPosition.topRight,
-                      bannerColor: Theme.of(context).primaryColorLight,
-                      elevation: 2,
-                    ),
-                  ],
-                ),
-              );
-            },
+          Reprovider(
+            selector: (AppViewModel vm) => vm.home,
+            child: const Home(),
           ),
           Reprovider(
             selector: (AppViewModel appViewModel) => appViewModel.focalPiece,
@@ -143,20 +102,6 @@ class AppOverlay extends StatelessWidget {
   }
 }
 
-class Home extends StatelessWidget {
-  const Home({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Stack(
-      children: [
-        ProjectSelector(),
-        ProjectContentOverlay(),
-      ],
-    );
-  }
-}
-
 class ProjectContentOverlay extends StatelessWidgetConsumer<AppViewModel> {
   const ProjectContentOverlay({super.key});
 
@@ -176,24 +121,6 @@ class ProjectContentOverlay extends StatelessWidgetConsumer<AppViewModel> {
   }
 }
 
-class AppBlur
-    extends StatelessWidgetReprovider<AppViewModel, ValueEmitter<double>> {
-  const AppBlur({super.key, required this.child});
-  final Widget child;
-
-  @override
-  ValueEmitter<double> select(AppViewModel emitter) => emitter.blurAmount;
-
-  @override
-  Widget reprovide(BuildContext context, blurAmount) {
-    return AnimatedBlur(
-      blur: blurAmount.value,
-      curve: FocalPieceViewModel.animationCurve,
-      child: child,
-    );
-  }
-}
-
 class ScaffoldCapture extends StatelessWidget {
   const ScaffoldCapture({super.key, required this.child});
   final Widget child;
@@ -204,31 +131,6 @@ class ScaffoldCapture extends StatelessWidget {
         .read<AppViewModel>()!
         .setScaffoldMessanger(ScaffoldMessenger.of(context));
     return child;
-  }
-}
-
-class _Title extends StatelessWidget {
-  const _Title();
-
-  @override
-  Widget build(BuildContext context) {
-    final title = context.select<AppViewModel, String>((vm) => vm.title)!;
-    return Text(
-      title,
-    );
-  }
-}
-
-class _Leading extends StatelessWidgetConsumer<AppViewModel> {
-  const _Leading();
-
-  @override
-  Widget consume(BuildContext context, vm) {
-    return vm.showBackButton.value
-        ? BackButton(
-            onPressed: vm.handleBackButton,
-          )
-        : const SizedBox();
   }
 }
 
