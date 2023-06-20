@@ -22,10 +22,7 @@ class AppViewModel extends RootEmitter {
       return 0.0;
     },
   );
-  late final showThemeSwitcher = ValueEmitter.reactive(
-    reactTo: [animating],
-    withValue: () => !animating.value,
-  );
+
   ScaffoldMessengerState? _scaffoldMessenger;
 
   void handleBackButton() {
@@ -147,8 +144,12 @@ class ProjectContentOverlay extends StatelessWidgetConsumer<AppViewModel> {
   Widget consume(BuildContext context, vm) {
     if (!vm.animating.value && vm.selectedProject.isNotNull) {
       return Container(
+        height: double.infinity,
+        width: double.infinity,
         color: Theme.of(context).colorScheme.background,
-        child: vm.selectedProject.value!.content,
+        child: Stack(
+          children: [vm.selectedProject.value!.content, const ThemeSwitcher()],
+        ),
       );
     }
     return const SizedBox();
