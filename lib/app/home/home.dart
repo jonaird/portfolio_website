@@ -1,12 +1,13 @@
 import 'package:website/main.dart';
 export './projects/projects.dart';
+export 'helpers.dart';
 
 class HomeViewModel extends EmitterContainer {
   @override
   AppViewModel get parent => super.parent as AppViewModel;
 
   final showFullBio = ValueEmitter(false);
-  late final showMainApp = ValueEmitter.reactive(
+  late final showHome = ValueEmitter.reactive(
     reactTo: [parent.focalPiece],
     withValue: () => parent.focalPiece.stage != FocalPieceStages.firstBuild,
   );
@@ -18,63 +19,70 @@ class HomeViewModel extends EmitterContainer {
     },
   );
   late final showBackButton = ValueEmitter.reactive(
+    reactTo: [parent.selectedProject],
+    withValue: () => parent.selectedProject.value != null,
+  );
+  late final title = ValueEmitter.reactive(
       reactTo: [parent.selectedProject],
-      withValue: () => parent.selectedProject.value != null);
+      withValue: () => parent.selectedProject.value?.title ?? 'Portfolio');
 
   void handleBackButton() {
     parent.selectedProject.value = null;
   }
 }
 
-class Home extends StatelessWidget {
+class Home
+    extends StatelessWidgetReprovider<HomeViewModel, ValueEmitter<bool>> {
   const Home({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Reprovider<HomeViewModel, ValueEmitter<bool>>(
-      selector: (vm) => vm.showMainApp,
-      builder: (context, showMainApp) {
-        if (!showMainApp.value) return const SizedBox();
-        return AppBlur(
-          child: Stack(
-            children: [
-              Scaffold(
-                appBar: AppBar(
-                  title: const _Title(),
-                  automaticallyImplyLeading: false,
-                  leading: const _Leading(),
-                ),
-                body: const ScaffoldCapture(
-                  child: Stack(
-                    children: [
-                      ProjectSelector(),
-                      ProjectContentOverlay(),
-                    ],
-                  ),
-                ),
+  ValueEmitter<bool> select(HomeViewModel vm) => vm.showHome;
+
+  @override
+  Widget reprovide(BuildContext context, showHome) {
+    if (!showHome.value) return const SizedBox();
+    return AppBlur(
+      child: Stack(
+        children: [
+          Scaffold(
+            appBar: AppBar(
+              title: const _Title(),
+              automaticallyImplyLeading: false,
+              leading: const _Leading(),
+            ),
+            body: const ScaffoldCapture(
+              child: Stack(
+                children: [
+                  ProjectSelector(),
+                  ProjectContentOverlay(),
+                  ThemeSwitcher()
+                ],
               ),
-              BuiltWithFlutterCornerBanner.positioned(
-                bannerPosition: CornerBannerPosition.topRight,
-                bannerColor: Theme.of(context).primaryColorLight,
-                elevation: 2,
-              ),
-            ],
+            ),
           ),
-        );
-      },
+          BuiltWithFlutterCornerBanner.positioned(
+            bannerPosition: CornerBannerPosition.topRight,
+            bannerColor: Theme.of(context).primaryColorLight,
+            elevation: 2,
+          ),
+        ],
+      ),
     );
   }
 }
 
-class _Title extends StatelessWidget {
+class _Title
+    extends StatelessWidgetReprovider<HomeViewModel, ValueEmitter<String>> {
   const _Title();
 
   @override
-  Widget build(BuildContext context) {
-    final title = context.select<AppViewModel, String>((vm) => vm.title)!;
-    return Text(
-      title,
-    );
+  ValueEmitter<String> select(HomeViewModel emitter) {
+    return emitter.title;
+  }
+
+  @override
+  Widget reprovide(BuildContext context, title) {
+    return Text(title.value);
   }
 }
 
@@ -97,20 +105,32 @@ class _Leading
   }
 }
 
-class AppBlur
-    extends StatelessWidgetReprovider<HomeViewModel, ValueEmitter<double>> {
-  const AppBlur({super.key, required this.child});
-  final Widget child;
+class ThemeSwitcher
+    extends StatelessWidgetReprovider<AppViewModel, ValueEmitter<AppTheme>> {
+  const ThemeSwitcher({
+    super.key,
+  });
 
   @override
-  ValueEmitter<double> select(vm) => vm.blurAmount;
+  select(appViewModel) => appViewModel.theme;
 
   @override
-  Widget reprovide(BuildContext context, blurAmount) {
-    return AnimatedBlur(
-      blur: blurAmount.value,
-      curve: FocalPieceViewModel.animationCurve,
-      child: child,
+  Widget reprovide(BuildContext context, theme) {
+    return Positioned(
+      left: 0,
+      bottom: 0,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(8, 20, 20, 8),
+        child: IconButton(
+          onPressed: theme.toggle,
+          icon: Icon(
+            switch (theme.value) {
+              AppTheme.light => Icons.dark_mode_outlined,
+              AppTheme.dark => Icons.light_mode_outlined
+            },
+          ),
+        ),
+      ),
     );
   }
 }

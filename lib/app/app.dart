@@ -1,5 +1,5 @@
 import 'package:website/main.dart';
-import 'theme.dart';
+export 'theme.dart';
 
 class AppViewModel extends RootEmitter {
   late final Project? initialRoute;
@@ -31,8 +31,6 @@ class AppViewModel extends RootEmitter {
     return selectedProject.value == project ||
         (selectedProject.previous == project && animating.value);
   }
-
-  String get title => selectedProject.value?.title ?? 'Portfolio';
 
   @override
   get children => {
@@ -98,68 +96,6 @@ class AppOverlay extends StatelessWidget {
   Widget build(BuildContext context) {
     return Overlay(
       initialEntries: [OverlayEntry(builder: (context) => child)],
-    );
-  }
-}
-
-class ProjectContentOverlay extends StatelessWidgetConsumer<AppViewModel> {
-  const ProjectContentOverlay({super.key});
-
-  @override
-  Widget consume(BuildContext context, vm) {
-    if (!vm.animating.value && vm.selectedProject.isNotNull) {
-      return Container(
-        height: double.infinity,
-        width: double.infinity,
-        color: Theme.of(context).colorScheme.background,
-        child: Stack(
-          children: [vm.selectedProject.value!.content, const ThemeSwitcher()],
-        ),
-      );
-    }
-    return const SizedBox();
-  }
-}
-
-class ScaffoldCapture extends StatelessWidget {
-  const ScaffoldCapture({super.key, required this.child});
-  final Widget child;
-
-  @override
-  Widget build(BuildContext context) {
-    context
-        .read<AppViewModel>()!
-        .setScaffoldMessanger(ScaffoldMessenger.of(context));
-    return child;
-  }
-}
-
-class ThemeSwitcher
-    extends StatelessWidgetReprovider<AppViewModel, ValueEmitter<AppTheme>> {
-  const ThemeSwitcher({
-    super.key,
-  });
-
-  @override
-  select(appViewModel) => appViewModel.theme;
-
-  @override
-  Widget reprovide(BuildContext context, theme) {
-    return Positioned(
-      left: 0,
-      bottom: 0,
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(8, 20, 20, 8),
-        child: IconButton(
-          onPressed: theme.toggle,
-          icon: Icon(
-            switch (theme.value) {
-              AppTheme.light => Icons.dark_mode_outlined,
-              AppTheme.dark => Icons.light_mode_outlined
-            },
-          ),
-        ),
-      ),
     );
   }
 }
