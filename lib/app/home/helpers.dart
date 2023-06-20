@@ -47,3 +47,16 @@ class ProjectContentOverlay extends StatelessWidgetConsumer<AppViewModel> {
     return const SizedBox();
   }
 }
+
+class HomeHider
+    extends StatelessWidgetReprovider<HomeViewModel, ValueEmitter<bool>> {
+  const HomeHider({super.key, required this.child});
+  final Widget child;
+  @override
+  ValueEmitter<bool> select(HomeViewModel vm) => vm.showHome;
+  @override
+  Widget reprovide(BuildContext context, showHome) {
+    if (!showHome.value) return const SizedBox();
+    return child;
+  }
+}

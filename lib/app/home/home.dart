@@ -31,41 +31,38 @@ class HomeViewModel extends EmitterContainer {
   }
 }
 
-class Home
-    extends StatelessWidgetReprovider<HomeViewModel, ValueEmitter<bool>> {
+class Home extends StatelessWidget {
   const Home({super.key});
 
   @override
-  ValueEmitter<bool> select(HomeViewModel vm) => vm.showHome;
-
-  @override
-  Widget reprovide(BuildContext context, showHome) {
-    if (!showHome.value) return const SizedBox();
-    return AppBlur(
-      child: Stack(
-        children: [
-          Scaffold(
-            appBar: AppBar(
-              title: const _Title(),
-              automaticallyImplyLeading: false,
-              leading: const _Leading(),
-            ),
-            body: const ScaffoldCapture(
-              child: Stack(
-                children: [
-                  ProjectSelector(),
-                  ProjectContentOverlay(),
-                  ThemeSwitcher()
-                ],
+  Widget build(BuildContext context) {
+    return HomeHider(
+      child: AppBlur(
+        child: Stack(
+          children: [
+            Scaffold(
+              appBar: AppBar(
+                title: const _Title(),
+                automaticallyImplyLeading: false,
+                leading: const _Leading(),
+              ),
+              body: const ScaffoldCapture(
+                child: Stack(
+                  children: [
+                    ProjectSelector(),
+                    ProjectContentOverlay(),
+                    ThemeSwitcher()
+                  ],
+                ),
               ),
             ),
-          ),
-          BuiltWithFlutterCornerBanner.positioned(
-            bannerPosition: CornerBannerPosition.topRight,
-            bannerColor: Theme.of(context).primaryColorLight,
-            elevation: 2,
-          ),
-        ],
+            BuiltWithFlutterCornerBanner.positioned(
+              bannerPosition: CornerBannerPosition.topRight,
+              bannerColor: Theme.of(context).primaryColorLight,
+              elevation: 2,
+            ),
+          ],
+        ),
       ),
     );
   }
