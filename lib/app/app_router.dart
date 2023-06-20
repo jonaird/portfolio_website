@@ -38,7 +38,7 @@ class RouterDelegateState extends EmitterContainer
 
   @override
   AppRouterConfig? get currentConfiguration =>
-      AppRouterConfig(appViewModel.selectedProject.value);
+      AppRouterConfig(appViewModel.selectedProject);
 
   @override
   Future<void> setInitialRoutePath(AppRouterConfig configuration) async {
@@ -47,7 +47,7 @@ class RouterDelegateState extends EmitterContainer
 
   @override
   Future<void> setNewRoutePath(AppRouterConfig configuration) async {
-    appViewModel.selectedProject.value = configuration.selectedProject;
+    appViewModel.selectedProject = configuration.selectedProject;
   }
 
   @override
@@ -59,5 +59,5 @@ class RouterDelegateState extends EmitterContainer
   Set<ChangeEmitter> get children => {appViewModel};
 
   @override
-  get dependencies => {appViewModel.selectedProject};
+  get dependencies => {appViewModel.projectSelector.selectedProject};
 }

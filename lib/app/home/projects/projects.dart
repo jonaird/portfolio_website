@@ -67,11 +67,6 @@ enum Project {
   ({ScrollController baseController, ScrollController overlayController})
       get controllers => _controllers[this]!;
 
-  static Project? of(BuildContext context) {
-    return context
-        .select<AppViewModel, Project?>((state) => state.selectedProject.value);
-  }
-
   static Project? fromUri(String uri) {
     final destList = List.from(values)
       ..retainWhere((element) => element.path == uri);
@@ -125,7 +120,7 @@ class ProjectSection extends StatelessWidget {
   }
 }
 
-class ProjectDisplay extends StatelessWidgetConsumer<AppViewModel> {
+class ProjectDisplay extends StatelessWidgetConsumer<ProjectSelectorViewModel> {
   const ProjectDisplay(this.project, {super.key});
   final Project project;
 
@@ -169,7 +164,10 @@ class ProjectCard extends StatelessWidget {
       child: Material(
         color: Theme.of(context).colorScheme.surface,
         child: InkWell(
-          onTap: () => context.read<AppViewModel>()!.selectProject(project),
+          onTap: () => context
+              .read<ProjectSelectorViewModel>()!
+              .selectedProject
+              .value = project,
           borderRadius: BorderRadius.circular(_borderRadius),
           child: SizedBox(
             width: 330,

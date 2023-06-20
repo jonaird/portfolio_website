@@ -37,8 +37,6 @@ extension StatelessExtensions on StatelessWidget {
 
 extension ContextExtensions on BuildContext {
   Size get windowSize => MediaQuery.of(this).size;
-
-  bool get atHome => depend<AppViewModel>()!.selectedProject.value == null;
 }
 
 abstract class StatelessWidgetConsumer<C extends ChangeEmitter>

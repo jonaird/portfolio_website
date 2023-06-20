@@ -1,5 +1,23 @@
 import 'package:website/main.dart';
 
+class ProjectSelectorViewModel extends EmitterContainer {
+  final selectedProject = ValueEmitter<Project?>(null, keepHistory: true);
+  final animating = ValueEmitter<bool>(false);
+
+  void selectProject(Project project) {
+    selectedProject.value = project;
+    animating.value = true;
+  }
+
+  bool showProjectContent(Project project) {
+    return selectedProject.value == project ||
+        (selectedProject.previous == project && animating.value);
+  }
+
+  @override
+  get children => {selectedProject, animating};
+}
+
 class ProjectSelector extends StatefulWidget {
   const ProjectSelector({Key? key}) : super(key: key);
 
@@ -18,7 +36,8 @@ class _ProjectSelectorState extends State<ProjectSelector>
 
   @override
   void didChangeDependencies() {
-    final selectedProject = Project.of(context);
+    final selectedProject = context
+        .select((ProjectSelectorViewModel vm) => vm.selectedProject.value);
     if (_initialBuild) {
       _selectedProject = selectedProject;
       _controller = AnimationController(
@@ -32,7 +51,7 @@ class _ProjectSelectorState extends State<ProjectSelector>
           Tween<Offset>(begin: const Offset(0, 0), end: const Offset(0, 0)));
       _initialBuild = false;
       _controller.addStatusListener((status) {
-        context.read<AppViewModel>()!.animating.value =
+        context.read<ProjectSelectorViewModel>()!.animating.value =
             status == AnimationStatus.forward;
       });
     } else if (selectedProject != _selectedProject) {
@@ -96,18 +115,13 @@ class _ProjectSelectorState extends State<ProjectSelector>
   @override
   Widget build(BuildContext context) {
     checkForWindowResize();
-    return Stack(
-      children: [
-        Transform.scale(
-          scale: _scaleAnimation.status == AnimationStatus.forward
-              ? _scaleAnimation.value
-              : _selectedProject?.scale ?? 1,
-          origin: _originAnimation.value,
-          alignment: Alignment.topLeft,
-          child: const HomePage(),
-        ),
-        const ThemeSwitcher()
-      ],
+    return Transform.scale(
+      scale: _scaleAnimation.status == AnimationStatus.forward
+          ? _scaleAnimation.value
+          : _selectedProject?.scale ?? 1,
+      origin: _originAnimation.value,
+      alignment: Alignment.topLeft,
+      child: const HomePage(),
     );
   }
 }

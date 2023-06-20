@@ -19,15 +19,18 @@ class HomeViewModel extends EmitterContainer {
     },
   );
   late final showBackButton = ValueEmitter.reactive(
-    reactTo: [parent.selectedProject],
-    withValue: () => parent.selectedProject.value != null,
+    reactTo: [parent],
+    withValue: () => parent.selectedProject != null,
   );
   late final title = ValueEmitter.reactive(
-      reactTo: [parent.selectedProject],
-      withValue: () => parent.selectedProject.value?.title ?? 'Portfolio');
+    reactTo: [parent],
+    withValue: () => parent.selectedProject?.title ?? 'Portfolio',
+  );
+  late final disableScrolling = ValueEmitter.reactive(
+      reactTo: [parent], withValue: () => parent.selectedProject != null);
 
   void handleBackButton() {
-    parent.selectedProject.value = null;
+    parent.selectedProject = null;
   }
 }
 
@@ -46,12 +49,14 @@ class Home extends StatelessWidget {
                 automaticallyImplyLeading: false,
                 leading: const _Leading(),
               ),
-              body: const ScaffoldCapture(
+              body: ScaffoldCapture(
                 child: Stack(
                   children: [
-                    ProjectSelector(),
-                    ProjectContentOverlay(),
-                    ThemeSwitcher()
+                    Reprovider<AppViewModel, ProjectSelectorViewModel>(
+                        selector: (vm) => vm.projectSelector,
+                        child: const ProjectSelector()),
+                    const ProjectContentOverlay(),
+                    const ThemeSwitcher()
                   ],
                 ),
               ),
@@ -132,11 +137,15 @@ class ThemeSwitcher
   }
 }
 
-class HomePage extends StatelessWidgetConsumer<AppViewModel> {
+class HomePage
+    extends StatelessWidgetReprovider<HomeViewModel, ValueEmitter<bool>> {
   const HomePage({super.key});
 
   @override
-  Widget consume(BuildContext context, vm) {
+  select(emitter) => emitter.disableScrolling;
+
+  @override
+  Widget reprovide(BuildContext context, disableScrolling) {
     return SizedBox(
       width: MediaQuery.of(context).size.width,
       child: FittedBox(
@@ -146,9 +155,9 @@ class HomePage extends StatelessWidgetConsumer<AppViewModel> {
           width: context.windowSize.width,
           height: context.windowSize.height + 400,
           child: ListView(
-            physics: vm.selectedProject.value == null
-                ? null
-                : const NeverScrollableScrollPhysics(),
+            physics: disableScrolling.value
+                ? const NeverScrollableScrollPhysics()
+                : null,
             children: const [
               Gap(200),
               Bio(),

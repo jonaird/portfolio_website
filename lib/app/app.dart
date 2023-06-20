@@ -3,18 +3,17 @@ export 'theme.dart';
 
 class AppViewModel extends RootEmitter {
   late final Project? initialRoute;
-  final selectedProject = ValueEmitter<Project?>(null, keepHistory: true);
-  final animating = ValueEmitter<bool>(false);
   final focalPiece = FocalPieceViewModel();
+  final projectSelector = ProjectSelectorViewModel();
   final home = HomeViewModel();
   final theme = ValueEmitter(AppTheme.dark);
 
   ScaffoldMessengerState? _scaffoldMessenger;
 
-  void selectProject(Project project) {
-    selectedProject.value = project;
-    animating.value = true;
-  }
+  Project? get selectedProject => projectSelector.selectedProject.value;
+
+  set selectedProject(Project? newSelection) =>
+      projectSelector.selectedProject.value = newSelection;
 
   void setScaffoldMessanger(ScaffoldMessengerState messanger) =>
       _scaffoldMessenger = messanger;
@@ -27,20 +26,13 @@ class AppViewModel extends RootEmitter {
     ));
   }
 
-  bool showProjectContent(Project project) {
-    return selectedProject.value == project ||
-        (selectedProject.previous == project && animating.value);
-  }
-
   @override
   get children => {
-        selectedProject,
+        projectSelector,
         focalPiece,
         home,
         theme,
       };
-  @override
-  get dependencies => {selectedProject, animating};
 }
 
 class App extends StatelessWidget {

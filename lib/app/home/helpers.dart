@@ -31,11 +31,17 @@ class ScaffoldCapture extends StatelessWidget {
   }
 }
 
-class ProjectContentOverlay extends StatelessWidgetConsumer<AppViewModel> {
+class ProjectContentOverlay
+    extends StatelessWidgetReprovider<AppViewModel, ProjectSelectorViewModel> {
   const ProjectContentOverlay({super.key});
 
   @override
-  Widget consume(BuildContext context, vm) {
+  ProjectSelectorViewModel select(AppViewModel vm) {
+    return vm.projectSelector;
+  }
+
+  @override
+  Widget reprovide(BuildContext context, vm) {
     if (!vm.animating.value && vm.selectedProject.isNotNull) {
       return Container(
         height: double.infinity,
