@@ -37,9 +37,11 @@ class AppViewModel extends RootEmitter {
 class App extends StatelessWidget {
   const App({super.key});
 
+  static final viewModel = AppViewModel();
+
   @override
   Widget build(BuildContext context) {
-    final vm = AppViewModel();
+    final vm = viewModel;
     return Provider<AppViewModel>(
       vm,
       child: Reprovider<AppViewModel, ValueEmitter<AppTheme>>(

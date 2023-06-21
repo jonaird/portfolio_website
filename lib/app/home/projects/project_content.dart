@@ -1,7 +1,6 @@
 import 'package:website/app/home/projects/force_directed_graph_demo.dart';
 import 'package:website/main.dart';
-import 'dart:math';
-import 'package:motion_blur/motion_blur.dart';
+import 'motion_blur_demo.dart';
 
 const _text = '''
 BSV News was a hacker news clone with a unique cryptocurrency integration. Instead of upvoting, users tipped small amounts of cryptocurrency allowing posters to earn money for their contributions. The tip total was then used as a metric to rank posts on the home page.
@@ -16,26 +15,34 @@ class BsvNews extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 24),
-      child: Row(
-        children: [
-          Expanded(
-            flex: 1,
-            child: Text(
-              _text,
-              overflow: TextOverflow.fade,
-              style: Theme.of(context).textTheme.bodyMedium,
+    return SingleChildScrollView(
+      child: Container(
+        alignment: Alignment.topCenter,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 24),
+          child: SizedBox(
+            width: 900,
+            child: Row(
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: Text(
+                    _text,
+                    overflow: TextOverflow.fade,
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                ),
+                const Gap(24),
+                const Expanded(
+                  flex: 1,
+                  child: Column(
+                    children: [Placeholder(), Gap(12), Placeholder()],
+                  ),
+                )
+              ],
             ),
           ),
-          const Gap(24),
-          const Expanded(
-            flex: 1,
-            child: Column(
-              children: [Placeholder(), Gap(12), Placeholder()],
-            ),
-          )
-        ],
+        ),
       ),
     );
   }
@@ -114,22 +121,32 @@ class VersoContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const Gap(24),
-        const Row(children: [
-          Expanded(child: Text(_versoText)),
-          Gap(24),
-          Expanded(child: Placeholder()),
-        ]),
-        const Gap(24),
-        ElevatedButton(
-            onPressed: () {
-              launchUrl(Uri.parse(
-                  'https://medium.com/@jonathan.aird/verso-design-case-study-c43c03067cfe'));
-            },
-            child: const Text('Read the Case Study'))
-      ],
+    return SingleChildScrollView(
+      child: Align(
+        alignment: Alignment.topCenter,
+        child: SizedBox(
+          width: 900,
+          child: Padding(
+            padding: const EdgeInsets.all(24.0),
+            child: Column(
+              children: [
+                const Row(children: [
+                  Expanded(child: Text(_versoText)),
+                  Gap(24),
+                  Expanded(child: Placeholder()),
+                ]),
+                const Gap(24),
+                ElevatedButton(
+                    onPressed: () {
+                      launchUrl(Uri.parse(
+                          'https://medium.com/@jonathan.aird/verso-design-case-study-c43c03067cfe'));
+                    },
+                    child: const Text('Read the Case Study'))
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
@@ -177,84 +194,5 @@ class MotionBlurContent extends StatelessWidget {
         ],
       ),
     ]);
-  }
-}
-
-class MotionBlurDemo extends StatefulWidget {
-  const MotionBlurDemo({super.key});
-
-  @override
-  State<MotionBlurDemo> createState() => _MotionBlurDemoState();
-}
-
-class _MotionBlurDemoState extends State<MotionBlurDemo>
-    with SingleTickerProviderStateMixin {
-  late final _controller = AnimationController(
-      vsync: this, duration: const Duration(milliseconds: 700));
-  var _enabled = false;
-
-  @override
-  void initState() {
-    _controller.addListener(() => setState(() {}));
-    _controller.forward();
-    _controller.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        _controller.value = 0.02;
-        _controller.forward();
-      }
-    });
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    // final width = 40 * (sin(_controller.value * 2 * pi) + 1) + 15;
-    const width = 50.0;
-    return Column(
-      children: [
-        Card(
-          color: Colors.white,
-          child: Padding(
-            padding: const EdgeInsets.only(top: 300),
-            child: SizedBox(
-              width: 400,
-              height: 150,
-              child: Center(
-                child: Transform.translate(
-                  offset: Offset(sin(_controller.value * 2 * pi) * 150,
-                      cos(_controller.value * 2 * pi) * 150 - 150),
-                  child: MotionBlur(
-                    enabled: _enabled,
-                    intensity: 1.5,
-                    child: Padding(
-                      padding: const EdgeInsets.all(30),
-                      child: Container(
-                        width: width,
-                        height: width,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(width / 2),
-                            color: Colors.green),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
-        const Gap(24),
-        Text('Motion blur: ${_enabled ? 'enabled' : 'disabled'}'),
-        Switch(
-          value: _enabled,
-          onChanged: (value) => setState(() => _enabled = value),
-        )
-      ],
-    );
   }
 }
