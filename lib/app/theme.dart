@@ -15,12 +15,14 @@ extension ThemeDataExtension on Brightness {
 }
 
 ThemeData _themeFromBrightness(Brightness brightness) {
-  final baseTextTheme = brightness == Brightness.light
-      ? Typography.blackHelsinki
-      : Typography.whiteHelsinki;
-  final textColor = brightness == Brightness.light
-      ? Colors.black.withAlpha(200)
-      : Colors.white.withAlpha(200);
+  final baseTextTheme = switch (brightness) {
+    Brightness.dark => Typography.whiteHelsinki,
+    Brightness.light => Typography.blackHelsinki
+  };
+  final textColor = switch (brightness) {
+    Brightness.light => Colors.black.withAlpha(200),
+    Brightness.dark => Colors.white.withAlpha(200)
+  };
   final onColor = switch (brightness) {
     Brightness.light => Colors.black,
     Brightness.dark => Colors.white
