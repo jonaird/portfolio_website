@@ -1,6 +1,7 @@
 import 'package:website/main.dart';
 export './projects/projects.dart';
 export 'helpers.dart';
+export 'project_selector.dart';
 
 class HomeViewModel extends EmitterContainer {
   @override

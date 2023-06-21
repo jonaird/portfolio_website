@@ -1,6 +1,5 @@
 import 'package:website/main.dart';
 export 'project_content.dart';
-export 'project_selector.dart';
 
 enum Project {
   bsvNews(
