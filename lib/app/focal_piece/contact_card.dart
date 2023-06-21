@@ -27,7 +27,7 @@ class ContactCardViewModel extends EmitterContainer {
       messageSent = true;
       parent.stage = FocalPieceStages.fab;
       findAncestorOfExactType<AppViewModel>()!
-          .showSnackBarMessage('Message sent! I will get back to you shortly!');
+          .showSnackBar('Message sent! I will get back to you shortly!');
     } else {
       somethingWentWrong.value = true;
     }

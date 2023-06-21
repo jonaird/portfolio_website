@@ -8,22 +8,21 @@ class AppViewModel extends RootEmitter {
   final home = HomeViewModel();
   final theme = ValueEmitter(AppTheme.dark);
 
-  ScaffoldMessengerState? _scaffoldMessenger;
-
   Project? get selectedProject => projectSelector.selectedProject.value;
 
   set selectedProject(Project? newSelection) =>
       projectSelector.selectedProject.value = newSelection;
 
-  void setScaffoldMessanger(ScaffoldMessengerState messanger) =>
-      _scaffoldMessenger = messanger;
+  late void Function(String message) showSnackBar;
 
-  void showSnackBarMessage(String message) {
-    _scaffoldMessenger?.showSnackBar(SnackBar(
-      content: Center(child: Text(message)),
-      behavior: SnackBarBehavior.floating,
-      width: 330,
-    ));
+  void captureScaffoldMessanger(ScaffoldMessengerState messanger) {
+    showSnackBar = (String message) => messanger.showSnackBar(
+          SnackBar(
+            content: Center(child: Text(message)),
+            behavior: SnackBarBehavior.floating,
+            width: 330,
+          ),
+        );
   }
 
   @override

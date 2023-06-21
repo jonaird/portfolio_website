@@ -26,7 +26,7 @@ class ScaffoldCapture extends StatelessWidget {
   Widget build(BuildContext context) {
     context
         .read<AppViewModel>()!
-        .setScaffoldMessanger(ScaffoldMessenger.of(context));
+        .captureScaffoldMessanger(ScaffoldMessenger.of(context));
     return child;
   }
 }
