@@ -19,6 +19,7 @@ dependencies:
   super_banners:
   http:
   url_launcher:
+  google_fonts:
   flutter:
     sdk: flutter
     

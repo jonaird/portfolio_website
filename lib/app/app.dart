@@ -6,7 +6,7 @@ class AppViewModel extends RootEmitter {
   final focalPiece = FocalPieceViewModel();
   final projectSelector = ProjectSelectorViewModel();
   final home = HomeViewModel();
-  final theme = ValueEmitter(AppTheme.dark);
+  final theme = ValueEmitter(Brightness.dark);
 
   Project? get selectedProject => projectSelector.selectedProject.value;
 
@@ -44,7 +44,7 @@ class App extends StatelessWidget {
     final vm = viewModel;
     return Provider<AppViewModel>(
       vm,
-      child: Reprovider<AppViewModel, ValueEmitter<AppTheme>>(
+      child: Reprovider<AppViewModel, ValueEmitter<Brightness>>(
         selector: (vm) => vm.theme,
         builder: (context, theme) {
           return MaterialApp.router(

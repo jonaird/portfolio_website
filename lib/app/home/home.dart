@@ -109,7 +109,7 @@ class _Leading
 }
 
 class ThemeSwitcher
-    extends StatelessWidgetReprovider<AppViewModel, ValueEmitter<AppTheme>> {
+    extends StatelessWidgetReprovider<AppViewModel, ValueEmitter<Brightness>> {
   const ThemeSwitcher({
     super.key,
   });
@@ -128,8 +128,8 @@ class ThemeSwitcher
           onPressed: theme.toggle,
           icon: Icon(
             switch (theme.value) {
-              AppTheme.light => Icons.dark_mode_outlined,
-              AppTheme.dark => Icons.light_mode_outlined
+              Brightness.light => Icons.dark_mode_outlined,
+              Brightness.dark => Icons.light_mode_outlined
             },
           ),
         ),
