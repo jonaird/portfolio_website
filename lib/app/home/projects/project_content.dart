@@ -2,6 +2,36 @@ import 'package:website/app/home/projects/force_directed_graph_demo.dart';
 import 'package:website/main.dart';
 import 'motion_blur_demo.dart';
 
+enum Link {
+  changeEmitterGithub(
+    'View on Github',
+    'https://github.com/jonaird/change_emitter',
+  ),
+  changeEmitterDesignDoc(
+    'Read the Design Doc',
+    'https://medium.com/@jonathan.aird/observable-state-trees-a-state-management-pattern-for-flutter-af62e76da1b',
+  ),
+  versoDesignCaseStudy(
+    'Read the Design Case Study',
+    'https://medium.com/@jonathan.aird/verso-design-case-study-c43c03067cfe',
+  ),
+  forceDirectedGraphGithub(
+    'View on Github',
+    'https://github.com/jonaird/force_directed_graph',
+  ),
+  motionBlurGithub(
+    'View on Github',
+    'https://github.com/jonaird/motion_blur',
+  );
+
+  const Link(this.text, this.urlString);
+
+  final String text;
+  final String urlString;
+
+  Uri get url => Uri.parse(urlString);
+}
+
 const _text = '''
 BSV News was a hacker news clone with a unique cryptocurrency integration. Instead of upvoting, users tipped small amounts of cryptocurrency allowing posters to earn money for their contributions. The tip total was then used as a metric to rank posts on the home page.
 
@@ -36,7 +66,11 @@ class BsvNews extends StatelessWidget {
                 const Expanded(
                   flex: 1,
                   child: Column(
-                    children: [Placeholder(), Gap(12), Placeholder()],
+                    children: [
+                      Placeholder(fallbackHeight: 200),
+                      Gap(12),
+                      Placeholder(fallbackHeight: 200)
+                    ],
                   ),
                 )
               ],
@@ -85,21 +119,12 @@ class ChangeEmitterContent extends StatelessWidget {
                 const Gap(24),
                 const Text(_changeEmitterText),
                 const Gap(24),
-                Row(
+                const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    ElevatedButton(
-                        onPressed: () => launchUrl(Uri.parse(
-                            'https://github.com/jonaird/change_emitter')),
-                        child: const Text("View on Github")),
-                    const Gap(12),
-                    ElevatedButton(
-                      onPressed: () {
-                        launchUrl(Uri.parse(
-                            'https://medium.com/@jonathan.aird/observable-state-trees-a-state-management-pattern-for-flutter-af62e76da1b'));
-                      },
-                      child: const Text('Read the Design Doc'),
-                    ),
+                    LinkButton(Link.changeEmitterGithub),
+                    Gap(12),
+                    LinkButton(Link.changeEmitterDesignDoc),
                   ],
                 ),
                 const Gap(48)
@@ -121,31 +146,46 @@ class VersoContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return const SingleChildScrollView(
       child: Align(
         alignment: Alignment.topCenter,
         child: SizedBox(
           width: 900,
           child: Padding(
-            padding: const EdgeInsets.all(24.0),
+            padding: EdgeInsets.all(24.0),
             child: Column(
               children: [
-                const Row(children: [
+                Row(children: [
                   Expanded(child: Text(_versoText)),
                   Gap(24),
                   Expanded(child: Placeholder()),
                 ]),
-                const Gap(24),
-                ElevatedButton(
-                    onPressed: () {
-                      launchUrl(Uri.parse(
-                          'https://medium.com/@jonathan.aird/verso-design-case-study-c43c03067cfe'));
-                    },
-                    child: const Text('Read the Case Study'))
+                Gap(24),
+                LinkButton(Link.versoDesignCaseStudy)
               ],
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class LinkButton extends StatelessWidget {
+  const LinkButton(this.link, {super.key});
+  final Link link;
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () => launchUrl(link.url),
+      style: ElevatedButton.styleFrom(
+        padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 45),
+        elevation: 2,
+      ),
+      child: Text(
+        link.text,
+        style: Theme.of(context).textTheme.bodyMedium,
       ),
     );
   }
@@ -160,18 +200,26 @@ class ForceDirectedGraph extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(children: [
-      const Expanded(child: Text(_forceDirectedGraphText)),
-      Expanded(
-          child: Container(
-        clipBehavior: Clip.antiAlias,
-        width: 300,
-        height: 500,
-        decoration: const BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(5))),
-        child: const ForceDirectedGraphDemo(),
-      )),
-    ]);
+    return _ContentContainer(
+      child: Column(
+        children: [
+          Row(children: [
+            const Expanded(child: Text(_forceDirectedGraphText)),
+            Expanded(
+                child: Container(
+              clipBehavior: Clip.antiAlias,
+              width: 300,
+              height: 500,
+              decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(5))),
+              child: const ForceDirectedGraphDemo(),
+            )),
+          ]),
+          const Gap(30),
+          const LinkButton(Link.forceDirectedGraphGithub)
+        ],
+      ),
+    );
   }
 }
 
@@ -184,15 +232,38 @@ class MotionBlurContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(children: [
-      Row(
-        children: [
-          Expanded(child: Text(_motionBlurText)),
-          Expanded(
-            child: MotionBlurDemo(),
-          )
-        ],
+    return const _ContentContainer(
+      child: Column(children: [
+        Row(
+          children: [
+            Expanded(child: Text(_motionBlurText)),
+            Gap(24),
+            Expanded(
+              child: MotionBlurDemo(),
+            )
+          ],
+        ),
+        Gap(30),
+        LinkButton(Link.motionBlurGithub),
+      ]),
+    );
+  }
+}
+
+class _ContentContainer extends StatelessWidget {
+  const _ContentContainer({required this.child});
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Align(
+        alignment: Alignment.topCenter,
+        child: SizedBox(
+          width: 900,
+          child: Padding(padding: const EdgeInsets.all(24.0), child: child),
+        ),
       ),
-    ]);
+    );
   }
 }
