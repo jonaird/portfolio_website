@@ -1,4 +1,4 @@
-import 'package:website/force_directed_graph.dart';
+import 'package:website/app/home/projects/force_directed_graph_demo.dart';
 import 'package:website/main.dart';
 import 'dart:math';
 import 'package:motion_blur/motion_blur.dart';

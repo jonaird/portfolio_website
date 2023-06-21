@@ -15,7 +15,6 @@ export 'app/home/home.dart';
 export 'utils.dart';
 export 'app/app_router.dart';
 export 'app/focal_piece/focal_piece.dart';
-export 'app/animated_blur.dart';
 
 void main() {
   logoBytes = Uint8List.fromList(logoBytesList);
