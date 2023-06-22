@@ -3,6 +3,10 @@ import 'package:website/main.dart';
 class ProjectSelectorViewModel extends EmitterContainer {
   final selectedProject = ValueEmitter<Project?>(null, keepHistory: true);
   final animating = ValueEmitter<bool>(false);
+  late final showProjectContentOverlay = ValueEmitter.reactive(
+    reactTo: [animating, selectedProject],
+    withValue: () => !animating.value && selectedProject.isNotNull,
+  );
 
   void selectProject(Project project) {
     selectedProject.value = project;
