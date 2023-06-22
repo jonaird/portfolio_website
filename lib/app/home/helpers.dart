@@ -89,7 +89,7 @@ class ProjectContentOverlay
 
   @override
   Widget reprovide(BuildContext context, vm) {
-    if (!vm.animating.value && vm.selectedProject.isNotNull) {
+    if (vm.showProjectContentOverlay.value) {
       return Container(
         height: double.infinity,
         width: double.infinity,
@@ -111,5 +111,35 @@ class HomeHider
   Widget reprovide(BuildContext context, showHome) {
     if (!showHome.value) return const SizedBox();
     return child;
+  }
+}
+
+class ThemeSwitcher
+    extends StatelessWidgetReprovider<AppViewModel, ValueEmitter<Brightness>> {
+  const ThemeSwitcher({
+    super.key,
+  });
+
+  @override
+  select(appViewModel) => appViewModel.theme;
+
+  @override
+  Widget reprovide(BuildContext context, theme) {
+    return Positioned(
+      left: 0,
+      bottom: 0,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(8, 20, 20, 8),
+        child: IconButton(
+          onPressed: theme.toggle,
+          icon: Icon(
+            switch (theme.value) {
+              Brightness.light => Icons.dark_mode_outlined,
+              Brightness.dark => Icons.light_mode_outlined
+            },
+          ),
+        ),
+      ),
+    );
   }
 }
