@@ -245,7 +245,7 @@ class Bio extends StatelessWidget {
                         ],
                       ),
                     ),
-                    const Gap(24),
+                    const Gap(48),
                     Text(
                       _shortBio,
                       style: Theme.of(context).textTheme.bodyLarge,

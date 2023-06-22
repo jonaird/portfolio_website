@@ -31,7 +31,7 @@ ThemeData _themeFromBrightness(Brightness brightness) {
   return ThemeData(
     scaffoldBackgroundColor: switch (brightness) {
       Brightness.dark => Colors.blueGrey.shade900,
-      Brightness.light => Colors.blueGrey.shade100
+      Brightness.light => Colors.blueGrey.shade50
     },
     primaryColorLight: switch (brightness) {
       Brightness.dark => Colors.blueGrey.shade400,
@@ -43,47 +43,56 @@ ThemeData _themeFromBrightness(Brightness brightness) {
         Brightness.dark => Colors.blueGrey.shade800,
         Brightness.light => Colors.blueGrey.shade400
       },
-      onPrimary: onColor,
+      onPrimary: Colors.white,
       secondary: Colors.redAccent.shade200,
       onSecondary: Colors.white,
       error: Colors.red,
       onError: Colors.white,
       background: switch (brightness) {
         Brightness.dark => Colors.blueGrey.shade900,
-        Brightness.light => Colors.blueGrey.shade100
+        Brightness.light => Colors.blueGrey.shade50
       },
       onBackground: onColor,
       surface: switch (brightness) {
         Brightness.dark => Colors.blueGrey.shade700,
-        Brightness.light => Colors.blueGrey.shade200
+        Brightness.light => Colors.blueGrey.shade100
       },
       onSurface: onColor,
     ),
-    textTheme: baseTextTheme.copyWith(
-      bodyLarge: GoogleFonts.lora(
+    textTheme: TextTheme(
+      bodyLarge: GoogleFonts.petrona(
         fontSize: 24,
         color: textColor.withAlpha(185),
+        fontWeight: FontWeight.w400,
+      ),
+      bodyMedium: baseTextTheme.bodyMedium!.copyWith(
+        fontSize: 20,
+        color: textColor.withAlpha(170),
         fontWeight: FontWeight.w100,
       ),
-      // bodyMedium: _textTheme.bodyMedium!.copyWith(
-      //   fontSize: 20,
-      //   color: Colors.white.withAlpha(170),
+
+      // bodyText1: GoogleFonts.lora(
+      //   fontSize: 24,
+      //   color: textColor.withAlpha(185),
       //   fontWeight: FontWeight.w100,
       // ),
-      bodyMedium: GoogleFonts.lora(
-        fontSize: 20,
-        color: textColor.withAlpha(185),
-        fontWeight: FontWeight.w300,
-      ),
+      // bodyText1: GoogleFonts.lora(
+      //   fontSize: 20,
+      //   color: textColor.withAlpha(185),
+      //   fontWeight: FontWeight.w300,
+      // ),
       displaySmall: baseTextTheme.displaySmall!.copyWith(
         color: textColor.withAlpha(200),
+        letterSpacing: -1,
+        height: 1.4,
       ),
       displayMedium: baseTextTheme.displayMedium!.copyWith(
         color: textColor.withAlpha(200),
-        height: 0.98,
+        height: 1.12,
+        letterSpacing: -1,
       ),
       displayLarge: baseTextTheme.displayLarge!.copyWith(
-        fontSize: 84,
+        fontSize: 74,
         color: textColor.withAlpha(200),
         height: 0.98,
       ),
@@ -101,6 +110,8 @@ ThemeData _themeFromBrightness(Brightness brightness) {
         thumbVisibility: MaterialStatePropertyAll(true)),
   );
 }
+
+
 
 // TextTheme _textThemeFromBrightness(Brightness brightness) {
 //   final baseTextTheme = brightness == Brightness.light

@@ -48,22 +48,20 @@ class BsvNews extends StatelessWidget {
     return SingleChildScrollView(
       child: Container(
         alignment: Alignment.topCenter,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 24),
+        child: const Padding(
+          padding: EdgeInsets.symmetric(vertical: 24),
           child: SizedBox(
             width: 900,
             child: Row(
               children: [
                 Expanded(
                   flex: 1,
-                  child: Text(
+                  child: ProjectText(
                     _text,
-                    overflow: TextOverflow.fade,
-                    style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ),
-                const Gap(24),
-                const Expanded(
+                Gap(24),
+                Expanded(
                   flex: 1,
                   child: Column(
                     children: [
@@ -117,7 +115,7 @@ class ChangeEmitterContent extends StatelessWidget {
                   width: 650,
                 ),
                 const Gap(24),
-                const Text(_changeEmitterText),
+                const ProjectText(_changeEmitterText),
                 const Gap(24),
                 const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -156,7 +154,7 @@ class VersoContent extends StatelessWidget {
             child: Column(
               children: [
                 Row(children: [
-                  Expanded(child: Text(_versoText)),
+                  Expanded(child: ProjectText(_versoText)),
                   Gap(24),
                   Expanded(child: Placeholder()),
                 ]),
@@ -166,26 +164,6 @@ class VersoContent extends StatelessWidget {
             ),
           ),
         ),
-      ),
-    );
-  }
-}
-
-class LinkButton extends StatelessWidget {
-  const LinkButton(this.link, {super.key});
-  final Link link;
-
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () => launchUrl(link.url),
-      style: ElevatedButton.styleFrom(
-        padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 45),
-        elevation: 2,
-      ),
-      child: Text(
-        link.text,
-        style: Theme.of(context).textTheme.bodyMedium,
       ),
     );
   }
@@ -204,7 +182,7 @@ class ForceDirectedGraph extends StatelessWidget {
       child: Column(
         children: [
           Row(children: [
-            const Expanded(child: Text(_forceDirectedGraphText)),
+            const Expanded(child: ProjectText(_forceDirectedGraphText)),
             Expanded(
                 child: Container(
               clipBehavior: Clip.antiAlias,
@@ -236,7 +214,7 @@ class MotionBlurContent extends StatelessWidget {
       child: Column(children: [
         Row(
           children: [
-            Expanded(child: Text(_motionBlurText)),
+            Expanded(child: ProjectText(_motionBlurText)),
             Gap(24),
             Expanded(
               child: MotionBlurDemo(),
@@ -263,6 +241,42 @@ class _ContentContainer extends StatelessWidget {
           width: 900,
           child: Padding(padding: const EdgeInsets.all(24.0), child: child),
         ),
+      ),
+    );
+  }
+}
+
+class ProjectText extends StatelessWidget {
+  const ProjectText(this.text, {super.key});
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 20),
+    );
+  }
+}
+
+class LinkButton extends StatelessWidget {
+  const LinkButton(this.link, {super.key});
+  final Link link;
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () => launchUrl(link.url),
+      style: ElevatedButton.styleFrom(
+        padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 45),
+        elevation: 2,
+      ),
+      child: Text(
+        link.text,
+        style: Theme.of(context)
+            .textTheme
+            .bodyMedium!
+            .copyWith(color: Theme.of(context).colorScheme.onPrimary),
       ),
     );
   }
