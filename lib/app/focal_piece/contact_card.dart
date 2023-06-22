@@ -110,7 +110,7 @@ class ContactCardContainer
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const _CloseButton(),
+                    const _Header(),
                     const Gap(10),
                     TextField(
                       controller: vm.nameField,
@@ -145,6 +145,25 @@ class ContactCardContainer
   }
 }
 
+class _Header extends StatelessWidget {
+  const _Header();
+
+  @override
+  Widget build(BuildContext context) {
+    return const Stack(
+      children: [
+        Center(
+          child: Padding(
+            padding: EdgeInsets.only(top: 8.0),
+            child: Text('Contact Me'),
+          ),
+        ),
+        _CloseButton()
+      ],
+    );
+  }
+}
+
 class _CloseButton extends StatelessWidget {
   const _CloseButton();
 
@@ -155,9 +174,9 @@ class _CloseButton extends StatelessWidget {
       child: IconButton(
         onPressed: context.read<ContactCardViewModel>()!.close,
         tooltip: 'Close',
-        icon: const Icon(
+        icon: Icon(
           Icons.close,
-          color: Colors.white,
+          color: Theme.of(context).colorScheme.onBackground,
         ),
       ),
     );

@@ -75,7 +75,7 @@ class FocalPieceViewModel extends EmitterContainer {
   EdgeInsets get padding {
     if (stage == FocalPieceStages.contact ||
         (previousStage == FocalPieceStages.contact && animating.value)) {
-      return const EdgeInsets.fromLTRB(290, 320, 0, 0);
+      return const EdgeInsets.fromLTRB(290, 340, 0, 0);
     }
     return const EdgeInsets.all(0);
   }
