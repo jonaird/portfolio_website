@@ -83,13 +83,13 @@ ThemeData _themeFromBrightness(Brightness brightness) {
       // ),
       displaySmall: baseTextTheme.displaySmall!.copyWith(
         color: textColor.withAlpha(200),
-        letterSpacing: -1,
-        height: 1.4,
+        letterSpacing: -1.5,
+        height: 1.3,
       ),
       displayMedium: baseTextTheme.displayMedium!.copyWith(
         color: textColor.withAlpha(200),
-        height: 1.12,
-        letterSpacing: -1,
+        height: 1.11,
+        letterSpacing: -1.5,
       ),
       displayLarge: baseTextTheme.displayLarge!.copyWith(
         fontSize: 74,
