@@ -2,18 +2,64 @@ import 'package:website/main.dart';
 import 'dart:math';
 import 'package:motion_blur/motion_blur.dart';
 
-class MotionBlurDemo extends StatefulWidget {
+class MotionBlurViewModel extends EmitterContainer {
+  final started = ValueEmitter(false);
+  final blurEnabled = ValueEmitter(false);
+  var _controllerValue = 0.0;
+
+  AnimationController requestNewController(
+      SingleTickerProviderStateMixin tickerProvider) {
+    debugPrint('new controller');
+    final controller = AnimationController(
+        vsync: tickerProvider,
+        duration: const Duration(milliseconds: 700),
+        value: _controllerValue);
+    controller.addListener(() => _controllerValue = controller.value);
+    return controller;
+  }
+
+  @override
+  get children => {started, blurEnabled};
+}
+
+class MotionBlurDemo extends StatelessWidget {
   const MotionBlurDemo({super.key});
 
   @override
-  State<MotionBlurDemo> createState() => _MotionBlurDemoState();
+  Widget build(BuildContext context) {
+    return const Column(
+      children: [
+        Card(
+          color: Colors.white,
+          child: Padding(
+            padding: EdgeInsets.only(top: 300),
+            child: SizedBox(
+              width: 400,
+              height: 150,
+              child: Center(
+                child: _MovingCircle(),
+              ),
+            ),
+          ),
+        ),
+        Gap(24),
+        _MBSwitch()
+      ],
+    );
+  }
 }
 
-class _MotionBlurDemoState extends State<MotionBlurDemo>
+class _MovingCircle extends StatefulWidget {
+  const _MovingCircle();
+
+  @override
+  State<_MovingCircle> createState() => __MovingCircleState();
+}
+
+class __MovingCircleState extends State<_MovingCircle>
     with SingleTickerProviderStateMixin {
-  late final _controller = AnimationController(
-      vsync: this, duration: const Duration(milliseconds: 700));
-  var _enabled = false;
+  late final _controller =
+      context.read<MotionBlurViewModel>()!.requestNewController(this);
 
   @override
   void initState() {
@@ -36,45 +82,43 @@ class _MotionBlurDemoState extends State<MotionBlurDemo>
 
   @override
   Widget build(BuildContext context) {
-    // final width = 40 * (sin(_controller.value * 2 * pi) + 1) + 15;
     const width = 50.0;
-    return Column(
-      children: [
-        Card(
-          color: Colors.white,
-          child: Padding(
-            padding: const EdgeInsets.only(top: 300),
-            child: SizedBox(
-              width: 400,
-              height: 150,
-              child: Center(
-                child: Transform.translate(
-                  offset: Offset(sin(_controller.value * 2 * pi) * 150,
-                      cos(_controller.value * 2 * pi) * 150 - 150),
-                  child: MotionBlur(
-                    enabled: _enabled,
-                    intensity: 1.5,
-                    child: Padding(
-                      padding: const EdgeInsets.all(30),
-                      child: Container(
-                        width: width,
-                        height: width,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(width / 2),
-                            color: Colors.green),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
+    return Transform.translate(
+      offset: Offset(sin(_controller.value * 2 * pi) * 150,
+          cos(_controller.value * 2 * pi) * 150 - 150),
+      child: MotionBlur(
+        enabled: context.depend<MotionBlurViewModel>()!.blurEnabled.value,
+        intensity: 1.5,
+        child: Padding(
+          padding: const EdgeInsets.all(30),
+          child: Container(
+            width: width,
+            height: width,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(width / 2),
+                color: Colors.green),
           ),
         ),
-        const Gap(24),
-        Text('Motion blur: ${_enabled ? 'enabled' : 'disabled'}'),
+      ),
+    );
+  }
+}
+
+class _MBSwitch
+    extends StatelessWidgetReprovider<MotionBlurViewModel, ValueEmitter<bool>> {
+  const _MBSwitch();
+
+  @override
+  ValueEmitter<bool> select(MotionBlurViewModel vm) => vm.blurEnabled;
+
+  @override
+  Widget reprovide(BuildContext contex, blurEnabled) {
+    return Column(
+      children: [
+        Text('Motion blur: ${blurEnabled.value ? 'enabled' : 'disabled'}'),
         Switch(
-          value: _enabled,
-          onChanged: (value) => setState(() => _enabled = value),
+          value: blurEnabled.value,
+          onChanged: (value) => blurEnabled.value = value,
         )
       ],
     );

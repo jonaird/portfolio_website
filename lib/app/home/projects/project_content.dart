@@ -210,19 +210,21 @@ class MotionBlurContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const _ContentContainer(
+    return _ContentContainer(
       child: Column(children: [
         Row(
           children: [
-            Expanded(child: ProjectText(_motionBlurText)),
-            Gap(24),
+            const Expanded(child: ProjectText(_motionBlurText)),
+            const Gap(24),
             Expanded(
-              child: MotionBlurDemo(),
+              child: Reprovider<HomeViewModel, MotionBlurViewModel>(
+                  selector: (vm) => vm.motionBlur,
+                  child: const MotionBlurDemo()),
             )
           ],
         ),
-        Gap(30),
-        LinkButton(Link.motionBlurGithub),
+        const Gap(30),
+        const LinkButton(Link.motionBlurGithub),
       ]),
     );
   }
