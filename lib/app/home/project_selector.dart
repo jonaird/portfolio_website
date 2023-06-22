@@ -10,9 +10,12 @@ class ProjectSelectorViewModel extends EmitterContainer {
   }
 
   bool showProjectContent(Project project) {
-    return selectedProject.value == project ||
+    return selectedProject.value == project && animating.value ||
         (selectedProject.previous == project && animating.value);
   }
+
+  bool get showProjectContentOverlay =>
+      !animating.value && selectedProject.isNotNull;
 
   @override
   get children => {selectedProject, animating};
