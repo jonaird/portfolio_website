@@ -89,7 +89,7 @@ class ProjectContentOverlay
 
   @override
   Widget reprovide(BuildContext context, vm) {
-    if (vm.showProjectContentOverlay.value) {
+    if (!vm.animating.value && vm.selectedProject.isNotNull) {
       return Container(
         height: double.infinity,
         width: double.infinity,
