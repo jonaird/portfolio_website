@@ -31,19 +31,48 @@ class MotionBlurDemo extends StatelessWidget {
       children: [
         Card(
           color: Colors.white,
-          child: Padding(
-            padding: EdgeInsets.only(top: 300),
-            child: SizedBox(
-              width: 400,
-              height: 150,
-              child: Center(
-                child: _MovingCircle(),
+          child: TryMeButton(
+            child: Padding(
+              padding: EdgeInsets.only(top: 300),
+              child: SizedBox(
+                width: 400,
+                height: 150,
+                child: Center(
+                  child: _MovingCircle(),
+                ),
               ),
             ),
           ),
         ),
         Gap(24),
         _MBSwitch()
+      ],
+    );
+  }
+}
+
+class TryMeButton
+    extends StatelessWidgetReprovider<MotionBlurViewModel, ValueEmitter<bool>> {
+  const TryMeButton({super.key, required this.child});
+  final Widget child;
+
+  @override
+  select(vm) => vm.started;
+
+  @override
+  Widget reprovide(BuildContext context, started) {
+    return Stack(
+      children: [
+        child,
+        if (!started.value)
+          Container(
+            alignment: Alignment.center,
+            padding: const EdgeInsets.only(top: 200),
+            child: ElevatedButton(
+              onPressed: () => started.value = true,
+              child: const Text('Try Me'),
+            ),
+          )
       ],
     );
   }
@@ -64,7 +93,6 @@ class __MovingCircleState extends State<_MovingCircle>
   @override
   void initState() {
     _controller.addListener(() => setState(() {}));
-    _controller.forward();
     _controller.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         _controller.value = 0.02;
@@ -72,6 +100,14 @@ class __MovingCircleState extends State<_MovingCircle>
       }
     });
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    if (context.select<MotionBlurViewModel, bool>((vm) => vm.started.value)!) {
+      _controller.forward();
+    }
+    super.didChangeDependencies();
   }
 
   @override
