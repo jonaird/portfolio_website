@@ -1,11 +1,5 @@
 import 'package:website/main.dart';
 
-const _shortBio =
-    "I’m from Chicago and I live in Hungary with my wife and 2 year old son. I’m a full stack developer, Flutter specialist and product designer.";
-
-const _longBio =
-    "\nIn 2018 I dropped out of a math degree at Roosevelt University to persue a startup at the intersection of cryptocurrency and social media. I taught myself how to code, graduated from the Founder Institute, raised a venture funding round, hired a developer and released a product to market. Unfortunately, due to extenuating circumstances, I had to shut the company down in July 2022. After taking a much-needed sabbatical, I’m excited to reenter the workforce!";
-
 class Header extends StatelessWidget {
   const Header({super.key});
 
@@ -98,7 +92,7 @@ class ExpandableBio
       child: Column(
         children: [
           Text(
-            _shortBio,
+            shortBio,
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           ClipRRect(
@@ -109,7 +103,7 @@ class ExpandableBio
               alignment: Alignment.topCenter,
               child: showFullBio.value
                   ? Text(
-                      _longBio,
+                      longBio,
                       style: Theme.of(context).textTheme.bodyLarge,
                     )
                   : Container(
@@ -122,7 +116,7 @@ class ExpandableBio
                         child: SizedBox(
                           width: 700,
                           child: Text(
-                            _longBio,
+                            longBio,
                             style: Theme.of(context).textTheme.bodyLarge,
                           ),
                         ),

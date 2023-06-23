@@ -32,14 +32,6 @@ enum Link {
   Uri get url => Uri.parse(urlString);
 }
 
-const _text = '''
-BSV News was a hacker news clone with a unique cryptocurrency integration. Instead of upvoting, users tipped small amounts of cryptocurrency allowing posters to earn money for their contributions. The tip total was then used as a metric to rank posts on the home page.
-
-BSV News used a novel architecture that took advantage of the low transaction fees and instant confirmations of the BSV cryptocurrency network. Instead of creating an account and authenticating on a private backend server, users broadcast their actions to the BSV mining network using a custom data encoding protocol. On the backend, these transactions were streamed from the blockchain in real time using an intermediary. These transactions were used to update persistent state in a MongoDB instance
-
-This architecture allowed any 3rd party to be able to permissionlessly recreate the current state of BSV News and offer a competing frontend to the protocol.
-''';
-
 class BsvNews extends StatelessWidget {
   const BsvNews({super.key});
 
@@ -48,8 +40,8 @@ class BsvNews extends StatelessWidget {
     return SingleChildScrollView(
       child: Container(
         alignment: Alignment.topCenter,
-        child: const Padding(
-          padding: EdgeInsets.symmetric(vertical: 24),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 24),
           child: SizedBox(
             width: 900,
             child: Row(
@@ -57,11 +49,11 @@ class BsvNews extends StatelessWidget {
                 Expanded(
                   flex: 1,
                   child: ProjectText(
-                    _text,
+                    Project.bsvNews.copy,
                   ),
                 ),
-                Gap(24),
-                Expanded(
+                const Gap(24),
+                const Expanded(
                   flex: 1,
                   child: Column(
                     children: [
@@ -79,14 +71,6 @@ class BsvNews extends StatelessWidget {
     );
   }
 }
-
-const _changeEmitterText = '''
-When developing BSV News, I found that the available state management solutions did not capture the same simplicity and elegance of the Flutter framework itself and so I decided to develop my own.
-
-After some experimentation, I settled on an architecture I call Observable State Trees. I found that this architecture made my codebases very easy to understand, navigate, and change with very minimal boilerplate code.
-
-change_emitter is a library for Flutter designed around implementing OSTs. Rather than an opaque framework, change_emitter provides a set of simple, easy to understand, and interoperable components allowing for a great degree of flexibility in implementation.
-''';
 
 class ChangeEmitterContent extends StatefulWidget {
   const ChangeEmitterContent({super.key});
@@ -124,7 +108,7 @@ class _ChangeEmitterContentState extends State<ChangeEmitterContent> {
                   width: 650,
                 ),
                 const Gap(24),
-                const ProjectText(_changeEmitterText),
+                ProjectText(Project.changeEmitter.copy),
                 const Gap(24),
                 const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -144,31 +128,27 @@ class _ChangeEmitterContentState extends State<ChangeEmitterContent> {
   }
 }
 
-const _versoText = '''
-Verso, my startup’s product offering, was an interconnected knowledge marketplace. It used the power of instantaneous internet micropayments and a novel content format to enable a new kind of experience for publishing and consuming knowledge. Rather than publishing articles, a format that has hardly changed in hundreds of years, users could publish short posts on individual concepts and link these posts together to form a web of knowledge and earn money for doing so.
-''';
-
 class VersoContent extends StatelessWidget {
   const VersoContent({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const SingleChildScrollView(
+    return SingleChildScrollView(
       child: Align(
         alignment: Alignment.topCenter,
         child: SizedBox(
           width: 900,
           child: Padding(
-            padding: EdgeInsets.all(24.0),
+            padding: const EdgeInsets.all(24.0),
             child: Column(
               children: [
                 Row(children: [
-                  Expanded(child: ProjectText(_versoText)),
-                  Gap(24),
-                  Expanded(child: Placeholder()),
+                  Expanded(child: ProjectText(Project.verso.copy)),
+                  const Gap(24),
+                  const Expanded(child: Placeholder()),
                 ]),
-                Gap(24),
-                LinkButton(Link.versoDesignCaseStudy)
+                const Gap(24),
+                const LinkButton(Link.versoDesignCaseStudy)
               ],
             ),
           ),
@@ -177,10 +157,6 @@ class VersoContent extends StatelessWidget {
     );
   }
 }
-
-const _forceDirectedGraphText = '''
-force directed graph
-''';
 
 class ForceDirectedGraph extends StatelessWidget {
   const ForceDirectedGraph({super.key});
@@ -191,7 +167,7 @@ class ForceDirectedGraph extends StatelessWidget {
       child: Column(
         children: [
           Row(children: [
-            const Expanded(child: ProjectText(_forceDirectedGraphText)),
+            Expanded(child: ProjectText(Project.forceDirectedGraph.copy)),
             Expanded(
                 child: Container(
               clipBehavior: Clip.antiAlias,
@@ -213,10 +189,6 @@ class ForceDirectedGraph extends StatelessWidget {
   }
 }
 
-const _motionBlurText = '''
-Flutter’s recent support for fragment shaders gives developers a huge new set of possibilities for immersive experiences in apps. motion_blur is a Flutter package that uses shaders to add motion blur to any moving widget. Simply add the motion_blur package to your project and wrap your moving widget in a MotionBlur widget and like magic, there’s motion blur!
-''';
-
 class MotionBlurContent extends StatelessWidget {
   const MotionBlurContent({super.key});
 
@@ -226,7 +198,7 @@ class MotionBlurContent extends StatelessWidget {
       child: Column(children: [
         Row(
           children: [
-            const Expanded(child: ProjectText(_motionBlurText)),
+            Expanded(child: ProjectText(Project.motionBlur.copy)),
             const Gap(24),
             Expanded(
               child: Reprovider<HomeViewModel, MotionBlurViewModel>(

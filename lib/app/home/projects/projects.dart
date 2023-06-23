@@ -52,20 +52,6 @@ enum Project {
 
   GlobalKey get key => keys[this]!;
 
-  static final _controllers = Project.values.asMap().map((key, value) {
-    final controllers = (
-      baseController: ScrollController(),
-      overlayController: ScrollController()
-    );
-    controllers.overlayController.addListener(() {
-      controllers.baseController.jumpTo(controllers.overlayController.offset);
-    });
-    return MapEntry(value, controllers);
-  });
-
-  ({ScrollController baseController, ScrollController overlayController})
-      get controllers => _controllers[this]!;
-
   static Project? fromUri(String uri) {
     final destList = List.from(values)
       ..retainWhere((element) => element.path == uri);
@@ -91,6 +77,8 @@ enum Project {
     final height = MediaQuery.of(key.currentContext!).size.height - 56;
     return height / key.projectCardSize.height;
   }
+
+  String get copy => projectCopy(this);
 }
 
 class ProjectSection extends StatelessWidget {

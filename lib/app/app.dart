@@ -1,5 +1,6 @@
 import 'package:website/main.dart';
 export 'theme.dart';
+export 'copy.dart';
 
 class AppViewModel extends RootEmitter {
   late final Project? initialRoute;
