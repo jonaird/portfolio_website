@@ -88,18 +88,27 @@ After some experimentation, I settled on an architecture I call Observable State
 change_emitter is a library for Flutter designed around implementing OSTs. Rather than an opaque framework, change_emitter provides a set of simple, easy to understand, and interoperable components allowing for a great degree of flexibility in implementation.
 ''';
 
-class ChangeEmitterContent extends StatelessWidget {
+class ChangeEmitterContent extends StatefulWidget {
   const ChangeEmitterContent({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final isOverlay =
-        context.findAncestorWidgetOfExactType<ProjectContentOverlay>() != null;
+  State<ChangeEmitterContent> createState() => _ChangeEmitterContentState();
+}
 
+class _ChangeEmitterContentState extends State<ChangeEmitterContent> {
+  late final _controller = context
+      .read<HomeViewModel>()!
+      .requestScrollConteroller(Project.changeEmitter);
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return SingleChildScrollView(
-      controller: isOverlay
-          ? Project.changeEmitter.controllers.overlayController
-          : Project.changeEmitter.controllers.baseController,
+      controller: _controller,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24),
         child: Container(

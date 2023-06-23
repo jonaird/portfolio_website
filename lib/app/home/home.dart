@@ -12,6 +12,18 @@ class HomeViewModel extends EmitterContainer {
   final motionBlur = MotionBlurViewModel();
   final forceDirectedGraph = ForceDirectedGraphViewModel();
   final showFullBio = ValueEmitter(false);
+  final changeEmitterScrollController = ScrollEmitter();
+  final scrollPositions =
+      Project.values.asMap().map((key, value) => MapEntry(value, 0.0));
+
+  ScrollController requestScrollConteroller(Project project) {
+    final newController =
+        ScrollController(initialScrollOffset: scrollPositions[project]!);
+    newController.addListener(() {
+      scrollPositions[project] = newController.offset;
+    });
+    return newController;
+  }
 
   late final showHome = ValueEmitter.reactive(
     reactTo: [parent.focalPiece],
