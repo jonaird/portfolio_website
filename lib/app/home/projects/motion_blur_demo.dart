@@ -9,7 +9,6 @@ class MotionBlurViewModel extends EmitterContainer {
 
   AnimationController requestNewController(
       SingleTickerProviderStateMixin tickerProvider) {
-    debugPrint('new controller');
     final controller = AnimationController(
         vsync: tickerProvider,
         duration: const Duration(milliseconds: 700),
@@ -69,9 +68,10 @@ class TryMeButton
             alignment: Alignment.center,
             padding: const EdgeInsets.only(top: 200),
             child: ElevatedButton(
-              onPressed: () => started.value = true,
-              child: const Text('Try Me'),
-            ),
+                onPressed: () => started.value = true,
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue.shade400),
+                child: const Text('Try Me')),
           )
       ],
     );

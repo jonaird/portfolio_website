@@ -190,7 +190,10 @@ class ForceDirectedGraph extends StatelessWidget {
               height: 500,
               decoration: const BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(5))),
-              child: const ForceDirectedGraphDemo(),
+              child: Reprovider<HomeViewModel, ForceDirectedGraphViewModel>(
+                selector: (vm) => vm.forceDirectedGraph,
+                child: const ForceDirectedGraphDemo(),
+              ),
             )),
           ]),
           const Gap(30),

@@ -1,3 +1,4 @@
+import 'package:website/app/home/projects/force_directed_graph_demo.dart';
 import 'package:website/app/home/projects/motion_blur_demo.dart';
 import 'package:website/main.dart';
 export './projects/projects.dart';
@@ -9,6 +10,7 @@ class HomeViewModel extends EmitterContainer {
   @override
   AppViewModel get parent => super.parent as AppViewModel;
   final motionBlur = MotionBlurViewModel();
+  final forceDirectedGraph = ForceDirectedGraphViewModel();
   final showFullBio = ValueEmitter(false);
 
   late final showHome = ValueEmitter.reactive(
