@@ -25,7 +25,7 @@ enum Project {
 
   forceDirectedGraph(
     title: 'force_directed_graph',
-    subtitle: 'Minimal & Powerful APIs',
+    subtitle: 'Minimal, Powerful APIs',
     path: '/forceDirectedGraph',
     content: ForceDirectedGraph(),
   ),
