@@ -26,7 +26,7 @@ change_emitter is a library for Flutter designed around implementing OSTs. Rathe
 Verso, my startup’s product offering, was an interconnected knowledge marketplace. It used the power of instantaneous internet micropayments and a novel content format to enable a new kind of experience for publishing and consuming knowledge. Rather than publishing articles, a format that has hardly changed in hundreds of years, users could publish short posts on individual concepts and link these posts together to form a web of knowledge and earn money for doing so.
 ''',
     Project.forceDirectedGraph => '''
-force directed graph
+This package provides a Flutter widget for displaying force directed graphs. It uses a simple declarative API and can animate between states. Click on the “+” button on the right a few times to try it out! It uses the Fruchterman Reingold algorithm under the hood but you can swap in your own algorithm if you like. Click the button below to see the source code.
 ''',
     Project.motionBlur => '''
 Flutter’s recent support for fragment shaders gives developers a huge new set of possibilities for immersive experiences in apps. motion_blur is a Flutter package that uses shaders to add motion blur to any moving widget. Simply add the motion_blur package to your project and wrap your moving widget in a MotionBlur widget and like magic, there’s motion blur!

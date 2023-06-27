@@ -168,6 +168,7 @@ class ForceDirectedGraph extends StatelessWidget {
         children: [
           Row(children: [
             Expanded(child: ProjectText(Project.forceDirectedGraph.copy)),
+            const Gap(24),
             Expanded(
                 child: Container(
               clipBehavior: Clip.antiAlias,
