@@ -2,7 +2,6 @@ import 'package:website/app/focal_piece/contact_card.dart';
 import 'package:website/main.dart';
 import 'focal_piece_container.dart';
 import 'focal_piece_content.dart';
-import 'package:motion_blur/motion_blur.dart';
 
 class FocalPieceViewModel extends EmitterContainer {
   final _stage = ValueEmitter(FocalPieceStages.firstBuild, keepHistory: true);
@@ -178,13 +177,9 @@ class FocalPiece extends StatelessWidgetConsumer<FocalPieceViewModel> {
                 maxWidth: double.infinity,
                 child: Reprovider(
                   selector: (FocalPieceViewModel vm) => vm.container,
-                  child: MotionBlur(
-                    enabled: vm.motionBlurEnabled,
-                    intensity: 0.4,
-                    child: const Padding(
-                      padding: EdgeInsets.all(100),
-                      child: FocalPieceContainer(),
-                    ),
+                  child: const Padding(
+                    padding: EdgeInsets.all(100),
+                    child: FocalPieceContainer(),
                   ),
                 ),
               ),
