@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:website/main.dart';
 export 'theme.dart';
 export 'copy.dart';
@@ -10,9 +12,11 @@ class AppViewModel extends RootEmitter {
 
   set initialRoute(Project? project) {
     if (project != null) {
-      focalPiece.changes.listen((event) {
+      late final StreamSubscription sub;
+      sub = focalPiece.changes.listen((event) {
         if (focalPiece.introSequenceCompleted) {
           projectSelector.selectedProject.value = project;
+          sub.cancel();
         }
       });
     }
