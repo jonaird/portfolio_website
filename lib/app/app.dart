@@ -3,11 +3,20 @@ export 'theme.dart';
 export 'copy.dart';
 
 class AppViewModel extends RootEmitter {
-  late final Project? initialRoute;
   final focalPiece = FocalPieceViewModel();
   final projectSelector = ProjectSelectorViewModel();
   final home = HomeViewModel();
   final theme = ValueEmitter(Brightness.dark);
+
+  set initialRoute(Project? project) {
+    if (project != null) {
+      focalPiece.changes.listen((event) {
+        if (focalPiece.introSequenceCompleted) {
+          projectSelector.selectedProject.value = project;
+        }
+      });
+    }
+  }
 
   Project? get selectedProject => projectSelector.selectedProject.value;
 
