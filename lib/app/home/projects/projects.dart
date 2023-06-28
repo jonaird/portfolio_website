@@ -111,6 +111,20 @@ class ProjectDisplay extends StatelessWidgetConsumer<ProjectSelectorViewModel> {
   const ProjectDisplay(this.project, {super.key});
   final Project project;
 
+  double left(BuildContext context, Project? selectedProject) {
+    if (selectedProject == null) return 0.0;
+    if (selectedProject == project) return 0.0;
+    if (project.key.offset.dy != selectedProject.key.offset.dy) return 0.0;
+    //card is to the left of the selected card
+    if (Project.values.indexOf(project) <
+        Project.values.indexOf(selectedProject)) {
+      return -330.0;
+    } else {
+      //card is to the right
+      return 330.0;
+    }
+  }
+
   @override
   Widget consume(BuildContext context, vm) {
     return SizedBox(
@@ -124,6 +138,7 @@ class ProjectDisplay extends StatelessWidgetConsumer<ProjectSelectorViewModel> {
             ProjectContainer(child: project.content),
           AnimatedPositioned(
             top: vm.selectedProject.value == project ? -230 : 0,
+            left: left(context, vm.selectedProject.value),
             duration: const Duration(milliseconds: 300),
             child: IgnorePointer(
               ignoring: vm.selectedProject.isNotNull,
