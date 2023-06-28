@@ -117,14 +117,16 @@ class ProjectDisplay extends StatelessWidgetConsumer<ProjectSelectorViewModel> {
       width: 330,
       height: 200,
       child: Stack(
+        key: project.key,
+        clipBehavior: Clip.none,
         children: [
           if (vm.showProjectContent(project))
             ProjectContainer(child: project.content),
-          IgnorePointer(
-            ignoring: vm.selectedProject.isNotNull,
-            child: AnimatedOpacity(
-              opacity: vm.selectedProject.isNotNull ? 0 : 1,
-              duration: const Duration(milliseconds: 400),
+          AnimatedPositioned(
+            top: vm.selectedProject.value == project ? -230 : 0,
+            duration: const Duration(milliseconds: 300),
+            child: IgnorePointer(
+              ignoring: vm.selectedProject.isNotNull,
               child: ProjectCard(project),
             ),
           ),
@@ -143,7 +145,6 @@ class ProjectCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      key: project.key,
       elevation: 1.5,
       clipBehavior: Clip.antiAlias,
       shape: RoundedRectangleBorder(
