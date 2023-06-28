@@ -58,34 +58,32 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return HomeHider(
-      child: AppBlur(
-        child: Stack(
-          children: [
-            Scaffold(
-              appBar: AppBar(
-                title: const _Title(),
-                automaticallyImplyLeading: false,
-                leading: const _Leading(),
-              ),
-              body: ScaffoldCapture(
-                child: Stack(
-                  children: [
-                    Reprovider<AppViewModel, ProjectSelectorViewModel>(
-                        selector: (vm) => vm.projectSelector,
-                        child: const ProjectSelector()),
-                    const ProjectContentOverlay(),
-                    const ThemeSwitcher()
-                  ],
-                ),
+      child: Stack(
+        children: [
+          Scaffold(
+            appBar: AppBar(
+              title: const _Title(),
+              automaticallyImplyLeading: false,
+              leading: const _Leading(),
+            ),
+            body: ScaffoldCapture(
+              child: Stack(
+                children: [
+                  Reprovider<AppViewModel, ProjectSelectorViewModel>(
+                      selector: (vm) => vm.projectSelector,
+                      child: const ProjectSelector()),
+                  const ProjectContentOverlay(),
+                  const ThemeSwitcher()
+                ],
               ),
             ),
-            BuiltWithFlutterCornerBanner.positioned(
-              bannerPosition: CornerBannerPosition.topRight,
-              bannerColor: Theme.of(context).primaryColorLight,
-              elevation: 2,
-            ),
-          ],
-        ),
+          ),
+          BuiltWithFlutterCornerBanner.positioned(
+            bannerPosition: CornerBannerPosition.topRight,
+            bannerColor: Theme.of(context).primaryColorLight,
+            elevation: 2,
+          ),
+        ],
       ),
     );
   }

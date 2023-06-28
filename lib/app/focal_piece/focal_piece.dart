@@ -201,9 +201,8 @@ class FocalPieceBackground
       ignoring: vm.backgroundShouldIgnorePointer,
       child: GestureDetector(
         onTap: vm.closeContactCard,
-        child: AnimatedContainer(
-          duration: vm.animationDuration,
-          color: vm.backgroundColor,
+        child: Container(
+          color: Colors.transparent,
         ),
       ),
     );
