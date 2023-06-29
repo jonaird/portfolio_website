@@ -22,8 +22,8 @@ class ProjectSelectorViewModel extends EmitterContainer {
 }
 
 class ProjectSelector extends StatefulWidget {
-  const ProjectSelector({Key? key}) : super(key: key);
-
+  const ProjectSelector({Key? key, required this.child}) : super(key: key);
+  final Widget child;
   @override
   State<ProjectSelector> createState() => _ProjectSelectorState();
 }
@@ -124,7 +124,7 @@ class _ProjectSelectorState extends State<ProjectSelector>
           : _selectedProject?.scale ?? 1,
       origin: _originAnimation.value,
       alignment: Alignment.topLeft,
-      child: const HomePage(),
+      child: widget.child,
     );
   }
 }

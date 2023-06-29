@@ -25,8 +25,8 @@ class FocalPieceContentViewModel extends EmitterContainer {
     };
   }
 
-  void onFABPressed() {
-    parent.stage = FocalPieceStages.contact;
+  void onFABTapped() {
+    findAncestorOfExactType<AppViewModel>()!.onFABTapped();
   }
 
   void sendMessage() => parent.sendMessage();
@@ -99,11 +99,11 @@ class _FabContent extends StatelessWidget {
       child: FittedBox(
         fit: BoxFit.contain,
         child: Tooltip(
-          message: "Contact",
+          message: "Contact Me",
           preferBelow: false,
           verticalOffset: 30,
           child: InkWell(
-            onTap: context.read<FocalPieceContentViewModel>()!.onFABPressed,
+            onTap: context.read<FocalPieceContentViewModel>()!.onFABTapped,
             borderRadius:
                 BorderRadius.circular(56 * FocalPieceViewModel.fabScale),
             child: const Padding(

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:website/main.dart';
 
 class ContactCardViewModel extends EmitterContainer {
@@ -21,15 +22,17 @@ class ContactCardViewModel extends EmitterContainer {
     return Alignment.bottomCenter;
   }
 
-  sendMessage() async {
+  Future<bool> sendMessage() async {
     final success = await _sendMessage();
     if (success) {
       messageSent = true;
-      parent.stage = FocalPieceStages.fab;
+      // parent.stage = FocalPieceStages.fab;
       findAncestorOfExactType<AppViewModel>()!
           .showSnackBar('Message sent! I will get back to you shortly!');
+      return true;
     } else {
       somethingWentWrong.value = true;
+      return false;
     }
   }
 
@@ -55,7 +58,9 @@ class ContactCardViewModel extends EmitterContainer {
   }
 
   Future<bool> _sendMessage() {
-    // return Future.delayed(const Duration(milliseconds: 600), () => true);
+    if (kDebugMode) {
+      return Future.delayed(const Duration(milliseconds: 600), () => true);
+    }
     return post(
         Uri.parse(
             'https://connect.pabbly.com/workflow/sendwebhookdata/IjU3NjUwNTZkMDYzNTA0M2M1MjZkNTUzNTUxMzUi_pc'),
@@ -74,9 +79,32 @@ class ContactCardViewModel extends EmitterContainer {
 
 enum ContactCardStage { inactive, active, messageSent }
 
+class ContactCard extends StatelessWidgetConsumer<ContactCardViewModel> {
+  const ContactCard({super.key});
+
+  @override
+  Widget consume(BuildContext context, vm) {
+    return OverflowBox(
+      maxHeight: double.infinity,
+      child: SizedBox(
+        height: MediaQuery.of(context).size.height + 800,
+        child: AnimatedAlign(
+          alignment: vm.alignment,
+          onEnd: vm.finishedAnimating,
+          curve: FocalPieceViewModel.animationCurve,
+          duration: vm.duration,
+          child: const ContactCardContainer(),
+        ),
+      ),
+    );
+  }
+}
+
 class ContactCardContainer
     extends StatelessWidgetConsumer<ContactCardViewModel> {
-  const ContactCardContainer({super.key});
+  const ContactCardContainer({
+    super.key,
+  });
 
   @override
   Widget consume(BuildContext context, vm) {
@@ -91,52 +119,44 @@ class ContactCardContainer
         ),
       ),
     );
-    return OverflowBox(
-      maxHeight: double.infinity,
+    return Align(
+      alignment: Alignment.topCenter,
       child: SizedBox(
-        height: MediaQuery.of(context).size.height + 800,
-        child: AnimatedAlign(
-          alignment: vm.alignment,
-          onEnd: vm.finishedAnimating,
-          curve: FocalPieceViewModel.animationCurve,
-          duration: vm.duration,
-          child: SizedBox(
-            width: 450,
-            height: 400,
-            child: Card(
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 8.0, horizontal: 14),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const _Header(),
-                    const Gap(10),
-                    TextField(
-                      controller: vm.nameField,
-                      decoration: inputDecoration,
-                    ),
-                    const Gap(8),
-                    TextField(
-                      controller: vm.emailField,
-                      decoration: inputDecoration.copyWith(labelText: 'Email'),
-                    ),
-                    const Gap(8),
-                    TextField(
-                      controller: vm.messageField,
-                      decoration: inputDecoration.copyWith(
-                        labelText: 'Message',
-                      ),
-                      minLines: 7,
-                      maxLines: 7,
-                    ),
-                    const Gap(12),
-                    if (vm.somethingWentWrong.value)
-                      const SelectableText(
-                          'Oops something went wrong!\nYou can contact me at jonathan.aird@gmail.com')
-                  ],
+        width: 500,
+        height: 400,
+        child: Card(
+          color: Theme.of(context).colorScheme.primary,
+          elevation: 2,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 14),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const _Header(),
+                const Gap(10),
+                TextField(
+                  controller: vm.nameField,
+                  decoration: inputDecoration,
                 ),
-              ),
+                const Gap(8),
+                TextField(
+                  controller: vm.emailField,
+                  decoration: inputDecoration.copyWith(labelText: 'Email'),
+                ),
+                const Gap(8),
+                TextField(
+                  controller: vm.messageField,
+                  decoration: inputDecoration.copyWith(
+                    labelText: 'Message',
+                  ),
+                  minLines: 7,
+                  maxLines: 7,
+                ),
+                const Gap(12),
+                if (vm.somethingWentWrong.value)
+                  const SelectableText(
+                      'Oops something went wrong!\nYou can contact me at jonathan.aird@gmail.com')
+              ],
             ),
           ),
         ),
@@ -158,7 +178,7 @@ class _Header extends StatelessWidget {
             child: Text('Contact Me'),
           ),
         ),
-        _CloseButton()
+        // _CloseButton()
       ],
     );
   }

@@ -24,8 +24,18 @@ class AppViewModel extends RootEmitter {
 
   Project? get selectedProject => projectSelector.selectedProject.value;
 
+  void onFABTapped() async {
+    if (projectSelector.selectedProject.isNotNull) {
+      projectSelector.selectedProject.value = null;
+      await Future.delayed(const Duration(milliseconds: 400));
+    }
+    home.animateToContactCard();
+  }
+
   set selectedProject(Project? newSelection) =>
       projectSelector.selectedProject.value = newSelection;
+
+  void onMessageSent() => home.onMessageSent();
 
   late void Function(String message) showSnackBar;
 

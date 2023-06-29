@@ -1,3 +1,4 @@
+import 'package:website/app/focal_piece/contact_card.dart';
 import 'package:website/app/home/projects/force_directed_graph_demo.dart';
 import 'package:website/app/home/projects/motion_blur_demo.dart';
 import 'package:website/main.dart';
@@ -7,22 +8,49 @@ export 'project_selector.dart';
 export 'header.dart';
 
 class HomeViewModel extends EmitterContainer {
+  HomeViewModel() {
+    scrollController.changes.listen((change) {
+      if (change.newValue > scrollController.position.maxScrollExtent - 10) {
+        parent.focalPiece.stage = FocalPieceStages.contact;
+      } else {
+        parent.focalPiece.stage = FocalPieceStages.fab;
+      }
+      if (change.newValue > scrollController.position.maxScrollExtent - 200 &&
+          change.newValue > change.oldValue!) {
+        animateToContactCard();
+      }
+    });
+  }
   @override
   AppViewModel get parent => super.parent as AppViewModel;
   final motionBlur = MotionBlurViewModel();
   final forceDirectedGraph = ForceDirectedGraphViewModel();
   final showFullBio = ValueEmitter(false);
-  final changeEmitterScrollController = ScrollEmitter();
-  final scrollPositions =
+  final scrollController = ScrollEmitter();
+  final projectScrollPositions =
       Project.values.asMap().map((key, value) => MapEntry(value, 0.0));
+  var _animatingToBottom = false;
 
   ScrollController requestScrollConteroller(Project project) {
     final newController =
-        ScrollController(initialScrollOffset: scrollPositions[project]!);
+        ScrollController(initialScrollOffset: projectScrollPositions[project]!);
     newController.addListener(() {
-      scrollPositions[project] = newController.offset;
+      projectScrollPositions[project] = newController.offset;
     });
     return newController;
+  }
+
+  void animateToContactCard() {
+    if (!_animatingToBottom) {
+      _animatingToBottom = true;
+      scrollController
+          .animateTo(
+            scrollController.position.maxScrollExtent,
+            duration: const Duration(milliseconds: 400),
+            curve: FocalPieceViewModel.animationCurve,
+          )
+          .then((value) => _animatingToBottom = false);
+    }
   }
 
   late final showHome = ValueEmitter.reactive(
@@ -50,6 +78,13 @@ class HomeViewModel extends EmitterContainer {
   void handleBackButton() {
     parent.selectedProject = null;
   }
+
+  void onMessageSent() {
+    scrollController.animateTo(
+        scrollController.position.maxScrollExtent - 64 - 400,
+        duration: const Duration(milliseconds: 400),
+        curve: FocalPieceViewModel.animationCurve);
+  }
 }
 
 class Home extends StatelessWidget {
@@ -71,7 +106,7 @@ class Home extends StatelessWidget {
                 children: [
                   Reprovider<AppViewModel, ProjectSelectorViewModel>(
                       selector: (vm) => vm.projectSelector,
-                      child: const ProjectSelector()),
+                      child: const ProjectSelector(child: HomePage())),
                   const ProjectContentOverlay(),
                   const ThemeSwitcher()
                 ],
@@ -140,18 +175,39 @@ class HomePage
         child: SizedBox(
           width: context.windowSize.width,
           height: context.windowSize.height + 400,
-          child: ListView(
-            physics: disableScrolling.value
-                ? const NeverScrollableScrollPhysics()
-                : null,
-            children: const [
-              Gap(200),
-              Header(),
-              Gap(48),
-              ProjectSection(),
-              Gap(348),
-            ],
-          ),
+          child: SingleChildScrollView(
+              physics: disableScrolling.value
+                  ? const NeverScrollableScrollPhysics()
+                  : null,
+              controller: context.read<HomeViewModel>()!.scrollController,
+              child: Column(
+                children: [
+                  const Gap(200),
+                  const Header(),
+                  const Gap(48),
+                  const ProjectSection(),
+                  const Gap(48),
+                  Align(
+                      alignment: Alignment.topCenter,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Text("Want to know how this website works? "),
+                          TextButton(
+                            onPressed: () => launchUrl(Uri.parse(
+                                'https://github.com/jonaird/portfolio_website')),
+                            child: const Text('View the source code.'),
+                          )
+                        ],
+                      )),
+                  const Gap(48),
+                  Reprovider<AppViewModel, ContactCardViewModel>(
+                    selector: (appVM) => appVM.focalPiece.contactCard,
+                    child: const ContactCardContainer(),
+                  ),
+                  const Gap(264),
+                ],
+              )),
         ),
       ),
     );

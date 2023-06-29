@@ -39,38 +39,31 @@ class FocalPieceContainerViewModel extends EmitterContainer {
   get dependencies => {_parameters};
 }
 
-class FocalPieceContainer extends StatefulWidget {
+class FocalPieceContainer
+    extends StatelessWidgetConsumer<FocalPieceContainerViewModel> {
   const FocalPieceContainer({super.key});
 
-  @override
-  State<FocalPieceContainer> createState() => _FocalPieceContainerState();
-}
-
-class _FocalPieceContainerState
-    extends ConsumerState<FocalPieceContainer, FocalPieceContainerViewModel> {
   @override
   Widget consume(context, fp) {
     if (fp.firstBuild) fp.onFirstBuild();
 
-    return Padding(
-        padding: const EdgeInsets.all(16.0 * 3),
-        child: AnimatedContainer(
-          width: fp.parameters.width?.toDouble() ??
-              MediaQuery.of(context).size.width,
-          height: fp.parameters.height?.toDouble() ??
-              MediaQuery.of(context).size.height,
-          curve: FocalPieceViewModel.animationCurve,
-          duration: fp.animationDuration,
-          onEnd: fp.finishedAnimating,
-          decoration: fp.parameters.decoration,
-          clipBehavior: Clip.antiAlias,
-          child: Material(
-            color: Theme.of(context).colorScheme.secondary,
-            child: Reprovider(
-              selector: (FocalPieceViewModel vm) => vm.content,
-              child: const FocalPieceContent(),
-            ),
-          ),
-        ));
+    return AnimatedContainer(
+      width:
+          fp.parameters.width?.toDouble() ?? MediaQuery.of(context).size.width,
+      height: fp.parameters.height?.toDouble() ??
+          MediaQuery.of(context).size.height,
+      curve: FocalPieceViewModel.animationCurve,
+      duration: fp.animationDuration,
+      onEnd: fp.finishedAnimating,
+      decoration: fp.parameters.decoration,
+      clipBehavior: Clip.antiAlias,
+      child: Material(
+        color: Theme.of(context).colorScheme.secondary,
+        child: Reprovider(
+          selector: (FocalPieceViewModel vm) => vm.content,
+          child: const FocalPieceContent(),
+        ),
+      ),
+    );
   }
 }

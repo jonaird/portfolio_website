@@ -42,7 +42,12 @@ class FocalPieceViewModel extends EmitterContainer {
     }
   }
 
-  void sendMessage() => contactCard.sendMessage();
+  void sendMessage() async {
+    final success = await contactCard.sendMessage();
+    if (success) {
+      findAncestorOfExactType<AppViewModel>()!.onMessageSent();
+    }
+  }
 
   void closeContactCard() => contactCard.close();
 
@@ -51,6 +56,7 @@ class FocalPieceViewModel extends EmitterContainer {
 
   Alignment get alignment {
     if (stage == FocalPieceStages.fab) return Alignment.bottomRight;
+    if (stage == FocalPieceStages.contact) return Alignment.bottomCenter;
     return Alignment.center;
   }
 
@@ -72,9 +78,16 @@ class FocalPieceViewModel extends EmitterContainer {
   }
 
   EdgeInsets get padding {
-    if (stage == FocalPieceStages.contact ||
-        (previousStage == FocalPieceStages.contact && animating.value)) {
-      return const EdgeInsets.fromLTRB(290, 340, 0, 0);
+    // if (stage == FocalPieceStages.contact ||
+    //     (previousStage == FocalPieceStages.contact && animating.value)) {
+    //   return const EdgeInsets.fromLTRB(290, 0, 0, 48);
+    // }
+    if (stage == FocalPieceStages.fab) {
+      return const EdgeInsets.all(16.0 * FocalPieceViewModel.fabScale);
+    }
+    if (stage == FocalPieceStages.contact) {
+      return const EdgeInsets.all(16.0 * FocalPieceViewModel.fabScale)
+          .copyWith(left: 345, bottom: 60);
     }
     return const EdgeInsets.all(0);
   }
@@ -111,10 +124,10 @@ enum FocalPieceStages {
   ContainerParameters get parameters {
     return switch (this) {
       FocalPieceStages.firstBuild => (
-          width: 2000.0,
-          height: 2000.0,
+          width: null,
+          height: null,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(1000),
+            borderRadius: BorderRadius.circular(0),
             boxShadow: _boxShadow,
           ),
         ),
@@ -161,28 +174,16 @@ class FocalPiece extends StatelessWidgetConsumer<FocalPieceViewModel> {
   Widget consume(_, vm) {
     return Stack(
       children: [
-        const FocalPieceBackground(),
-        Provider(vm.contactCard, child: const ContactCardContainer()),
+        // const FocalPieceBackground(),
         AnimatedAlign(
           alignment: vm.alignment,
           duration: vm.animationDuration,
           curve: FocalPieceViewModel.animationCurve,
           child: Padding(
             padding: vm.padding,
-            child: SizedBox(
-              width: vm.outerSize.width,
-              height: vm.outerSize.height,
-              child: OverflowBox(
-                maxHeight: double.infinity,
-                maxWidth: double.infinity,
-                child: Reprovider(
-                  selector: (FocalPieceViewModel vm) => vm.container,
-                  child: const Padding(
-                    padding: EdgeInsets.all(100),
-                    child: FocalPieceContainer(),
-                  ),
-                ),
-              ),
+            child: Reprovider(
+              selector: (FocalPieceViewModel vm) => vm.container,
+              child: const FocalPieceContainer(),
             ),
           ),
         ),
@@ -191,20 +192,20 @@ class FocalPiece extends StatelessWidgetConsumer<FocalPieceViewModel> {
   }
 }
 
-class FocalPieceBackground
-    extends StatelessWidgetConsumer<FocalPieceViewModel> {
-  const FocalPieceBackground({super.key});
+// class FocalPieceBackground
+//     extends StatelessWidgetConsumer<FocalPieceViewModel> {
+//   const FocalPieceBackground({super.key});
 
-  @override
-  Widget consume(_, vm) {
-    return IgnorePointer(
-      ignoring: vm.backgroundShouldIgnorePointer,
-      child: GestureDetector(
-        onTap: vm.closeContactCard,
-        child: Container(
-          color: Colors.transparent,
-        ),
-      ),
-    );
-  }
-}
+//   @override
+//   Widget consume(_, vm) {
+//     return IgnorePointer(
+//       ignoring: vm.backgroundShouldIgnorePointer,
+//       child: GestureDetector(
+//         onTap: vm.closeContactCard,
+//         child: Container(
+//           color: Colors.transparent,
+//         ),
+//       ),
+//     );
+//   }
+// }
