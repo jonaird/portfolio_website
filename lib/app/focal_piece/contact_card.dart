@@ -59,7 +59,7 @@ class ContactCardViewModel extends EmitterContainer {
 
   Future<bool> _sendMessage() {
     if (kDebugMode) {
-      return Future.delayed(const Duration(milliseconds: 600), () => true);
+      return Future.delayed(const Duration(milliseconds: 600), () => false);
     }
     return post(
         Uri.parse(
@@ -152,10 +152,12 @@ class ContactCardContainer
                   minLines: 7,
                   maxLines: 7,
                 ),
-                const Gap(12),
+                const Gap(13),
                 if (vm.somethingWentWrong.value)
                   const SelectableText(
-                      'Oops something went wrong!\nYou can contact me at jonathan.aird@gmail.com')
+                    'Oops something went wrong!\nYou can contact me at jonathan.aird@gmail.com',
+                    style: TextStyle(fontSize: 13),
+                  )
               ],
             ),
           ),
