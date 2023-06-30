@@ -10,30 +10,40 @@ class AppViewModel extends RootEmitter {
   final home = HomeViewModel();
   final theme = ValueEmitter(Brightness.dark);
 
+  void onProjectSelected() {
+    if (selectedProject != null) {
+      focalPiece.stage = FocalPieceStages.fab;
+    }
+
+    if (selectedProject == null && home.nearBottomOfScrollView) {
+      focalPiece.stage = FocalPieceStages.contact;
+    }
+  }
+
   set initialRoute(Project? project) {
     if (project != null) {
       late final StreamSubscription sub;
       sub = focalPiece.changes.listen((event) {
         if (focalPiece.introSequenceCompleted) {
-          projectSelector.selectedProject.value = project;
+          projectSelector.selectedProject = project;
           sub.cancel();
         }
       });
     }
   }
 
-  Project? get selectedProject => projectSelector.selectedProject.value;
+  Project? get selectedProject => projectSelector.selectedProject;
 
   void onFABTapped() async {
-    if (projectSelector.selectedProject.isNotNull) {
-      projectSelector.selectedProject.value = null;
+    if (projectSelector.selectedProject != null) {
+      projectSelector.selectedProject = null;
       await Future.delayed(const Duration(milliseconds: 400));
     }
     home.animateToContactCard();
   }
 
   set selectedProject(Project? newSelection) =>
-      projectSelector.selectedProject.value = newSelection;
+      projectSelector.selectedProject = newSelection;
 
   void onMessageSent() => home.onMessageSent();
 

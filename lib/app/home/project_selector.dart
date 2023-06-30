@@ -1,24 +1,28 @@
 import 'package:website/main.dart';
 
 class ProjectSelectorViewModel extends EmitterContainer {
-  final selectedProject = ValueEmitter<Project?>(null, keepHistory: true);
+  final _selectedProject = ValueEmitter<Project?>(null, keepHistory: true);
   final animating = ValueEmitter<bool>(false);
 
-  void selectProject(Project project) {
-    selectedProject.value = project;
-    animating.value = true;
+  set selectedProject(Project? project) {
+    if (project != _selectedProject.value) animating.value = true;
+    _selectedProject.value = project;
+
+    findAncestorOfExactType<AppViewModel>()!.onProjectSelected();
   }
 
+  Project? get selectedProject => _selectedProject.value;
+
   bool showProjectContent(Project project) {
-    return selectedProject.value == project && animating.value ||
-        (selectedProject.previous == project && animating.value);
+    return _selectedProject.value == project && animating.value ||
+        (_selectedProject.previous == project && animating.value);
   }
 
   bool get showProjectContentOverlay =>
-      !animating.value && selectedProject.isNotNull;
+      !animating.value && _selectedProject.isNotNull;
 
   @override
-  get children => {selectedProject, animating};
+  get children => {_selectedProject, animating};
 }
 
 class ProjectSelector extends StatefulWidget {
@@ -40,7 +44,7 @@ class _ProjectSelectorState extends State<ProjectSelector>
   @override
   void didChangeDependencies() {
     final selectedProject = context
-        .select((ProjectSelectorViewModel vm) => vm.selectedProject.value);
+        .select((ProjectSelectorViewModel vm) => vm._selectedProject.value);
     if (_initialBuild) {
       _selectedProject = selectedProject;
       _controller = AnimationController(

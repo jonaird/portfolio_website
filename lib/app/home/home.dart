@@ -10,7 +10,7 @@ export 'header.dart';
 class HomeViewModel extends EmitterContainer {
   HomeViewModel() {
     scrollController.changes.listen((change) {
-      if (change.newValue > scrollController.position.maxScrollExtent - 10) {
+      if (nearBottomOfScrollView) {
         parent.focalPiece.stage = FocalPieceStages.contact;
       } else {
         parent.focalPiece.stage = FocalPieceStages.fab;
@@ -51,6 +51,11 @@ class HomeViewModel extends EmitterContainer {
           )
           .then((value) => _animatingToBottom = false);
     }
+  }
+
+  bool get nearBottomOfScrollView {
+    return scrollController.offset >
+        scrollController.position.maxScrollExtent - 10;
   }
 
   late final showHome = ValueEmitter.reactive(

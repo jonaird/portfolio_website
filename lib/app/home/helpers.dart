@@ -94,7 +94,7 @@ class ProjectContentOverlay
         height: double.infinity,
         width: double.infinity,
         color: Theme.of(context).colorScheme.background,
-        child: vm.selectedProject.value!.content,
+        child: vm.selectedProject!.content,
       );
     }
     return const SizedBox();

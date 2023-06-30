@@ -137,11 +137,11 @@ class ProjectDisplay extends StatelessWidgetConsumer<ProjectSelectorViewModel> {
           if (vm.showProjectContent(project))
             ProjectContainer(child: project.content),
           AnimatedPositioned(
-            top: vm.selectedProject.value == project ? -230 : 0,
-            left: left(context, vm.selectedProject.value),
+            top: vm.selectedProject == project ? -230 : 0,
+            left: left(context, vm.selectedProject),
             duration: const Duration(milliseconds: 300),
             child: IgnorePointer(
-              ignoring: vm.selectedProject.isNotNull,
+              ignoring: vm.selectedProject != null,
               child: ProjectCard(project),
             ),
           ),
@@ -169,8 +169,7 @@ class ProjectCard extends StatelessWidget {
         child: InkWell(
           onTap: () => context
               .read<ProjectSelectorViewModel>()!
-              .selectedProject
-              .value = project,
+              .selectedProject = project,
           borderRadius: BorderRadius.circular(_borderRadius),
           child: SizedBox(
             width: 330,

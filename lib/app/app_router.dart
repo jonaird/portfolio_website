@@ -59,5 +59,5 @@ class RouterDelegateState extends EmitterContainer
   Set<ChangeEmitter> get children => {appViewModel};
 
   @override
-  get dependencies => {appViewModel.projectSelector.selectedProject};
+  get dependencies => {appViewModel.projectSelector};
 }
