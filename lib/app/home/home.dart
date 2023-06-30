@@ -194,8 +194,7 @@ class HomePage
                   const Gap(48),
                   Align(
                       alignment: Alignment.topCenter,
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
+                      child: Wrap(
                         children: [
                           const Text("Want to know how this website works? "),
                           TextButton(

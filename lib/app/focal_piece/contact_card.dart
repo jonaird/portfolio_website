@@ -59,7 +59,7 @@ class ContactCardViewModel extends EmitterContainer {
 
   Future<bool> _sendMessage() {
     if (kDebugMode) {
-      return Future.delayed(const Duration(milliseconds: 600), () => false);
+      return Future.delayed(const Duration(milliseconds: 600), () => true);
     }
     return post(
         Uri.parse(
