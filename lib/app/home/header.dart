@@ -128,7 +128,9 @@ class ExpandableBio
           TextButton(
             onPressed: showFullBio.toggle,
             child: Text(
-              showFullBio.value ? "Less about me" : 'More about me',
+              showFullBio.value
+                  ? "Less about me"
+                  : 'Learn more about my approach.',
             ),
           ),
         ],
