@@ -20,6 +20,7 @@ dependencies:
   http:
   url_launcher:
   google_fonts:
+  font_awesome_flutter: 
   flutter:
     sdk: flutter
     

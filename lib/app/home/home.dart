@@ -1,3 +1,4 @@
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:website/app/focal_piece/contact_card.dart';
 import 'package:website/app/home/projects/force_directed_graph_demo.dart';
 import 'package:website/app/home/projects/motion_blur_demo.dart';
@@ -103,8 +104,36 @@ class Home extends StatelessWidget {
           Scaffold(
             appBar: AppBar(
               title: const _Title(),
+              centerTitle: true,
               automaticallyImplyLeading: false,
               leading: const _Leading(),
+              actions: [
+                ElevatedButton.icon(
+                  onPressed: () =>
+                      launchUrl(Uri.parse('https://github.com/jonaird')),
+                  icon: const Icon(FontAwesomeIcons.github),
+                  label: const Text('GitHub'),
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Theme.of(context).colorScheme.surface,
+                      elevation: 0),
+                ),
+                ElevatedButton.icon(
+                  onPressed: () {},
+                  icon: const Icon(Icons.contact_page_outlined),
+                  label: const Text('Resume'),
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Theme.of(context).colorScheme.surface,
+                      elevation: 0),
+                ),
+                ElevatedButton.icon(
+                  onPressed: () {},
+                  icon: const Icon(FontAwesomeIcons.linkedin),
+                  label: const Text('LinkedIn'),
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Theme.of(context).colorScheme.surface,
+                      elevation: 0),
+                )
+              ],
             ),
             body: ScaffoldCapture(
               child: Stack(
@@ -118,11 +147,11 @@ class Home extends StatelessWidget {
               ),
             ),
           ),
-          BuiltWithFlutterCornerBanner.positioned(
-            bannerPosition: CornerBannerPosition.topRight,
-            bannerColor: Theme.of(context).primaryColorLight,
-            elevation: 2,
-          ),
+          // BuiltWithFlutterCornerBanner.positioned(
+          //   bannerPosition: CornerBannerPosition.topLeft,
+          //   bannerColor: Theme.of(context).primaryColorLight,
+          //   elevation: 2,
+          // ),
         ],
       ),
     );
