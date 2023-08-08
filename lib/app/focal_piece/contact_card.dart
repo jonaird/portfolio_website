@@ -109,7 +109,7 @@ class ContactCardContainer
   @override
   Widget consume(BuildContext context, vm) {
     final inputDecoration = InputDecoration(
-      border: const OutlineInputBorder(),
+      // border: const OutlineInputBorder(),
       labelText: 'Name',
       floatingLabelStyle:
           TextStyle(color: Theme.of(context).colorScheme.secondary),
@@ -126,13 +126,14 @@ class ContactCardContainer
         height: 400,
         child: Card(
           color: Theme.of(context).colorScheme.surface,
+          elevation: 3,
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 14),
+            padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 25),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const _Header(),
-                const Gap(10),
+                const Gap(12),
                 TextField(
                   controller: vm.nameField,
                   decoration: inputDecoration,
@@ -151,7 +152,7 @@ class ContactCardContainer
                   minLines: 7,
                   maxLines: 7,
                 ),
-                const Gap(13),
+                const Gap(18),
                 if (vm.somethingWentWrong.value)
                   const SelectableText(
                     'Oops something went wrong!\nYou can contact me at jonathan.aird@gmail.com',
