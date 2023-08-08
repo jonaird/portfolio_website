@@ -56,12 +56,12 @@ ThemeData _themeFromBrightness(Brightness brightness) {
       onError: Colors.white,
       background: switch (brightness) {
         Brightness.dark => Colors.blueGrey.shade900,
-        Brightness.light => Colors.blueGrey.shade50
+        Brightness.light => Colors.white
       },
       onBackground: onColor,
       surface: switch (brightness) {
         Brightness.dark => Colors.blueGrey.shade700,
-        Brightness.light => Colors.blueGrey.shade100
+        Brightness.light => Colors.blueGrey.shade200
       },
       onSurface: onColor,
     ),

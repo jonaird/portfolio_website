@@ -125,7 +125,7 @@ class ContactCardContainer
         width: 500,
         height: 400,
         child: Card(
-          color: Theme.of(context).colorScheme.primary,
+          color: Theme.of(context).colorScheme.surface,
           elevation: 2,
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 14),
