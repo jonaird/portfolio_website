@@ -1,8 +1,7 @@
 import 'package:website/main.dart';
 
 const shortBio =
-    'I combine engineering with empathy to design, develop, and deploy delightful desktop, web, and mobile applicatons. My passion is building products that reach for the limit of what’s possible in terms of simplicity, functionality and beauty.';
-// "I’m from Chicago and I live in Hungary with my wife and 2 year old son. I’m a full stack developer, Flutter specialist and product designer.";
+    "I’m from Chicago and I live in Hungary with my wife and 2 year old son. I’m a full stack developer, Flutter specialist and product designer.";
 
 const longBio =
     "\nIn 2018 I dropped out of a math degree at Roosevelt University to persue a startup at the intersection of cryptocurrency and social media. I taught myself how to code, graduated from the Founder Institute, raised a venture funding round, hired a developer and released a product to market. Unfortunately, due to extenuating circumstances, I had to shut the company down in July 2022. After taking a much-needed sabbatical, I’m excited to reenter the workforce!";
