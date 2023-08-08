@@ -79,26 +79,26 @@ class ContactCardViewModel extends EmitterContainer {
 
 enum ContactCardStage { inactive, active, messageSent }
 
-class ContactCard extends StatelessWidgetConsumer<ContactCardViewModel> {
-  const ContactCard({super.key});
+// class ContactCard extends StatelessWidgetConsumer<ContactCardViewModel> {
+//   const ContactCard({super.key});
 
-  @override
-  Widget consume(BuildContext context, vm) {
-    return OverflowBox(
-      maxHeight: double.infinity,
-      child: SizedBox(
-        height: MediaQuery.of(context).size.height + 800,
-        child: AnimatedAlign(
-          alignment: vm.alignment,
-          onEnd: vm.finishedAnimating,
-          curve: FocalPieceViewModel.animationCurve,
-          duration: vm.duration,
-          child: const ContactCardContainer(),
-        ),
-      ),
-    );
-  }
-}
+//   @override
+//   Widget consume(BuildContext context, vm) {
+//     return OverflowBox(
+//       maxHeight: double.infinity,
+//       child: SizedBox(
+//         height: MediaQuery.of(context).size.height + 800,
+//         child: AnimatedAlign(
+//           alignment: vm.alignment,
+//           onEnd: vm.finishedAnimating,
+//           curve: FocalPieceViewModel.animationCurve,
+//           duration: vm.duration,
+//           child: const ContactCardContainer(),
+//         ),
+//       ),
+//     );
+//   }
+// }
 
 class ContactCardContainer
     extends StatelessWidgetConsumer<ContactCardViewModel> {

@@ -87,7 +87,7 @@ class FocalPieceViewModel extends EmitterContainer {
     }
     if (stage == FocalPieceStages.contact) {
       return const EdgeInsets.all(16.0 * FocalPieceViewModel.fabScale)
-          .copyWith(left: 345, bottom: 60);
+          .copyWith(left: 345, bottom: 80);
     }
     return const EdgeInsets.all(0);
   }
