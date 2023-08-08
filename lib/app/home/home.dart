@@ -209,7 +209,8 @@ class HomePage
       child: FittedBox(
         fit: BoxFit.none,
         alignment: Alignment.center,
-        child: SizedBox(
+        child: Container(
+          color: Theme.of(context).colorScheme.background,
           width: context.windowSize.width,
           height: context.windowSize.height + 400,
           child: SingleChildScrollView(

@@ -29,10 +29,6 @@ ThemeData _themeFromBrightness(Brightness brightness) {
   };
 
   return ThemeData(
-    scaffoldBackgroundColor: switch (brightness) {
-      Brightness.dark => Colors.blueGrey.shade900,
-      Brightness.light => Colors.blueGrey.shade50
-    },
     primaryColorLight: switch (brightness) {
       Brightness.dark => Colors.blueGrey.shade400,
       Brightness.light => Colors.blueGrey.shade300
@@ -61,7 +57,7 @@ ThemeData _themeFromBrightness(Brightness brightness) {
       onBackground: onColor,
       surface: switch (brightness) {
         Brightness.dark => Colors.blueGrey.shade700,
-        Brightness.light => Colors.blueGrey.shade200
+        Brightness.light => Colors.grey.shade200
       },
       onSurface: onColor,
     ),
