@@ -22,7 +22,7 @@ dependencies:
   google_fonts:
   flutter:
     sdk: flutter
-    
+  font_awesome_flutter: ^10.5.0
 
 
 
