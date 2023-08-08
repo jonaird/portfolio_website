@@ -37,6 +37,11 @@ ThemeData _themeFromBrightness(Brightness brightness) {
       Brightness.dark => Colors.blueGrey.shade400,
       Brightness.light => Colors.blueGrey.shade300
     },
+    appBarTheme: AppBarTheme(
+        color: switch (brightness) {
+      Brightness.dark => Colors.blueGrey.shade700,
+      Brightness.light => Colors.blueGrey.shade500,
+    }),
     colorScheme: ColorScheme(
       brightness: brightness,
       primary: switch (brightness) {
