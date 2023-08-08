@@ -59,6 +59,7 @@ class FocalPieceContainer
       clipBehavior: Clip.antiAlias,
       child: Material(
         color: Theme.of(context).colorScheme.secondary,
+        elevation: 2,
         child: Reprovider(
           selector: (FocalPieceViewModel vm) => vm.content,
           child: const FocalPieceContent(),
