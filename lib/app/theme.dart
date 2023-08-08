@@ -39,6 +39,11 @@ ThemeData _themeFromBrightness(Brightness brightness) {
         Brightness.light => Colors.blueGrey.shade500,
       },
     ),
+    cardTheme: CardTheme(
+      elevation: 2,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(9.0)),
+      clipBehavior: Clip.antiAlias,
+    ),
     colorScheme: ColorScheme(
       brightness: brightness,
       primary: switch (brightness) {

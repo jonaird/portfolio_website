@@ -160,10 +160,10 @@ class ProjectCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 1.5,
-      clipBehavior: Clip.antiAlias,
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(_borderRadius)),
+      // elevation: 1.5,
+      // clipBehavior: Clip.antiAlias,
+      // shape: RoundedRectangleBorder(
+      //     borderRadius: BorderRadius.circular(_borderRadius)),
       child: Material(
         color: Theme.of(context).colorScheme.surface,
         child: InkWell(
