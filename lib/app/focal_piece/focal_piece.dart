@@ -87,15 +87,9 @@ class FocalPieceViewModel extends EmitterContainer {
     }
     if (stage == FocalPieceStages.contact) {
       return const EdgeInsets.all(16.0 * FocalPieceViewModel.fabScale)
-          .copyWith(bottom: 58);
+          .copyWith(left: 345, bottom: 60);
     }
-
     return const EdgeInsets.all(0);
-  }
-
-  double? get sBWidth {
-    if (stage == FocalPieceStages.contact) return 445;
-    return null;
   }
 
   bool get motionBlurEnabled {
@@ -180,25 +174,16 @@ class FocalPiece extends StatelessWidgetConsumer<FocalPieceViewModel> {
   Widget consume(_, vm) {
     return Stack(
       children: [
+        // const FocalPieceBackground(),
         AnimatedAlign(
           alignment: vm.alignment,
           duration: vm.animationDuration,
           curve: FocalPieceViewModel.animationCurve,
-          child: SizedBox(
-            width: vm.sBWidth,
-            child: Row(
-              children: [
-                const Expanded(
-                  child: SizedBox(),
-                ),
-                Padding(
-                  padding: vm.padding,
-                  child: Reprovider(
-                    selector: (FocalPieceViewModel vm) => vm.container,
-                    child: const FocalPieceContainer(),
-                  ),
-                ),
-              ],
+          child: Padding(
+            padding: vm.padding,
+            child: Reprovider(
+              selector: (FocalPieceViewModel vm) => vm.container,
+              child: const FocalPieceContainer(),
             ),
           ),
         ),
@@ -206,3 +191,21 @@ class FocalPiece extends StatelessWidgetConsumer<FocalPieceViewModel> {
     );
   }
 }
+
+// class FocalPieceBackground
+//     extends StatelessWidgetConsumer<FocalPieceViewModel> {
+//   const FocalPieceBackground({super.key});
+
+//   @override
+//   Widget consume(_, vm) {
+//     return IgnorePointer(
+//       ignoring: vm.backgroundShouldIgnorePointer,
+//       child: GestureDetector(
+//         onTap: vm.closeContactCard,
+//         child: Container(
+//           color: Colors.transparent,
+//         ),
+//       ),
+//     );
+//   }
+// }
