@@ -1,4 +1,3 @@
-import 'package:website/app/focal_piece/contact_card.dart';
 import 'package:website/main.dart';
 import 'focal_piece_container.dart';
 import 'focal_piece_content.dart';
@@ -8,7 +7,7 @@ class FocalPieceViewModel extends EmitterContainer {
   final animating = ValueEmitter(true);
   final container = FocalPieceContainerViewModel();
   final content = FocalPieceContentViewModel();
-  final contactCard = ContactCardViewModel();
+  final contactCard = ContactMeViewModel();
 
   var _introSequenceCompleted = false;
 
@@ -48,8 +47,6 @@ class FocalPieceViewModel extends EmitterContainer {
       findAncestorOfExactType<AppViewModel>()!.onMessageSent();
     }
   }
-
-  void closeContactCard() => contactCard.close();
 
   FocalPieceStages get stage => _stage.value;
   FocalPieceStages? get previousStage => _stage.previous;

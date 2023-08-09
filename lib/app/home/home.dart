@@ -1,4 +1,3 @@
-import 'package:website/app/focal_piece/contact_card.dart';
 import 'package:website/app/home/projects/force_directed_graph_demo.dart';
 import 'package:website/app/home/projects/motion_blur_demo.dart';
 import 'package:website/main.dart';
@@ -6,6 +5,7 @@ export './projects/projects.dart';
 export 'helpers.dart';
 export 'project_selector.dart';
 export 'header.dart';
+export 'contact_me.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class HomeViewModel extends EmitterContainer {
@@ -227,9 +227,9 @@ class HomePage
                   const Gap(48),
                   const SourceCodePrompt(),
                   const Gap(24),
-                  Reprovider<AppViewModel, ContactCardViewModel>(
+                  Reprovider<AppViewModel, ContactMeViewModel>(
                     selector: (appVM) => appVM.focalPiece.contactCard,
-                    child: const ContactCardContainer(),
+                    child: const ContactMeSection(),
                   ),
                   const Gap(90),
                   const Gap(200),
