@@ -225,19 +225,8 @@ class HomePage
                   const Gap(48),
                   const ProjectSection(),
                   const Gap(48),
-                  Align(
-                      alignment: Alignment.topCenter,
-                      child: Wrap(
-                        children: [
-                          const Text("Want to know how this website works? "),
-                          TextButton(
-                            onPressed: () => launchUrl(Uri.parse(
-                                'https://github.com/jonaird/portfolio_website')),
-                            child: const Text('View the source code.'),
-                          )
-                        ],
-                      )),
-                  const Gap(48),
+                  const SourceCodePrompt(),
+                  const Gap(24),
                   Reprovider<AppViewModel, ContactCardViewModel>(
                     selector: (appVM) => appVM.focalPiece.contactCard,
                     child: const ContactCardContainer(),
@@ -249,5 +238,27 @@ class HomePage
         ),
       ),
     );
+  }
+}
+
+class SourceCodePrompt extends StatelessWidget {
+  const SourceCodePrompt({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+        alignment: Alignment.topCenter,
+        child: Wrap(
+          children: [
+            const Text("Want to know how this website works? "),
+            TextButton(
+              onPressed: () => launchUrl(
+                  Uri.parse('https://github.com/jonaird/portfolio_website')),
+              child: const Text('View the source code.'),
+            )
+          ],
+        ));
   }
 }

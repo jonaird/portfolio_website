@@ -176,33 +176,13 @@ class _Header extends StatelessWidget {
     return Stack(
       children: [
         Center(
-          child: Padding(
-            padding: const EdgeInsets.only(top: 8.0),
-            child: Text('Contact Me',
-                style: Theme.of(context).textTheme.displaySmall),
+          child: Text(
+            'Contact Me',
+            style: Theme.of(context).textTheme.displaySmall,
           ),
         ),
         // _CloseButton()
       ],
-    );
-  }
-}
-
-class _CloseButton extends StatelessWidget {
-  const _CloseButton();
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.topRight,
-      child: IconButton(
-        onPressed: context.read<ContactCardViewModel>()!.close,
-        tooltip: 'Close',
-        icon: Icon(
-          Icons.close,
-          color: Theme.of(context).colorScheme.onBackground,
-        ),
-      ),
     );
   }
 }
