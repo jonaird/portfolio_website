@@ -65,15 +65,6 @@ class FocalPieceViewModel extends EmitterContainer {
     return const Duration(milliseconds: 500);
   }
 
-  Size get outerSize {
-    if (stage == FocalPieceStages.contact && !animating.value) {
-      return Size(stage.parameters.width!.toDouble(),
-          stage.parameters.height!.toDouble());
-    }
-    final fab = FocalPieceStages.fab.parameters;
-    return Size(fab.width! + 3 * 16, fab.height! + 3 * 16);
-  }
-
   EdgeInsets get padding {
     // if (stage == FocalPieceStages.contact ||
     //     (previousStage == FocalPieceStages.contact && animating.value)) {
@@ -169,40 +160,17 @@ class FocalPiece extends StatelessWidgetConsumer<FocalPieceViewModel> {
 
   @override
   Widget consume(_, vm) {
-    return Stack(
-      children: [
-        // const FocalPieceBackground(),
-        AnimatedAlign(
-          alignment: vm.alignment,
-          duration: vm.animationDuration,
-          curve: FocalPieceViewModel.animationCurve,
-          child: Padding(
-            padding: vm.padding,
-            child: Reprovider(
-              selector: (FocalPieceViewModel vm) => vm.container,
-              child: const FocalPieceContainer(),
-            ),
-          ),
+    return AnimatedAlign(
+      alignment: vm.alignment,
+      duration: vm.animationDuration,
+      curve: FocalPieceViewModel.animationCurve,
+      child: Padding(
+        padding: vm.padding,
+        child: Reprovider(
+          selector: (FocalPieceViewModel vm) => vm.container,
+          child: const FocalPieceContainer(),
         ),
-      ],
+      ),
     );
   }
 }
-
-// class FocalPieceBackground
-//     extends StatelessWidgetConsumer<FocalPieceViewModel> {
-//   const FocalPieceBackground({super.key});
-
-//   @override
-//   Widget consume(_, vm) {
-//     return IgnorePointer(
-//       ignoring: vm.backgroundShouldIgnorePointer,
-//       child: GestureDetector(
-//         onTap: vm.closeContactCard,
-//         child: Container(
-//           color: Colors.transparent,
-//         ),
-//       ),
-//     );
-//   }
-// }
