@@ -109,7 +109,7 @@ class ContactCardContainer
   @override
   Widget consume(BuildContext context, vm) {
     final inputDecoration = InputDecoration(
-      // border: const OutlineInputBorder(),
+      border: const OutlineInputBorder(),
       labelText: 'Name',
       floatingLabelStyle:
           TextStyle(color: Theme.of(context).colorScheme.secondary),
@@ -123,27 +123,27 @@ class ContactCardContainer
       alignment: Alignment.topCenter,
       child: SizedBox(
         width: 500,
-        height: 400,
+        // height: 400,
         child: Card(
-          color: Theme.of(context).colorScheme.surface,
-          elevation: 3,
+          color: Theme.of(context).colorScheme.background,
+          elevation: 0,
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 25),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const _Header(),
-                const Gap(12),
+                const Gap(24),
                 TextField(
                   controller: vm.nameField,
                   decoration: inputDecoration,
                 ),
-                const Gap(8),
+                const Gap(12),
                 TextField(
                   controller: vm.emailField,
                   decoration: inputDecoration.copyWith(labelText: 'Email'),
                 ),
-                const Gap(8),
+                const Gap(12),
                 TextField(
                   controller: vm.messageField,
                   decoration: inputDecoration.copyWith(
@@ -152,12 +152,13 @@ class ContactCardContainer
                   minLines: 7,
                   maxLines: 7,
                 ),
-                const Gap(18),
+                const Gap(12),
                 if (vm.somethingWentWrong.value)
                   const SelectableText(
                     'Oops something went wrong!\nYou can contact me at jonathan.aird@gmail.com',
                     style: TextStyle(fontSize: 13),
-                  )
+                  ),
+                const Gap(36)
               ],
             ),
           ),
@@ -172,12 +173,13 @@ class _Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Stack(
+    return Stack(
       children: [
         Center(
           child: Padding(
-            padding: EdgeInsets.only(top: 8.0),
-            child: Text('Contact Me'),
+            padding: const EdgeInsets.only(top: 8.0),
+            child: Text('Contact Me',
+                style: Theme.of(context).textTheme.displaySmall),
           ),
         ),
         // _CloseButton()

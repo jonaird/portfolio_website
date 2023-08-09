@@ -45,27 +45,30 @@ ThemeData _themeFromBrightness(Brightness brightness) {
       clipBehavior: Clip.antiAlias,
     ),
     colorScheme: ColorScheme(
-      brightness: brightness,
-      primary: switch (brightness) {
-        Brightness.dark => Colors.blueGrey.shade800,
-        Brightness.light => Colors.blueGrey.shade400
-      },
-      onPrimary: Colors.white,
-      secondary: Colors.redAccent.shade200,
-      onSecondary: Colors.white,
-      error: Colors.red,
-      onError: Colors.white,
-      background: switch (brightness) {
-        Brightness.dark => Colors.blueGrey.shade900,
-        Brightness.light => Colors.white
-      },
-      onBackground: onColor,
-      surface: switch (brightness) {
-        Brightness.dark => Colors.blueGrey.shade700,
-        Brightness.light => Colors.grey.shade200
-      },
-      onSurface: onColor,
-    ),
+        brightness: brightness,
+        primary: switch (brightness) {
+          Brightness.dark => Colors.blueGrey.shade800,
+          Brightness.light => Colors.blueGrey.shade400
+        },
+        onPrimary: Colors.white,
+        secondary: Colors.redAccent.shade200,
+        onSecondary: Colors.white,
+        error: Colors.red,
+        onError: Colors.white,
+        background: switch (brightness) {
+          Brightness.dark => Colors.blueGrey.shade900,
+          Brightness.light => Colors.white
+        },
+        onBackground: onColor,
+        surface: switch (brightness) {
+          Brightness.dark => Colors.blueGrey.shade700,
+          Brightness.light => Colors.grey.shade200
+        },
+        onSurface: onColor,
+        surfaceVariant: switch (brightness) {
+          Brightness.dark => Colors.blueGrey.shade900,
+          Brightness.light => Colors.grey.shade200,
+        }),
     textTheme: TextTheme(
       bodyLarge: GoogleFonts.petrona(
         fontSize: 24,
