@@ -74,10 +74,6 @@ class FocalPieceViewModel extends EmitterContainer {
     return const EdgeInsets.all(0);
   }
 
-  bool get motionBlurEnabled {
-    return animating.value && introSequenceCompleted;
-  }
-
   static const fabScale = 1.6;
   static const animationCurve = Curves.easeInOutExpo;
 
