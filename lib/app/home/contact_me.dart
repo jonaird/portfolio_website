@@ -2,12 +2,23 @@ import 'package:flutter/foundation.dart';
 import 'package:website/main.dart';
 
 class ContactMeViewModel extends EmitterContainer {
+  ContactMeViewModel() {
+    focusNodes.forEach((key, value) {
+      value.addListener(() {
+        if (value.hasFocus) onFieldFocus();
+      });
+    });
+  }
   @override
   FocalPieceViewModel get parent => super.parent as FocalPieceViewModel;
 
   final nameField = TextEditingEmitter();
   final emailField = TextEditingEmitter();
   final messageField = TextEditingEmitter();
+  late final focusNodes = [nameField, emailField, messageField]
+      .asMap()
+      .map((key, value) => MapEntry(value, FocusNode()));
+
   late final _contactCardOpen = ValueEmitter.reactive(
     reactTo: [parent],
     withValue: () => parent.stage == FocalPieceStages.contact,
@@ -15,6 +26,10 @@ class ContactMeViewModel extends EmitterContainer {
   final somethingWentWrong = ValueEmitter(false);
   var messageSent = false;
   var duration = const Duration(milliseconds: 400);
+
+  void onFieldFocus() {
+    findAncestorOfExactType<AppViewModel>()!.onFABTapped();
+  }
 
   Alignment get alignment {
     if (_contactCardOpen.value) return Alignment.center;
@@ -115,11 +130,13 @@ class ContactMeSection extends StatelessWidgetConsumer<ContactMeViewModel> {
                 TextField(
                   controller: vm.nameField,
                   decoration: inputDecoration,
+                  focusNode: vm.focusNodes[vm.nameField],
                 ),
                 const Gap(12),
                 TextField(
                   controller: vm.emailField,
                   decoration: inputDecoration.copyWith(labelText: 'Email'),
+                  focusNode: vm.focusNodes[vm.emailField],
                 ),
                 const Gap(12),
                 TextField(
@@ -129,6 +146,7 @@ class ContactMeSection extends StatelessWidgetConsumer<ContactMeViewModel> {
                   ),
                   minLines: 7,
                   maxLines: 7,
+                  focusNode: vm.focusNodes[vm.messageField],
                 ),
                 const Gap(12),
                 if (vm.somethingWentWrong.value)
