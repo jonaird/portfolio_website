@@ -39,11 +39,14 @@ class AppViewModel extends RootEmitter {
       projectSelector.selectedProject = null;
       await Future.delayed(const Duration(milliseconds: 400));
     }
-    home.animateToContactCard();
+    await home.animateToContactCard();
+    if (home.contactMe.focusNodes.values.every((node) => !node.hasFocus)) {
+      home.contactMe.focusNodes[home.contactMe.nameField]!.requestFocus();
+    }
   }
 
   void sendMessage() async {
-    final success = await home.contactCard.sendMessage();
+    final success = await home.contactMe.sendMessage();
     if (success) {
       findAncestorOfExactType<AppViewModel>()!.onMessageSent();
     }

@@ -24,7 +24,7 @@ class HomeViewModel extends EmitterContainer {
   }
   @override
   AppViewModel get parent => super.parent as AppViewModel;
-  final contactCard = ContactMeViewModel();
+  final contactMe = ContactMeViewModel();
   final motionBlur = MotionBlurViewModel();
   final forceDirectedGraph = ForceDirectedGraphViewModel();
   final showFullBio = ValueEmitter(false);
@@ -42,10 +42,10 @@ class HomeViewModel extends EmitterContainer {
     return newController;
   }
 
-  void animateToContactCard() {
+  Future<void> animateToContactCard() async {
     if (!_animatingToBottom) {
       _animatingToBottom = true;
-      scrollController
+      await scrollController
           .animateTo(
             scrollController.position.maxScrollExtent,
             duration: const Duration(milliseconds: 400),
@@ -95,7 +95,7 @@ class HomeViewModel extends EmitterContainer {
 
   @override
   get children => {
-        contactCard,
+        contactMe,
         motionBlur,
         forceDirectedGraph,
         showFullBio,
@@ -238,7 +238,7 @@ class HomePage
                   const SourceCodePrompt(),
                   const Gap(24),
                   Reprovider<AppViewModel, ContactMeViewModel>(
-                    selector: (appVM) => appVM.home.contactCard,
+                    selector: (appVM) => appVM.home.contactMe,
                     child: const ContactMeSection(),
                   ),
                   const Gap(90),
