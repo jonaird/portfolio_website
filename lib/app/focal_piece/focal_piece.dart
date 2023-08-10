@@ -7,7 +7,6 @@ class FocalPieceViewModel extends EmitterContainer {
   final animating = ValueEmitter(true);
   final container = FocalPieceContainerViewModel();
   final content = FocalPieceContentViewModel();
-  final contactCard = ContactMeViewModel();
 
   var _introSequenceCompleted = false;
 
@@ -41,12 +40,7 @@ class FocalPieceViewModel extends EmitterContainer {
     }
   }
 
-  void sendMessage() async {
-    final success = await contactCard.sendMessage();
-    if (success) {
-      findAncestorOfExactType<AppViewModel>()!.onMessageSent();
-    }
-  }
+  void sendMessage() => findAncestorOfExactType<AppViewModel>()!.sendMessage();
 
   FocalPieceStages get stage => _stage.value;
   FocalPieceStages? get previousStage => _stage.previous;
@@ -93,7 +87,6 @@ class FocalPieceViewModel extends EmitterContainer {
         animating,
         container,
         content,
-        contactCard,
       };
 
   @override

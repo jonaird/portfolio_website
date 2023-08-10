@@ -9,8 +9,6 @@ class ContactMeViewModel extends EmitterContainer {
       });
     });
   }
-  @override
-  FocalPieceViewModel get parent => super.parent as FocalPieceViewModel;
 
   final nameField = TextEditingEmitter();
   final emailField = TextEditingEmitter();
@@ -19,22 +17,12 @@ class ContactMeViewModel extends EmitterContainer {
       .asMap()
       .map((key, value) => MapEntry(value, FocusNode()));
 
-  late final _contactCardOpen = ValueEmitter.reactive(
-    reactTo: [parent],
-    withValue: () => parent.stage == FocalPieceStages.contact,
-  );
   final somethingWentWrong = ValueEmitter(false);
   var messageSent = false;
   var duration = const Duration(milliseconds: 400);
 
   void onFieldFocus() {
     findAncestorOfExactType<AppViewModel>()!.goToContactMeSection();
-  }
-
-  Alignment get alignment {
-    if (_contactCardOpen.value) return Alignment.center;
-    if (messageSent) return Alignment.topCenter;
-    return Alignment.bottomCenter;
   }
 
   Future<bool> sendMessage() async {
@@ -48,23 +36,6 @@ class ContactMeViewModel extends EmitterContainer {
     } else {
       somethingWentWrong.value = true;
       return false;
-    }
-  }
-
-  void finishedAnimating() {
-    if (duration == Duration.zero) {
-      duration = const Duration(milliseconds: 400);
-    }
-    if (!_contactCardOpen.value) {
-      somethingWentWrong.value = false;
-      for (var element in [nameField, emailField, messageField]) {
-        element.clear();
-      }
-      if (messageSent) {
-        messageSent = false;
-        duration = Duration.zero;
-        emit();
-      }
     }
   }
 
@@ -85,7 +56,7 @@ class ContactMeViewModel extends EmitterContainer {
   }
 
   @override
-  get children => {_contactCardOpen, somethingWentWrong};
+  get children => {somethingWentWrong};
 }
 
 enum ContactCardStage { inactive, active, messageSent }

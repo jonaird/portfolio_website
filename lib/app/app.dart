@@ -42,6 +42,13 @@ class AppViewModel extends RootEmitter {
     home.animateToContactCard();
   }
 
+  void sendMessage() async {
+    final success = await home.contactCard.sendMessage();
+    if (success) {
+      findAncestorOfExactType<AppViewModel>()!.onMessageSent();
+    }
+  }
+
   set selectedProject(Project? newSelection) =>
       projectSelector.selectedProject = newSelection;
 

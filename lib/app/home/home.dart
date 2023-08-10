@@ -24,6 +24,7 @@ class HomeViewModel extends EmitterContainer {
   }
   @override
   AppViewModel get parent => super.parent as AppViewModel;
+  final contactCard = ContactMeViewModel();
   final motionBlur = MotionBlurViewModel();
   final forceDirectedGraph = ForceDirectedGraphViewModel();
   final showFullBio = ValueEmitter(false);
@@ -91,6 +92,15 @@ class HomeViewModel extends EmitterContainer {
         duration: const Duration(milliseconds: 400),
         curve: FocalPieceViewModel.animationCurve);
   }
+
+  @override
+  get children => {
+        contactCard,
+        motionBlur,
+        forceDirectedGraph,
+        showFullBio,
+        scrollController
+      };
 }
 
 class Home extends StatelessWidget {
@@ -228,7 +238,7 @@ class HomePage
                   const SourceCodePrompt(),
                   const Gap(24),
                   Reprovider<AppViewModel, ContactMeViewModel>(
-                    selector: (appVM) => appVM.focalPiece.contactCard,
+                    selector: (appVM) => appVM.home.contactCard,
                     child: const ContactMeSection(),
                   ),
                   const Gap(90),
