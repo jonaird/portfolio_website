@@ -29,10 +29,6 @@ class FocalPieceContainerViewModel extends EmitterContainer {
 
   bool get firstBuild => parent.stage == FocalPieceStages.firstBuild;
 
-  void handleFABTap() {
-    parent.stage = FocalPieceStages.contact;
-  }
-
   Duration get animationDuration => parent.animationDuration;
 
   @override

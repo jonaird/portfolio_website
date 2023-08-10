@@ -34,7 +34,7 @@ class AppViewModel extends RootEmitter {
 
   Project? get selectedProject => projectSelector.selectedProject;
 
-  void onFABTapped() async {
+  void goToContactMeSection() async {
     if (projectSelector.selectedProject != null) {
       projectSelector.selectedProject = null;
       await Future.delayed(const Duration(milliseconds: 400));

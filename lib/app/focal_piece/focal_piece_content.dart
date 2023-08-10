@@ -26,7 +26,7 @@ class FocalPieceContentViewModel extends EmitterContainer {
   }
 
   void onFABTapped() {
-    findAncestorOfExactType<AppViewModel>()!.onFABTapped();
+    findAncestorOfExactType<AppViewModel>()!.goToContactMeSection();
   }
 
   void sendMessage() => parent.sendMessage();

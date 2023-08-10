@@ -28,7 +28,7 @@ class ContactMeViewModel extends EmitterContainer {
   var duration = const Duration(milliseconds: 400);
 
   void onFieldFocus() {
-    findAncestorOfExactType<AppViewModel>()!.onFABTapped();
+    findAncestorOfExactType<AppViewModel>()!.goToContactMeSection();
   }
 
   Alignment get alignment {
@@ -49,10 +49,6 @@ class ContactMeViewModel extends EmitterContainer {
       somethingWentWrong.value = true;
       return false;
     }
-  }
-
-  void close() {
-    parent.stage = FocalPieceStages.fab;
   }
 
   void finishedAnimating() {
