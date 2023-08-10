@@ -75,7 +75,7 @@ class FocalPieceViewModel extends EmitterContainer {
     }
     if (stage == FocalPieceStages.contact) {
       return const EdgeInsets.all(16.0 * FocalPieceViewModel.fabScale)
-          .copyWith(left: 345, bottom: 80);
+          .copyWith(bottom: 80);
     }
     return const EdgeInsets.all(0);
   }
@@ -160,6 +160,30 @@ class FocalPiece extends StatelessWidgetConsumer<FocalPieceViewModel> {
 
   @override
   Widget consume(_, vm) {
+    // ignore: avoid_unnecessary_containers
+    if (vm.introSequenceCompleted) {
+      return AnimatedAlign(
+        alignment: vm.alignment,
+        duration: vm.animationDuration,
+        curve: FocalPieceViewModel.animationCurve,
+        child: SizedBox(
+          width: 430,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Expanded(child: SizedBox()),
+              Padding(
+                padding: vm.padding,
+                child: Reprovider(
+                  selector: (FocalPieceViewModel vm) => vm.container,
+                  child: const FocalPieceContainer(),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
     return AnimatedAlign(
       alignment: vm.alignment,
       duration: vm.animationDuration,
