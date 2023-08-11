@@ -48,14 +48,12 @@ class AppViewModel extends RootEmitter {
   void sendMessage() async {
     final success = await home.contactMe.sendMessage();
     if (success) {
-      findAncestorOfExactType<AppViewModel>()!.onMessageSent();
+      home.onMessageSent();
     }
   }
 
   set selectedProject(Project? newSelection) =>
       projectSelector.selectedProject = newSelection;
-
-  void onMessageSent() => home.onMessageSent();
 
   late void Function(String message) showSnackBar;
 

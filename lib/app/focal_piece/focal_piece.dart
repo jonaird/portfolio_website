@@ -156,7 +156,7 @@ class FocalPiece extends StatelessWidgetConsumer<FocalPieceViewModel> {
         duration: vm.animationDuration,
         curve: FocalPieceViewModel.animationCurve,
         child: SizedBox(
-          width: 430,
+          width: 450,
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
