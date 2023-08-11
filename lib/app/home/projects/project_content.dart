@@ -43,26 +43,14 @@ class BsvNews extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 24),
           child: SizedBox(
-            width: 900,
-            child: Row(
+            width: 700,
+            child: Column(
               children: [
-                Expanded(
-                  flex: 1,
-                  child: ProjectText(
-                    Project.bsvNews.copy,
-                  ),
-                ),
+                const Placeholder(fallbackHeight: 200),
                 const Gap(24),
-                const Expanded(
-                  flex: 1,
-                  child: Column(
-                    children: [
-                      Placeholder(fallbackHeight: 200),
-                      Gap(12),
-                      Placeholder(fallbackHeight: 200)
-                    ],
-                  ),
-                )
+                ProjectText(Project.bsvNews.copy),
+                const Gap(24),
+                const Placeholder(fallbackHeight: 200)
               ],
             ),
           ),
@@ -137,16 +125,14 @@ class VersoContent extends StatelessWidget {
       child: Align(
         alignment: Alignment.topCenter,
         child: SizedBox(
-          width: 900,
+          width: 700,
           child: Padding(
             padding: const EdgeInsets.all(24.0),
             child: Column(
               children: [
-                Row(children: [
-                  Expanded(child: ProjectText(Project.verso.copy)),
-                  const Gap(24),
-                  const Expanded(child: Placeholder()),
-                ]),
+                const Placeholder(),
+                const Gap(24),
+                ProjectText(Project.verso.copy),
                 const Gap(24),
                 const LinkButton(Link.versoDesignCaseStudy)
               ],
@@ -166,23 +152,20 @@ class ForceDirectedGraph extends StatelessWidget {
     return _ContentContainer(
       child: Column(
         children: [
-          Row(children: [
-            Expanded(child: ProjectText(Project.forceDirectedGraph.copy)),
-            const Gap(24),
-            Expanded(
-                child: Container(
-              clipBehavior: Clip.antiAlias,
-              width: 300,
-              height: 500,
-              decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(5))),
-              child: Reprovider<HomeViewModel, ForceDirectedGraphViewModel>(
-                selector: (vm) => vm.forceDirectedGraph,
-                child: const ForceDirectedGraphDemo(),
-              ),
-            )),
-          ]),
+          Container(
+            clipBehavior: Clip.antiAlias,
+            width: 400,
+            height: 600,
+            decoration: const BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(5))),
+            child: Reprovider<HomeViewModel, ForceDirectedGraphViewModel>(
+              selector: (vm) => vm.forceDirectedGraph,
+              child: const ForceDirectedGraphDemo(),
+            ),
+          ),
           const Gap(30),
+          ProjectText(Project.forceDirectedGraph.copy),
+          const Gap(24),
           const LinkButton(Link.forceDirectedGraphGithub)
         ],
       ),
@@ -197,18 +180,11 @@ class MotionBlurContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return _ContentContainer(
       child: Column(children: [
-        Row(
-          children: [
-            Expanded(child: ProjectText(Project.motionBlur.copy)),
-            const Gap(24),
-            Expanded(
-              child: Reprovider<HomeViewModel, MotionBlurViewModel>(
-                  selector: (vm) => vm.motionBlur,
-                  child: const MotionBlurDemo()),
-            )
-          ],
-        ),
-        const Gap(30),
+        Reprovider<HomeViewModel, MotionBlurViewModel>(
+            selector: (vm) => vm.motionBlur, child: const MotionBlurDemo()),
+        const Gap(24),
+        ProjectText(Project.motionBlur.copy),
+        const Gap(24),
         const LinkButton(Link.motionBlurGithub),
       ]),
     );
@@ -225,7 +201,7 @@ class _ContentContainer extends StatelessWidget {
       child: Align(
         alignment: Alignment.topCenter,
         child: SizedBox(
-          width: 900,
+          width: 700,
           child: Padding(padding: const EdgeInsets.all(24.0), child: child),
         ),
       ),
