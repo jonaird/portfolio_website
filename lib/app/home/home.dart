@@ -11,11 +11,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 class HomeViewModel extends EmitterContainer {
   HomeViewModel() {
     scrollController.changes.listen((change) {
-      if (nearBottomOfScrollView) {
-        parent.focalPiece.stage = FocalPieceStages.contact;
-      } else {
-        parent.focalPiece.stage = FocalPieceStages.fab;
-      }
+      checkForFocalPieceStage();
       if (change.newValue > scrollController.position.maxScrollExtent - 200 &&
           change.newValue > change.oldValue!) {
         animateToContactCard();
@@ -40,6 +36,16 @@ class HomeViewModel extends EmitterContainer {
       projectScrollPositions[project] = newController.offset;
     });
     return newController;
+  }
+
+  void checkForFocalPieceStage() {
+    if (scrollController.hasClients) {
+      if (nearBottomOfScrollView) {
+        parent.focalPiece.stage = FocalPieceStages.contact;
+      } else {
+        parent.focalPiece.stage = FocalPieceStages.fab;
+      }
+    }
   }
 
   Future<void> animateToContactCard() async {
@@ -113,63 +119,65 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return HomeHider(
-      child: Stack(
-        children: [
-          Scaffold(
-            appBar: AppBar(
-              title: const _Title(),
-              automaticallyImplyLeading: false,
-              leading: const _Leading(),
-              centerTitle: true,
-              actions: [
-                ElevatedButton.icon(
-                  onPressed: () =>
-                      launchUrl(Uri.parse('https://github.com/jonaird')),
-                  icon: const Icon(FontAwesomeIcons.github),
-                  label: const Text('GitHub'),
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor:
-                          Theme.of(context).appBarTheme.backgroundColor,
-                      elevation: 0),
-                ),
-                ElevatedButton.icon(
-                  onPressed: () {},
-                  icon: const Icon(Icons.contact_page_outlined),
-                  label: const Text('Resume'),
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor:
-                          Theme.of(context).appBarTheme.backgroundColor,
-                      elevation: 0),
-                ),
-                ElevatedButton.icon(
-                  onPressed: () {},
-                  icon: const Icon(FontAwesomeIcons.linkedin),
-                  label: const Text('LinkedIn'),
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor:
-                          Theme.of(context).appBarTheme.backgroundColor,
-                      elevation: 0),
-                )
-              ],
-            ),
-            body: ScaffoldCapture(
-              child: Stack(
-                children: [
-                  Reprovider<AppViewModel, ProjectSelectorViewModel>(
-                      selector: (vm) => vm.projectSelector,
-                      child: const ProjectSelector(child: HomePage())),
-                  const ProjectContentOverlay(),
-                  const ThemeSwitcher()
+      child: FPCheckOnSizeChange(
+        child: Stack(
+          children: [
+            Scaffold(
+              appBar: AppBar(
+                title: const _Title(),
+                automaticallyImplyLeading: false,
+                leading: const _Leading(),
+                centerTitle: true,
+                actions: [
+                  ElevatedButton.icon(
+                    onPressed: () =>
+                        launchUrl(Uri.parse('https://github.com/jonaird')),
+                    icon: const Icon(FontAwesomeIcons.github),
+                    label: const Text('GitHub'),
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor:
+                            Theme.of(context).appBarTheme.backgroundColor,
+                        elevation: 0),
+                  ),
+                  ElevatedButton.icon(
+                    onPressed: () {},
+                    icon: const Icon(Icons.contact_page_outlined),
+                    label: const Text('Resume'),
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor:
+                            Theme.of(context).appBarTheme.backgroundColor,
+                        elevation: 0),
+                  ),
+                  ElevatedButton.icon(
+                    onPressed: () {},
+                    icon: const Icon(FontAwesomeIcons.linkedin),
+                    label: const Text('LinkedIn'),
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor:
+                            Theme.of(context).appBarTheme.backgroundColor,
+                        elevation: 0),
+                  )
                 ],
               ),
+              body: ScaffoldCapture(
+                child: Stack(
+                  children: [
+                    Reprovider<AppViewModel, ProjectSelectorViewModel>(
+                        selector: (vm) => vm.projectSelector,
+                        child: const ProjectSelector(child: HomePage())),
+                    const ProjectContentOverlay(),
+                    const ThemeSwitcher()
+                  ],
+                ),
+              ),
             ),
-          ),
-          // BuiltWithFlutterCornerBanner.positioned(
-          //   bannerPosition: CornerBannerPosition.topRight,
-          //   bannerColor: Theme.of(context).primaryColorLight,
-          //   elevation: 2,
-          // ),
-        ],
+            // BuiltWithFlutterCornerBanner.positioned(
+            //   bannerPosition: CornerBannerPosition.topRight,
+            //   bannerColor: Theme.of(context).primaryColorLight,
+            //   elevation: 2,
+            // ),
+          ],
+        ),
       ),
     );
   }

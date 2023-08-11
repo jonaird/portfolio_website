@@ -143,3 +143,15 @@ class ThemeSwitcher
     );
   }
 }
+
+class FPCheckOnSizeChange extends StatelessWidget {
+  const FPCheckOnSizeChange({super.key, required this.child});
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    MediaQuery.of(context).size;
+    context.read<HomeViewModel>()!.checkForFocalPieceStage();
+    return child;
+  }
+}
