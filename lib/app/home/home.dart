@@ -86,11 +86,15 @@ class HomeViewModel extends EmitterContainer {
     parent.selectedProject = null;
   }
 
-  void onMessageSent() {
-    scrollController.animateTo(
-        scrollController.position.maxScrollExtent - 64 - 400,
-        duration: const Duration(milliseconds: 400),
-        curve: FocalPieceViewModel.animationCurve);
+  void onMessageSent() async {
+    await scrollController.animateTo(
+      scrollController.position.maxScrollExtent - 64 - 400,
+      duration: const Duration(milliseconds: 400),
+      curve: FocalPieceViewModel.animationCurve,
+    );
+    for (var controller in contactMe.focusNodes.keys) {
+      controller.clear();
+    }
   }
 
   @override
