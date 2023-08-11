@@ -26,6 +26,24 @@ class ContactMeViewModel extends EmitterContainer {
   }
 
   Future<bool> sendMessage() async {
+    if (nameField.text == '') {
+      findAncestorOfExactType<AppViewModel>()!
+          .showSnackBar('Please include a name');
+      focusNodes[nameField]!.requestFocus();
+      return false;
+    }
+    if (emailField.text == '') {
+      findAncestorOfExactType<AppViewModel>()!
+          .showSnackBar('Please include an email');
+      focusNodes[emailField]!.requestFocus();
+      return false;
+    }
+    if (messageField.text == '') {
+      findAncestorOfExactType<AppViewModel>()!
+          .showSnackBar('Please include a message');
+      focusNodes[messageField]!.requestFocus();
+      return false;
+    }
     final success = await _sendMessage();
     if (success) {
       messageSent = true;
