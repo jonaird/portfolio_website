@@ -88,7 +88,7 @@ class HomeViewModel extends EmitterContainer {
 
   void onMessageSent() async {
     await scrollController.animateTo(
-      scrollController.position.maxScrollExtent - 64 - 400,
+      scrollController.position.maxScrollExtent - 64 - 450,
       duration: const Duration(milliseconds: 400),
       curve: FocalPieceViewModel.animationCurve,
     );
