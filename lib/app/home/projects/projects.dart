@@ -139,7 +139,7 @@ class ProjectDisplay extends StatelessWidgetConsumer<ProjectSelectorViewModel> {
           AnimatedPositioned(
             top: vm.selectedProject == project ? -230 : 0,
             left: left(context, vm.selectedProject),
-            duration: const Duration(milliseconds: 300),
+            duration: const Duration(milliseconds: 500),
             child: IgnorePointer(
               ignoring: vm.selectedProject != null,
               child: ProjectCard(project),

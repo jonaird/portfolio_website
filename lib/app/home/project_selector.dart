@@ -48,7 +48,7 @@ class _ProjectSelectorState extends State<ProjectSelector>
     if (_initialBuild) {
       _selectedProject = selectedProject;
       _controller = AnimationController(
-          vsync: this, duration: const Duration(milliseconds: 400));
+          vsync: this, duration: const Duration(milliseconds: 600));
       _controller.addListener(() => setState(() {}));
       _scaleAnimation = _controller.drive<double>(Tween<double>(
         begin: _selectedProject?.scale ?? 1,
