@@ -40,8 +40,17 @@ class AppViewModel extends RootEmitter {
       await Future.delayed(const Duration(milliseconds: 400));
     }
     await home.animateToContactCard();
+
     if (home.contactMe.focusNodes.values.every((node) => !node.hasFocus)) {
-      home.contactMe.focusNodes[home.contactMe.nameField]!.requestFocus();
+      late TextEditingEmitter emitter;
+      if (home.contactMe.nameField.text == '') {
+        emitter = home.contactMe.nameField;
+      } else if (home.contactMe.emailField.text == '') {
+        emitter = home.contactMe.emailField;
+      } else {
+        emitter = home.contactMe.messageField;
+      }
+      home.contactMe.focusNodes[emitter]!.requestFocus();
     }
   }
 
