@@ -55,8 +55,8 @@ class FocalPieceViewModel extends EmitterContainer {
     if (stage == FocalPieceStages.firstBuild) {
       return const Duration(milliseconds: 0);
     }
-    if (introSequenceCompleted) return const Duration(milliseconds: 350);
-    return const Duration(milliseconds: 500);
+    if (introSequenceCompleted) return const Duration(milliseconds: 450);
+    return const Duration(milliseconds: 680);
   }
 
   EdgeInsets get padding {
