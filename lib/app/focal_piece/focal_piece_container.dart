@@ -21,7 +21,7 @@ class FocalPieceContainerViewModel extends EmitterContainer {
 
   void onFirstBuild() async {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      Future.delayed(const Duration(milliseconds: 200), () {
+      Future.delayed(const Duration(milliseconds: 500), () {
         parent.stage = FocalPieceStages.intro;
       });
     });
