@@ -102,46 +102,42 @@ class ContactMeSection extends StatelessWidgetConsumer<ContactMeViewModel> {
       child: SizedBox(
         width: 500,
         // height: 400,
-        child: Card(
-          color: Theme.of(context).colorScheme.background,
-          elevation: 0,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 25),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const _Header(),
-                const Gap(24),
-                TextField(
-                  controller: vm.nameField,
-                  decoration: inputDecoration,
-                  focusNode: vm.focusNodes[vm.nameField],
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 25),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const _Header(),
+              const Gap(24),
+              TextField(
+                controller: vm.nameField,
+                decoration: inputDecoration,
+                focusNode: vm.focusNodes[vm.nameField],
+              ),
+              const Gap(12),
+              TextField(
+                controller: vm.emailField,
+                decoration: inputDecoration.copyWith(labelText: 'Email'),
+                focusNode: vm.focusNodes[vm.emailField],
+              ),
+              const Gap(12),
+              TextField(
+                controller: vm.messageField,
+                decoration: inputDecoration.copyWith(
+                  labelText: 'Message',
                 ),
-                const Gap(12),
-                TextField(
-                  controller: vm.emailField,
-                  decoration: inputDecoration.copyWith(labelText: 'Email'),
-                  focusNode: vm.focusNodes[vm.emailField],
+                minLines: 7,
+                maxLines: 7,
+                focusNode: vm.focusNodes[vm.messageField],
+              ),
+              const Gap(12),
+              if (vm.somethingWentWrong.value)
+                const SelectableText(
+                  'Oops something went wrong!\nYou can contact me at jonathan.aird@gmail.com',
+                  style: TextStyle(fontSize: 13),
                 ),
-                const Gap(12),
-                TextField(
-                  controller: vm.messageField,
-                  decoration: inputDecoration.copyWith(
-                    labelText: 'Message',
-                  ),
-                  minLines: 7,
-                  maxLines: 7,
-                  focusNode: vm.focusNodes[vm.messageField],
-                ),
-                const Gap(12),
-                if (vm.somethingWentWrong.value)
-                  const SelectableText(
-                    'Oops something went wrong!\nYou can contact me at jonathan.aird@gmail.com',
-                    style: TextStyle(fontSize: 13),
-                  ),
-                const Gap(36)
-              ],
-            ),
+              const Gap(36)
+            ],
           ),
         ),
       ),
