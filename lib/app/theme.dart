@@ -11,30 +11,27 @@ extension ThemeToggle on ValueEmitter<Brightness> {
 }
 
 extension ThemeDataExtension on Brightness {
-  ThemeData get themeData => _themeFromBrightness(this);
-}
-
-ThemeData _themeFromBrightness(Brightness brightness) {
-  final baseTextTheme = switch (brightness) {
+  ThemeData get themeData {
+  final baseTextTheme = switch (this) {
     Brightness.dark => Typography.whiteHelsinki,
     Brightness.light => Typography.blackHelsinki
   };
-  final textColor = switch (brightness) {
+  final textColor = switch (this) {
     Brightness.light => Colors.black.withAlpha(200),
     Brightness.dark => Colors.white.withAlpha(200)
   };
-  final onColor = switch (brightness) {
+  final onColor = switch (this) {
     Brightness.light => Colors.black,
     Brightness.dark => Colors.white
   };
 
   return ThemeData(
-    primaryColorLight: switch (brightness) {
+    primaryColorLight: switch (this) {
       Brightness.dark => Colors.blueGrey.shade400,
       Brightness.light => Colors.blueGrey.shade300
     },
     appBarTheme: AppBarTheme(
-      backgroundColor: switch (brightness) {
+      backgroundColor: switch (this) {
         Brightness.dark => Colors.blueGrey.shade700,
         Brightness.light => Colors.blueGrey.shade500,
       },
@@ -46,7 +43,7 @@ ThemeData _themeFromBrightness(Brightness brightness) {
     ),
     colorScheme: ColorScheme(
         brightness: brightness,
-        primary: switch (brightness) {
+        primary: switch (this) {
           Brightness.dark => Colors.blueGrey.shade800,
           Brightness.light => Colors.blueGrey.shade400
         },
@@ -55,17 +52,17 @@ ThemeData _themeFromBrightness(Brightness brightness) {
         onSecondary: Colors.white,
         error: Colors.red,
         onError: Colors.white,
-        background: switch (brightness) {
+        background: switch (this) {
           Brightness.dark => Colors.blueGrey.shade900,
           Brightness.light => Colors.white
         },
         onBackground: onColor,
-        surface: switch (brightness) {
+        surface: switch (this) {
           Brightness.dark => Colors.blueGrey.shade700,
           Brightness.light => Colors.grey.shade200
         },
         onSurface: onColor,
-        surfaceVariant: switch (brightness) {
+        surfaceVariant: switch (this) {
           Brightness.dark => Colors.blueGrey.shade900,
           Brightness.light => Colors.grey.shade200,
         }),
@@ -108,4 +105,5 @@ ThemeData _themeFromBrightness(Brightness brightness) {
     scrollbarTheme: const ScrollbarThemeData(
         thumbVisibility: MaterialStatePropertyAll(true)),
   );
+}
 }
